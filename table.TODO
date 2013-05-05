@@ -1,0 +1,44 @@
+table:
+- user
+username
+password
+createdDate
+status - active/not active
+superAdmin
+ref profile
+
+- role
+roleName
+accessRights
+
+- profile
+firstName
+lastName
+birthDate
+employeeNumber
+identityNo
+homeAddress
+postalCode
+phoneNumber
+phoneNumber2
+emailAddress
+facebook
+twitter
+createdDate
+createdBy
+modifiedDate
+modifiedBy
+ref position
+ref branch
+
+- position
+positionName
+
+- branch
+branchName
+branchAddress
+postalCode
+phoneNumber
+
+
+

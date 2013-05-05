@@ -1,0 +1,1 @@
+nodemon -w routes -w . app.js

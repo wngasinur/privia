@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Gebo Admin Panel</title>
+    
+        <!-- Bootstrap framework -->
+            <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+            <link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css" />
+        <!-- breadcrumbs-->
+            <link rel="stylesheet" href="/lib/jBreadcrumbs/css/BreadCrumb.css" />
+        <!-- tooltips-->
+            <link rel="stylesheet" href="/lib/qtip2/jquery.qtip.min.css" />
+        <!-- colorbox -->
+            <link rel="stylesheet" href="/lib/colorbox/colorbox.css" />    
+        <!-- code prettify -->
+            <link rel="stylesheet" href="/lib/google-code-prettify/prettify.css" />    
+        <!-- notifications -->
+            <link rel="stylesheet" href="/lib/sticky/sticky.css" />    
+        <!-- splashy icons -->
+            <link rel="stylesheet" href="/img/splashy/splashy.css" />
+        <!-- flags -->
+            <link rel="stylesheet" href="/img/flags/flags.css" />    
+        <!-- calendar -->
+            <link rel="stylesheet" href="/lib/fullcalendar/fullcalendar_gebo.css" />
+            
+        <!-- gebo color theme-->
+            <link rel="stylesheet" href="/css/blue.css" id="link_theme" />
+        <!-- main styles -->
+            <link rel="stylesheet" href="/css/style.css" />
+            
+            <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans" />
+    
+        <!-- Favicon -->
+            <link rel="shortcut icon" href="favicon.ico" />
+              <script>
+            //* hide all elements & show preloader
+            document.documentElement.className += 'js';
+        </script>
+    </head>
+    <body class="sidebar_hidden">
+        <div id="loading_layer" style="display:none"><img src="/img/ajax_loader.gif" alt="" /></div>
+
+    {{> menus}}
+    <div id="containerwrapper"> 
+    <div class="main_content"> 
+    {{{body}}}
+    </div>
+    </div> 
+    {{> scripts}}
+
+    {{{block "pageScripts"}}}
+
+  
+  </body>
+
+</html>
