@@ -41,4 +41,34 @@ postalCode
 phoneNumber
 
 
+- data_properti
+tipeProperti
+harga
+deskripsi
+luasRumah
+luasTanah
+jmlKamar
+jmlWc
+jalan
+daerah
+kota
+propinsi
+tglTerdafar
+tahunBulanTerdaftar
+tglMasuk
+masukOleh
+img[]
+sumber {website,url,id}
+kontak (nama,telp,email)
+status (aktif,tidak)
+
+- data_jobs
+site
+url
+last10id
+totalRun
+status
+message
+
+
 

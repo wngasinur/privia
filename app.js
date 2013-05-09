@@ -3,12 +3,22 @@
  */
 
  var express = require('express')
- , routes = require('./routes')
- , user = require('./routes/user')
  , http = require('http')
- , path = require('path');
+ , path = require('path')
+  , fs = require('fs')
+ , config = require('./config')['development'];
 
  var hbs = require('express-hbs');
+
+ var mongoose = require('mongoose');
+
+ mongoose.connect(config.db)
+
+var models_path = __dirname + '/models'
+fs.readdirSync(models_path).forEach(function (file) {
+  require(models_path+'/'+file)
+})
+
 
  var app = express();
 
@@ -35,11 +45,8 @@ if ('development' == app.get('env')) {
 	app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
-app.all('/login', routes.login);
-app.get('/users', user.list);
 
-app.get('/users/add', user.add);
+require('./routes/routes')(app) ;
 
 http.createServer(app).listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));

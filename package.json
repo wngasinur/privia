@@ -8,6 +8,23 @@
   "dependencies": {
     "express": "3.2.0",
     "express-hbs": "*",
-    "mongoose": "*"
+    "mongoose": "*" ,
+    "node.io": "*" ,
+    "jquery":"*"
+    , "passport": "latest"
+    , "passport-local": "latest"
+    , "passport-facebook": "latest"
+    , "passport-twitter": "latest"
+    , "passport-github": "latest"
+    , "passport-google-oauth": "latest"
+    , "imager": "latest"
+    , "notifier": "latest"
+    , "underscore": "latest"
+    , "gzippo": "latest"
+    , "async": "latest"
+    , "view-helpers": "latest"
+    , "forever": "latest"
+    , "node-schedule" :"latest"
+
   }
 }
