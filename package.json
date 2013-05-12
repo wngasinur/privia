@@ -7,24 +7,8 @@
   },
   "dependencies": {
     "express": "3.2.0",
-    "express-hbs": "*",
-    "mongoose": "*" ,/*
-    "node.io": "*" ,*/
-    "jquery":"*"
-    , "passport": "latest"
-    , "passport-local": "latest"
-    , "passport-facebook": "latest"
-    , "passport-twitter": "latest"
-    , "passport-github": "latest"
-    , "passport-google-oauth": "latest"
-    , "imager": "latest"
-    , "notifier": "latest"
-    , "underscore": "latest"
-    , "gzippo": "latest"
-    , "async": "latest"
-    , "view-helpers": "latest"
-    , "forever": "latest"
-    , "node-schedule" :"latest"
-
+    "express-hbs": "0.1.5",
+    "mongoose": "3.6.7" ,
+    "jquery":"1.8.3"
   }
 }
