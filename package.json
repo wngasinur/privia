@@ -9,7 +9,6 @@
     "express": "3.2.0",
     "express-hbs": "*",
     "mongoose": "*" ,
-    "node.io": "*" ,
     "jquery":"*"
     , "passport": "latest"
     , "passport-local": "latest"
