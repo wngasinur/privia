@@ -1,39 +1,26 @@
 <div class="row-fluid">
-    <div class="span12">
-		<form class="form_validation_ttip" id="signup">
+	<div class="span12">
+
+		<form id="userForm" method="post">
 			<div class="formSep">
-			<div class="span4">
-				<label>First name <span class="f_req">*</span></label>
-				<input type="text" name="reg_first_name" class="span12" id="reg_first_name" />
-				<span class="help-block">help block</span>
-			</div>
+				<label>Username<span class="f_req">*</span></label>
+				<input type="text" name="username">
 			</div>
 			<div class="formSep">
-				<label>Username</label>
-				<input type="text">
+				<label>Password<span class="f_req">*</span></label>
+				<input type="password" name="password">
 			</div>
 			<div class="formSep">
-				<label>Password</label>
-				<input type="password">
+				<label>Password<span class="f_req">*</span></label>
+				<input type="password" name="confirmPassword">
 			</div>
-			<div class="formSep">
-				<div class="row-fluid">
-					<div class="span6">
-						<label>Textarea</label>
-						<textarea name="txtarea_reg" id="txtarea_reg" cols="10" rows="3"></textarea>
-					</div>
-					<div class="span6">
-						<label>Textarea with <code>.span8</code> class</label>
-						<textarea name="txtarea_sp" id="txtarea_sp" cols="10" rows="3" class="span8"></textarea>
-					</div>
-				</div>
+			
+			<div class="form-actions">
+				<button class="btn btn-inverse" type="submit">Save changes</button>
+				<button class="btn">Cancel</button>
 			</div>
-            	<div class="form-actions">
-									<button class="btn btn-inverse" type="submit">Save changes</button>
-									<button class="btn">Cancel</button>
-								</div>
-        </form>
-    </div>
+		</form>
+	</div>
 </div>
 
 {{#content "pageScripts"}}
@@ -41,27 +28,60 @@
 <script src="/lib/validation/jquery.validate.min.js"></script>
 
 <script>
-	$(document).ready(function(){
-		$("#signup").validate({
-  onkeyup: false,
-  errorClass: 'error',
-  validClass: 'valid',
-  highlight: function(element) {
-    $(element).closest('div').addClass("f_error");
-  },
-  unhighlight: function(element) {
-    $(element).closest('div').removeClass("f_error");
-  },
-  errorPlacement: function(error, element) {
-    $(element).closest('div').append(error);
-  }, 
-  rules: {
-    reg_first_name: "required"
-  },
-  messages: {
-    reg_first_name: "Please enter your firstname"
-  }
-});
+$(document).ready(function(){
+	$("#userForm").validate({
+		onkeyup: false,
+		errorClass: 'error',
+		validClass: 'valid',
+		highlight: function(element) {
+			$(element).closest('div').addClass("f_error");
+		},
+		unhighlight: function(element) {
+			$(element).closest('div').removeClass("f_error");
+		},
+		errorPlacement: function(error, element) {
+			$(element).closest('div').append(error);
+		}, 
+		rules: {
+			username: "required",
+			password : {
+				required :true,
+				minlength : 1
+			},
+			confirmPassword : {
+				required :true,
+				minlength : 1,
+				equalTo : "input[name=password]"
+			}
+		},
+		messages: {
+			username: "Please enter your username"
+		}
 	});
+
+	 var options = { 
+        success:       showResponse  // post-submit callback 
+        ,clearForm: true,
+        error : errorHandler
+        // other available options: 
+        //url:       url         // override for form's 'action' attribute 
+        //type:      type        // 'get' or 'post', override for form's 'method' attribute 
+        //dataType:  null        // 'xml', 'script', or 'json' (expected server response type) 
+        //clearForm: true        // clear all form fields after successful submit 
+        //resetForm: true        // reset the form after successful submit 
+ 
+        // $.ajax options can be used here too, for example: 
+        //timeout:   3000 
+    }; 
+	$('#userForm').ajaxForm(options); 
+});
+	function showResponse(responseText, statusText, xhr, $form) {
+		if(responseText.success) {
+			console.log('success');
+		}
+	}
+	function errorHandler(context, xhr, status, responseText) {
+		console.log(context.responseText);
+	}
 </script>
 {{/content}}
