@@ -1,0 +1,18 @@
+
+
+entity:
+rumah
+apartemen
+
+
+problem:
+% jumlah kenaikan/penurunan harga mingguan/bulanan/tahunan rumah/apartemen/tanah per daerah/propinsi
+jumlah transaksi penjualan  harga mingguan/bulanan/tahunan rumah/apartemen/tanah per daerah/propinsi
+
+
+
+harga sekarang rata2 rumah/apartemen/tanah per luas per daerah
+
+graphical:
+line chart
+

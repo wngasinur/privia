@@ -1,20 +1,40 @@
 <div class="row-fluid">
 	<div class="span12">
-
-		<form id="userForm" method="post">
-			<div class="formSep">
+		
+		<h3 class="heading">Tambah User</h3>
+  		<form id="userForm" method="post">
+			<input type="hidden" name="_id" value="<%= _id %>">
+			<div class="control-group">
 				<label>Username<span class="f_req">*</span></label>
-				<input type="text" name="username">
+				<input type="text" name="username" id="username" value="<%= username %>">
 			</div>
-			<div class="formSep">
+			<div class="control-group" id="passwordSection">
+				<div class="row-fluid">
+					<div class="span3">
 				<label>Password<span class="f_req">*</span></label>
 				<input type="password" name="password">
 			</div>
-			<div class="formSep">
-				<label>Password<span class="f_req">*</span></label>
+			<div class="span3">
+				<label>Konfirmasi Password<span class="f_req">*</span></label>
 				<input type="password" name="confirmPassword">
 			</div>
-			
+				</div>
+
+			</div>
+			<div class="control-group">
+			<div class="row-fluid">
+				
+					<label><span class="error_placement">Akses</span> <span class="f_req">*</span></label>
+					
+					<label class="checkbox inline">
+						<input type="checkbox" value="admin" name="akses" <%=_.contains(akses, 'admin')?'checked':''%>> Admin 
+					</label>
+					<label class="checkbox inline">
+						<input type="checkbox" value="sales" name="akses" <%=_.contains(akses, 'sales')?'checked':''%>> Sales
+					</label>
+				
+			</div>
+			</div>
 			<div class="form-actions">
 				<button class="btn btn-inverse" type="submit">Save changes</button>
 				<button class="btn">Cancel</button>
@@ -23,13 +43,19 @@
 	</div>
 </div>
 
-{{#content "pageScripts"}}
-<!-- validation -->
-<script src="/lib/validation/jquery.validate.min.js"></script>
-
 <script>
-$(document).ready(function(){
-	$("#userForm").validate({
+
+	$(document).ready(function() {
+	<% if(_id!='')  // edit mode
+	{
+		%>
+		$('#passwordSection').remove();	
+		$('#username').attr('readonly','readonly');	
+		<%
+	} 
+	else { // add mode
+		%>
+		$("#userForm").validate({
 		onkeyup: false,
 		errorClass: 'error',
 		validClass: 'valid',
@@ -58,10 +84,18 @@ $(document).ready(function(){
 			username: "Please enter your username"
 		}
 	});
+		<%
+	}
+	%>
+
+
+	});
+
 
 	 var options = { 
         success:       showResponse  // post-submit callback 
         ,clearForm: true,
+        url:'/users/save',
         error : errorHandler
         // other available options: 
         //url:       url         // override for form's 'action' attribute 
@@ -74,7 +108,7 @@ $(document).ready(function(){
         //timeout:   3000 
     }; 
 	$('#userForm').ajaxForm(options); 
-});
+
 	function showResponse(responseText, statusText, xhr, $form) {
 		if(responseText.success) {
 			console.log('success');
@@ -84,4 +118,3 @@ $(document).ready(function(){
 		console.log(context.responseText);
 	}
 </script>
-{{/content}}

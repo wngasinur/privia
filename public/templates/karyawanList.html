@@ -1,0 +1,65 @@
+ 
+<div class="row-fluid">
+    <div class="span12">
+        <h3 class="heading">Daftar Karyawan</h3>
+        <div class="row-fluid">
+            <div class="span3">
+                <input type="text" placeholder="Username" class="span8" id="username">
+            </div>
+        </div>
+        <table class="table table-bordered table-striped  dTableR" id="privia_grid" aria-describedby="dt_gal_info">
+            <thead>
+                <tr>
+                    <th>Profile</th>
+                    <th>Username</th>
+                    <th>Nama</th>
+                    <th>Handphone</th>
+                    <th>Cabang</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            </tbody></table>
+
+        </div>
+    </div>
+    <script>
+
+    var oTable = $('#privia_grid').dataTable( {
+        "bProcessing": true,
+        "bServerSide": true,
+        "sDom": "<'row'<'span6'<'dt_actions'>l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+        "sPaginationType": "bootstrap_alt",
+        "sAjaxDataProp" : "data",
+        "aoColumnDefs": [
+            {
+                // `data` refers to the data for the cell (defined by `mData`, which
+                // defaults to the column being worked with, in this case is the first
+                // Using `row[0]` is equivalent.
+                "mRender": function ( data, type, row ) {
+                    if(data!='') 
+                        return '<img src="'+data+'" width=40 height=40 />';
+                    return '<img src="http://www.placehold.it/40x40/EFEFEF/AAAAAA" alt="" id="thumbnail-profile"></div>';
+                },
+                "aTargets": [ 0 ]
+            }
+            ],
+        "aoColumns": [
+        { "mData": "imgProfile" },
+        { "mData": "username" },
+        { "mData": "nama" },
+        { "mData": "handphone" },
+        { "mData": "cabang" },
+        { "mData": "status" }
+        ],
+        "sAjaxSource": "/karyawan"
+    } );
+
+   $('#username').keyup( function() { 
+      
+           oTable.fnFilter( 'username|'+this.value );
+        
+    } );
+    </script>

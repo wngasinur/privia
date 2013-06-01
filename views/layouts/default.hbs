@@ -12,8 +12,10 @@
             <link rel="stylesheet" href="/lib/jBreadcrumbs/css/BreadCrumb.css" />
         <!-- tooltips-->
             <link rel="stylesheet" href="/lib/qtip2/jquery.qtip.min.css" />
+
+            <link rel="stylesheet" href="/lib/stepy/css/jquery.stepy.css" />
         <!-- colorbox -->
-            <link rel="stylesheet" href="/lib/colorbox/colorbox.css" />    
+            <link rel="stylesheet" href="/lib/jquery-ui/css/smoothness/jquery-ui-1.8.20.custom.css" />    
         <!-- code prettify -->
             <link rel="stylesheet" href="/lib/google-code-prettify/prettify.css" />    
         <!-- notifications -->
@@ -27,8 +29,13 @@
             
         <!-- gebo color theme-->
             <link rel="stylesheet" href="/css/blue.css" id="link_theme" />
-        <!-- main styles -->
+
             <link rel="stylesheet" href="/css/style.css" />
+        <!-- main styles -->
+            <link rel="stylesheet" href="/css/fineuploader-3.5.0.css" />
+
+
+            <link rel="stylesheet" href="/css/select2.css" />
             
             <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans" />
     
@@ -39,15 +46,17 @@
             document.documentElement.className += 'js';
         </script>
     </head>
-    <body class="sidebar_hidden">
+    <body>
         <div id="loading_layer" style="display:none"><img src="/img/ajax_loader.gif" alt="" /></div>
 
     {{> menus}}
     <div id="containerwrapper"> 
-    <div class="main_content"> 
+    <div class="main_content" id="container"> 
     {{{body}}}
     </div>
     </div> 
+
+      {{> sidebars}}
     {{> scripts}}
 
     {{{block "pageScripts"}}}

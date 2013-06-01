@@ -1,0 +1,202 @@
+<div class="row-fluid">
+	<div class="span12">
+		<h3 class="heading">Tambah Karyawan</h3>
+		<form id="karyawanForm" method="post">
+			<input type="hidden" name="imgProfile" id="imgProfile">
+			<div class="row-fluid">
+				<div class="span5">
+					<div class="control-group">
+						<div data-provides="fileupload" class="fileupload fileupload-new">
+							<div style="width: 80px; height: 80px;" class="fileupload-new thumbnail">
+								<img src="http://www.placehold.it/80x80/EFEFEF/AAAAAA" alt="" id="thumbnail-profile"></div>
+								<div style="width: 80px; height: 80px; line-height: 80px;" class="fileupload-preview fileupload-exists thumbnail"></div>
+								<span id="img-uploader" class="btn btn-file"></span>
+								<a data-dismiss="fileupload" class="btn fileupload-exists" href="#">Remove</a>
+							</div>  
+						</div>
+						<div class="control-group">
+							<label>Username<span class="f_req">*</span></label>
+							<input name="username" id="username">
+						</div>
+
+						<div class="control-group">
+							<label>
+								Identitas
+								<span class="f_req">*</span></label>
+								<div class="input-prepend">
+									<select name="jenisIdentitas" class="span4">
+										<option>KTP</option>
+										<option>SIM</option>
+									</select>	<input type="text" name="noIndentitas">
+								</div>
+							</div>
+
+							<div class="control-group">
+								<div class="row-fluid">
+									<div class="span6">
+										<label>Nama<span class="f_req">*</span></label>
+										<input type="text" name="nama" class="span10">
+									</div>
+
+
+									<div class="span6">
+										<label>Jenis Kelamin<span class="f_req">*</span></label>
+										<label class="radio inline">
+											<input name="jenisKelamin" value="L" type="radio" >Laki
+										</label>
+										<label class="radio inline">
+											<input name="jenisKelamin" value="P" type="radio">Perempuan
+										</label>
+									</div>
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label>Tempat/Tanggal Lahir<span class="f_req">*</span></label>
+
+								<input type="text" name="tempatLahir" class="input-small">
+								<input type="text" name="tglLahir" id="tglLahir">
+							</div>
+						</div>
+						<div class="span6 well">
+
+							<div class="control-group">
+								<label>Alamat<span class="f_req">*</span></label>
+
+								<textarea name="alamat"></textarea>
+							</div>
+
+							<div class="control-group">
+								<div class="span4">
+									<label>Telepon<span class="f_req">*</span></label>
+									<input type="text" name="telepon" class="span12">
+								</div>
+								<div class="span4">
+									<label>Handphone 1</label>
+									<input type="text" name="handphone" class="span12">
+								</div>
+								<div class="span4">
+									<label>Handphone 2</label>
+									<input type="text" name="handphone" class="span12">
+								</div>
+							</div>
+
+							<div class="control-group">
+								<label>Email<span class="f_req">*</span></label>
+								<input type="text" name="email">
+							</div>
+
+						</div>
+					</div>
+
+					<div class="control-group">
+						<div class="row-fluid">
+							<div class="span2">
+								<label>Bank<span class="f_req">*</span></label>
+								<input type="text" name="bank" class="span12">
+							</div>
+							<div class="span2">
+								<label>No Rekening<span class="f_req">*</span></label>
+								<input type="text" name="noRekening" class="span12">
+							</div>
+							<div class="span2">
+								<label>A/N<span class="f_req">*</span></label>
+								<input type="text" name="atasNama" class="span12">
+							</div>
+						</div>
+					</div> 
+
+					<div class="control-group">
+						<label>Cabang<span class="f_req">*</span></label>
+						<input type="text" name="cabang">
+					</div>
+					<div class="form-actions">
+						<button class="btn btn-inverse" type="submit">Save changes</button>
+						<button class="btn">Cancel</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<script>
+		$(document).ready(function() {
+			$('#username').select2({  
+				ajax: {
+					url: "/users/search",
+					quietMillis: 100,
+					data: function (term, page) { 
+						return {
+							q:term
+						}
+					},
+					results : function(data) {
+						return {
+							results : $.map(data, function(item) {
+								return {
+									id : item.username,
+									text : item.username
+								};
+							})
+						};
+					}
+				},
+				initSelection: function(element, callback) {
+					console.log(callback);
+					var id=$(element).val();
+					if (id!=="") {
+						$.ajax("/users/search?q="+id).done(function(data) { 
+							data[0].id=data[0].username;
+							data[0].text=data[0].username;
+							var obj =data[0];
+							callback(obj); });
+					}
+				}
+			});
+			$('#img-uploader').fineUploader({
+				request: {
+					endpoint: '/upload'
+				},
+				multiple: false,
+				validation: {
+					allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
+					sizeLimit: 51200 
+				},
+				text: {
+					uploadButton: 'Click or Drop'
+				}
+			}).on('complete', function(event, id, fileName, response) {
+				if (response.success) {
+					$('#thumbnail-profile').attr('src',response.path);
+					$('#imgProfile').val(response.path);
+				}
+				else {
+					$('#thumbnail-profile').attr('src','http://www.placehold.it/80x80/EFEFEF/AAAAAA');
+					$('#imgProfile').val('');
+					
+				}
+			});
+
+			var options = { 
+	        success:       showResponse  // post-submit callback 
+	        ,clearForm: true,
+	        beforeSubmit: preForm,
+	        url :'/karyawan/add', 
+	        error : errorHandler
+	    }; 
+	    $("#tglLahir").datepicker();
+	    $('#karyawanForm').ajaxForm(options); 
+
+	    function preForm(arr, $form, options) { 
+	    	
+	    	return true;
+	    }
+	    function showResponse(responseText, statusText, xhr, $form) {
+	    	if(responseText.success) {
+
+	    		console.log('success');
+	    	}
+	    }
+	    function errorHandler(context, xhr, status, responseText) {
+	    	console.log(context.responseText);
+	    }
+	});
+</script>
