@@ -28,6 +28,9 @@ exports.upload = function(req, res){
   var newPath = __dirname + "/../uploads/"+fileName;
   console.log('writing to '+newPath);
   fs.writeFile(newPath, data, function (err) {
+    res.set({
+  'Content-Type': 'text/plain'
+    });
     res.json({ success: 'true' ,path : '/thumbnail/'+fileName});
   });
 });

@@ -2,14 +2,15 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'views/homeView', 
+  'views/homeView',
+  'views/analisaView', 
   'views/userView',
   'views/karyawanView',
   'views/cabangView',
   'views/leasingView',
   ], 
 
-  function($, _, Backbone, HomeView, UserView, KaryawanView,CabangView,LeasingView) {
+  function($, _, Backbone, HomeView, AnalisaView, UserView, KaryawanView,CabangView,LeasingView) {
 
   var AppRouter = Backbone.Router.extend({
     initialize : function(option) {
@@ -28,6 +29,7 @@ define([
       'cabang/add': 'addCabang',
       'cabang': 'showCabang',
       'home': 'showHome',
+      'analisis': 'showAnalisa',
       'login': 'showLogin',
       'success': 'showSuccess',
       // Default
@@ -41,6 +43,10 @@ define([
     showHome: function() {
       console.log('showHome');
       new HomeView().render();
+    },
+    showAnalisa: function() {
+      console.log('showAnalisa');
+      new AnalisaView().render();
     },
     showUsers: function() {
       console.log('showUsers');

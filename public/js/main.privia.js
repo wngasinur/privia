@@ -94,6 +94,7 @@ require([
 'select2','stepy','flot','flot.categories','flot.time','flot.pie','qtip2'], function(app,Router) {
  setTimeout('$("html").removeClass("js")',500);
  $('.antiScroll').antiscroll().data('antiscroll');
+// $('#constructionModal').modal();
 
  app.router = new Router();
 /* $(document).on("click", "a[data-parent]", function(evt) {

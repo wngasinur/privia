@@ -26,7 +26,7 @@ module.exports = function (app) {
 
     var karyawan = require('./karyawanRoute');
 
-    app.post('/karyawan/add',karyawan.add);
+    app.post('/karyawan/save',karyawan.add);
 
     app.get('/karyawan',karyawan.list);
 

@@ -52,7 +52,7 @@
 							</div>
 
 							<div class="control-group">
-								<label>Tempat/Tanggal Lahir<span class="f_req">*</span></label>
+								<label>Tempat/Tanggal Lahir</label>
 
 								<input type="text" name="tempatLahir" class="input-small">
 								<input type="text" name="tglLahir" id="tglLahir">
@@ -61,14 +61,14 @@
 						<div class="span6 well">
 
 							<div class="control-group">
-								<label>Alamat<span class="f_req">*</span></label>
+								<label>Alamat</label>
 
 								<textarea name="alamat"></textarea>
 							</div>
 
 							<div class="control-group">
 								<div class="span4">
-									<label>Telepon<span class="f_req">*</span></label>
+									<label>Telepon</label>
 									<input type="text" name="telepon" class="span12">
 								</div>
 								<div class="span4">
@@ -82,7 +82,7 @@
 							</div>
 
 							<div class="control-group">
-								<label>Email<span class="f_req">*</span></label>
+								<label>Email</label>
 								<input type="text" name="email">
 							</div>
 
@@ -100,7 +100,7 @@
 								<input type="text" name="noRekening" class="span12">
 							</div>
 							<div class="span2">
-								<label>A/N<span class="f_req">*</span></label>
+								<label>A/N</label>
 								<input type="text" name="atasNama" class="span12">
 							</div>
 						</div>
@@ -111,7 +111,7 @@
 						<input type="text" name="cabang">
 					</div>
 					<div class="form-actions">
-						<button class="btn btn-inverse" type="submit">Save changes</button>
+						<button type="submit" class="finish btn btn-primary"><i class="icon-ok icon-white"></i> Save</button>
 						<button class="btn">Cancel</button>
 					</div>
 				</form>
@@ -176,27 +176,51 @@
 			});
 
 			var options = { 
-	        success:       showResponse  // post-submit callback 
-	        ,clearForm: true,
-	        beforeSubmit: preForm,
-	        url :'/karyawan/add', 
-	        error : errorHandler
-	    }; 
-	    $("#tglLahir").datepicker();
-	    $('#karyawanForm').ajaxForm(options); 
+				success:       showResponse,
+				clearForm: true,
+				beforeSubmit: preForm,
+				url :'/karyawan/save', 
+				error : errorHandler
+			}; 
+			$("#tglLahir").datepicker();
 
-	    function preForm(arr, $form, options) { 
-	    	
-	    	return true;
-	    }
-	    function showResponse(responseText, statusText, xhr, $form) {
-	    	if(responseText.success) {
-
-	    		console.log('success');
-	    	}
-	    }
-	    function errorHandler(context, xhr, status, responseText) {
-	    	console.log(context.responseText);
-	    }
+			$("#karyawanForm").validate({
+		onkeyup: false,
+		errorClass: 'error',
+		validClass: 'valid',
+		highlight: function(element) {
+			$(element).closest('div').addClass("f_error");
+		},
+		unhighlight: function(element) {
+			$(element).closest('div').removeClass("f_error");
+		},
+		errorPlacement: function(error, element) {
+			$(element).closest('div').append(error);
+		}, 
+		rules: {
+			username: "required",
+			nama: "required",
+			jenisKelamin : "required",
+			noIndentitas : "required",
+			bank : "required",
+			noRekening :"required"
+		}
 	});
+
+			$('#karyawanForm').ajaxForm(options); 
+
+			function preForm(arr, $form, options) { 
+
+				return true;
+			}
+			function showResponse(responseText, statusText, xhr, $form) {
+				if(responseText.success) {
+
+					console.log('success');
+				}
+			}
+			function errorHandler(context, xhr, status, responseText) {
+				console.log(context.responseText);
+			}
+		});
 </script>
