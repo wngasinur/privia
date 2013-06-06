@@ -14,7 +14,7 @@ define([
 
   var AppRouter = Backbone.Router.extend({
     initialize : function(option) {
-
+        this.currentView = {};
     },
     routes: {
       // Define some URL routes
@@ -49,16 +49,17 @@ define([
       new AnalisaView().render();
     },
     showUsers: function() {
-      console.log('showUsers');
+      
       new UserView().render();
     },
     addUsers: function() {
       console.log('addUsers');
+ 
       new UserView().render('form');
     },
     editUsers: function(id) {
-      console.log('editUsers '+id);
-      new UserView().render('form',id);
+     
+       new UserView({id:id}).render('form');
     },
     addKaryawan: function() {
       console.log('addKaryawan');

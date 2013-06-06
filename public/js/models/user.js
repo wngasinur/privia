@@ -4,7 +4,7 @@ define(["jquery", "backbone"],
 
         // Creates a new Backbone Model class object
         var User = Backbone.Model.extend({
-            urlRoot :'/users/get',
+            urlRoot :'/user',
             // Model Constructor
             initialize: function() {
             },

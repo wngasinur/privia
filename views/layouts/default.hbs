@@ -50,20 +50,22 @@
         </script>
     </head>
     <body>
-        <div id="loading_layer" style="display:none"><img src="/img/ajax_loader.gif" alt="" /></div>
+    <div id="loading_layer" style="display:none"><img src="/img/ajax_loader.gif" alt="" /></div>
 
     {{> menus}}
     <div id="containerwrapper"> 
     <div class="main_content" id="container"> 
     {{{body}}}
+    
     </div>
-    </div> 
+
+
 
       {{> sidebars}}
     {{> scripts}}
 
     {{{block "pageScripts"}}}
-
+  <div id="userViewContainer"></div>
   <div class="modal hide fade" id="constructionModal">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -76,6 +78,16 @@
     <a href="#" class="btn">Close</a>
   </div>
 </div>
+
+    <div id="alertInfo" class="alert alert-info" style="display:none">
+    <a class="close" data-dismiss="alert">×</a>
+    <span></span>
+    </div>
+
+    <div id="alertError" class="alert alert-error" style="display:none">
+        <a class="close" data-dismiss="alert">×</a>
+        <span></span>
+    </div>
   </body>
 
 </html>

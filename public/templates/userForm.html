@@ -2,11 +2,14 @@
 	<div class="span12">
 		
 		<h3 class="heading">Tambah User</h3>
+
   		<form id="userForm" method="post">
-			<input type="hidden" name="_id" value="<%= _id %>">
+  			<div class="formMessage">
+  				
+  			</div>
 			<div class="control-group">
 				<label>Username<span class="f_req">*</span></label>
-				<input type="text" name="username" id="username" value="<%= username %>">
+				<input type="text" name="username" id="username" >
 			</div>
 			<div class="control-group" id="passwordSection">
 				<div class="row-fluid">
@@ -27,94 +30,18 @@
 					<label><span class="error_placement">Akses</span> <span class="f_req">*</span></label>
 					
 					<label class="checkbox inline">
-						<input type="checkbox" value="admin" name="akses" <%=_.contains(akses, 'admin')?'checked':''%>> Admin 
+						<input type="checkbox" value="admin" name="akses" > Admin 
 					</label>
 					<label class="checkbox inline">
-						<input type="checkbox" value="sales" name="akses" <%=_.contains(akses, 'sales')?'checked':''%>> Sales
+						<input type="checkbox" value="sales" name="akses"> Sales
 					</label>
 				
 			</div>
 			</div>
 			<div class="form-actions">
-				<button type="submit" class="finish btn btn-primary"><i class="icon-ok icon-white"></i> Save</button>
+				<button type="button" class="finish btn btn-primary save" data-loading-text="Loading ..."><i class="icon-ok icon-white"></i> Save</button>
 				<button class="btn">Cancel</button>
 			</div>
 		</form>
 	</div>
 </div>
-
-<script>
-
-	$(document).ready(function() {
-	<% if(_id!='')  // edit mode
-	{
-		%>
-		$('#passwordSection').remove();	
-		$('#username').attr('readonly','readonly');	
-		<%
-	} 
-	else { // add mode
-		%>
-		$("#userForm").validate({
-		onkeyup: false,
-		errorClass: 'error',
-		validClass: 'valid',
-		highlight: function(element) {
-			$(element).closest('div').addClass("f_error");
-		},
-		unhighlight: function(element) {
-			$(element).closest('div').removeClass("f_error");
-		},
-		errorPlacement: function(error, element) {
-			$(element).closest('div').append(error);
-		}, 
-		rules: {
-			username: "required",
-			password : {
-				required :true,
-				minlength : 1
-			},
-			confirmPassword : {
-				required :true,
-				minlength : 1,
-				equalTo : "input[name=password]"
-			}
-		},
-		messages: {
-			username: "Please enter your username"
-		}
-	});
-		<%
-	}
-	%>
-
-
-	});
-
-
-	 var options = { 
-        success:       showResponse  // post-submit callback 
-        ,clearForm: true,
-        url:'/users/save',
-        error : errorHandler
-        // other available options: 
-        //url:       url         // override for form's 'action' attribute 
-        //type:      type        // 'get' or 'post', override for form's 'method' attribute 
-        //dataType:  null        // 'xml', 'script', or 'json' (expected server response type) 
-        //clearForm: true        // clear all form fields after successful submit 
-        //resetForm: true        // reset the form after successful submit 
- 
-        // $.ajax options can be used here too, for example: 
-        //timeout:   3000 
-    }; 
-	$('#userForm').ajaxForm(options); 
-
-	function showResponse(responseText, statusText, xhr, $form) {
-		if(responseText.success) {
-			console.log('success');
-		}
-	}
-	function errorHandler(context, xhr, status, responseText) {
-		console.log(context.responseText);
-	}
-</script>

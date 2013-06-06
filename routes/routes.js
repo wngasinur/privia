@@ -10,10 +10,12 @@ module.exports = function (app) {
     app.get('/',index.index);
 
     var user = require('./userRoute');
-    app.all('/users/save',user.save);
+    app.put('/user/:id',user.save);
+    app.post('/user',user.save);
 
+    app.put('/user/changePassword/:id',user.changePassword);
 
-    app.get('/users/get/:id',user.get);
+    app.get('/user/:id',user.get);
 
     app.get('/users',user.list);
 

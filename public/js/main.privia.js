@@ -6,11 +6,13 @@ require.config({
     "dataTables.bootstrap" : "../lib/datatables/jquery.dataTables.bootstrap.min",
     "underscore" : "../lib/underscore",
     "backbone" :"../lib/backbone",
+    "backbone.syphon" :"../lib/backbone.syphon",
     "util" : "../util.nganterin",
     "bootstrap" : "../bootstrap/js/bootstrap.min",
     "jquery" : "jquery.min",
-    "jquery.ui" : "../lib/jquery-ui/jquery-ui-1.10.0.custom.min",
-    "jquery.validate" : "../lib/validation/jquery.validate.min",
+    "jquery.ui" : "../lib/jquery-ui/jquery-ui-1.10.2.custom.min",
+    "jquery.validate" : "../lib/validation/jquery.validate.min",    
+    "jquery.serializeObject" : "jquery.serializeObject",
     "antiscroll" : "../lib/antiscroll/antiscroll.min",
     "jquery.form" : "forms/jquery.form",
     "jquery.fineuploader" : "../lib/jquery.fineuploader-3.5.0.min",    
@@ -48,6 +50,9 @@ require.config({
     'jquery.ui' : {
       deps : ['jquery']
     },
+    'jquery.serializeObject' : {
+      deps : ['jquery']
+    },
     'dataTables': {
       exports: 'dataTable'
     },
@@ -83,15 +88,20 @@ require.config({
     },
     'qtip2' : {
       deps : ['jquery']
+    },
+    'backbone.syphon' : {
+      deps : ['backbone']
     }
   }
 });
 
 require([
 
-'app','router','backbone','jquery.ui','jquery.validate','jquery.form','bootstrap',
+'app','router','backbone','jquery.ui','jquery.validate','jquery.form','bootstrap','jquery.serializeObject',
 'dataTables','dataTables.sorting','dataTables.bootstrap','antiscroll','jquery.fineuploader',
-'select2','stepy','flot','flot.categories','flot.time','flot.pie','qtip2'], function(app,Router) {
+'select2','stepy','flot','flot.categories','flot.time','flot.pie','qtip2',
+'backbone.syphon'], function(app,Router) {
+
  setTimeout('$("html").removeClass("js")',500);
  $('.antiScroll').antiscroll().data('antiscroll');
 // $('#constructionModal').modal();
