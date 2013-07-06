@@ -2,12 +2,12 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'views/homeView',
-  'views/analisaView', 
-  'views/userView',
-  'views/karyawanView',
-  'views/cabangView',
-  'views/leasingView',
+  './views/homeView',
+  './views/analisaView',
+  './views/userView',
+  './views/karyawanView',
+  './views/cabangView',
+  './views/leasingView',
   ], 
 
   function($, _, Backbone, HomeView, AnalisaView, UserView, KaryawanView,CabangView,LeasingView) {

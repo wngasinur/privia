@@ -1,10 +1,10 @@
 define([
-  'jquery',
+    'jquery',
   'underscore',
   'backbone',
   'text!../../templates/karyawanList.html',
-  'text!../../templates/leasingForm.html'
-], function($, _, Backbone, leasingList,leasingForm){
+  'text!../../templates/karyawanForm.html'
+], function($, _, Backbone, karyawanList,karyawanForm){
 
   var HomeView = Backbone.View.extend({
     el: $('#container'),
@@ -13,9 +13,9 @@ define([
       var data = {};
       var template;
       if(page=='form')
-        template=leasingForm;
+        template=karyawanForm;
       else
-        template=leasingList;
+        template=karyawanList;
 
       var compiledTemplate = _.template( template, data );
       // Append our compiled template to this Views "el"

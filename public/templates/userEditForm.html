@@ -25,7 +25,7 @@
 						<input type="checkbox" value="admin" name="akses" <%=_.contains(akses,'admin')?'checked':'' %> > Admin 
 					</label>
 					<label class="checkbox inline">
-						<input type="checkbox" value="sales" name="akses" <%=_.contains(akses,'Sales')?'checked':'' %> > Sales
+						<input type="checkbox" value="sales" name="akses" <%=_.contains(akses,'sales')?'checked':'' %> > Sales
 					</label>
 				
 			</div>
@@ -34,7 +34,7 @@
 				<button type="button" class="finish btn btn-primary save" data-loading-text="Loading ..."><i class="icon-ok icon-white"></i> Save
 				</button>
 			
-				<button class="btn">Cancel</button>
+				<button type="button" class="btn cancel">Cancel</button>
 			</div>
 		</form>
 	</div>

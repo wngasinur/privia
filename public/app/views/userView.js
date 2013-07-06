@@ -1,5 +1,5 @@
 define([
-  'jquery',
+    'jquery',
   'underscore',
   'backbone',
   'text!../../templates/userList.html',
@@ -13,10 +13,12 @@ define([
       el: $('#container'),
       events: {
         "click .save"   : "save",
+        "click .cancel"   : "cancel",
         "click #changePassword"   : "changePassword"
       },
       initialize:function(options){
         console.log('initialize user view ');
+        this.$el.undelegate();
 
         var that = this;
         this.model = new Model();
@@ -47,7 +49,7 @@ define([
         });
 
       },
-      save:function() {
+     save:function() {
         this.userForm = this.$el.find('#userForm');
         console.log(this.userForm.serializeObject());
         if(this.userForm.valid()) {   
@@ -55,6 +57,9 @@ define([
           this.userForm.find('.save').button('loading');
           this.model.save();
         }
+      },
+      cancel:function() {
+        app.router.navigate('/users',{trigger:true});
       },
      changePassword:function() {
 
