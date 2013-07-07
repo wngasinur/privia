@@ -8,9 +8,11 @@ define([
   './views/karyawanView',
   './views/cabangView',
   './views/leasingView',
+  './views/quoteView',
+  './views/customerView'
   ], 
 
-  function($, _, Backbone, HomeView, AnalisaView, UserView, KaryawanView,CabangView,LeasingView) {
+  function($, _, Backbone, HomeView, AnalisaView, UserView, KaryawanView,CabangView,LeasingView,QuoteView,CustomerView) {
 
   var AppRouter = Backbone.Router.extend({
     initialize : function(option) {
@@ -26,6 +28,11 @@ define([
       'karyawan': 'showKaryawan',
       'leasing/add': 'addLeasing',
       'leasing': 'showLeasing',
+        'quote/add': 'addQuote',
+        'quote': 'showQuote',
+        'customer/add': 'addCustomer',
+        'customer/edit/:id': 'editCustomer',
+        'customer': 'showCustomer',
       'cabang/add': 'addCabang',
       'cabang': 'showCabang',
       'home': 'showHome',
@@ -77,6 +84,26 @@ define([
       console.log('showLeasing');
       new LeasingView().render();
     },
+      addQuote: function() {
+          console.log('addQuote');
+          new QuoteView().render('form');
+      },
+      showQuote: function() {
+          console.log('showQuote');
+          new QuoteView().render();
+      },
+      addCustomer: function() {
+          console.log('addCustomer');
+          new CustomerView().render('form');
+      },
+      showCustomer: function() {
+          console.log('showCustomer');
+          new CustomerView().render();
+      },
+      editCustomer: function(id) {
+
+          new CustomerView({id:id}).render('form');
+      },
     addCabang: function() {
       console.log('addCabang');
       new CabangView().render('form');

@@ -7,7 +7,7 @@
 module.exports = function (app) {
 
     var index = require('./index');
-    app.get('/',index.index);
+    app.all('/',index.index);
 
     var user = require('./userRoute');
     app.put('/user/:id',user.save);
@@ -33,9 +33,17 @@ module.exports = function (app) {
     app.get('/karyawan',karyawan.list);
 
 	var cabang = require('./cabangRoute');
-    
+
     app.post('/cabang/add',cabang.add);
 
     app.get('/cabang',cabang.list);
 
+    var customer = require('./customerRoute');
+
+    app.all('/customers',customer.list);
+
+    app.get('/customer/:id',customer.get);
+
+    app.put('/customer/:id',customer.save);
+    app.post('/customer',customer.save);
 }

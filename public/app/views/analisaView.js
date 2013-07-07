@@ -2,7 +2,7 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'text!../../templates/analisa.html'
+  'text!../templates/analisa.html'
 ], function($, _, Backbone, analisaTemplate){
 
   var AnalisaView = Backbone.View.extend({

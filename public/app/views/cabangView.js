@@ -2,8 +2,8 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'text!../../templates/cabangList.html',
-  'text!../../templates/cabangForm.html'
+  'text!../templates/cabangList.html',
+  'text!../templates/cabangForm.html'
 ], function($, _, Backbone, cabangList,cabangForm){
 
   var HomeView = Backbone.View.extend({

@@ -2,9 +2,9 @@ define([
     'jquery',
   'underscore',
   'backbone',
-  'text!../../templates/userList.html',
-  'text!../../templates/userForm.html',
-  'text!../../templates/userEditForm.html',
+  'text!../templates/userList.html',
+  'text!../templates/userForm.html',
+  'text!../templates/userEditForm.html',
   '../models/user',
   '../models/changePassword'
   ], function($, _, Backbone, listTemplate,formTemplate,formEditTemplate,Model,ChangePasswordModel){
@@ -51,7 +51,7 @@ define([
       },
      save:function() {
         this.userForm = this.$el.find('#userForm');
-        console.log(this.userForm.serializeObject());
+        //console.log(this.userForm.serializeObject());
         if(this.userForm.valid()) {   
           this.model.set(this.userForm.serializeObject());
           this.userForm.find('.save').button('loading');
@@ -65,7 +65,7 @@ define([
 
       this.changePasswordForm = this.$el.find('#changePasswordForm');
       if(this.changePasswordForm.valid()) {
-        console.log(this.changePasswordModel);
+        //console.log(this.changePasswordModel);
         this.changePasswordModel.set('password',this.$el.find('#password').val());
         this.changePasswordModel.save();
         $('#changePasswordModal').modal('hide');

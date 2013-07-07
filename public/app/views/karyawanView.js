@@ -2,8 +2,8 @@ define([
     'jquery',
   'underscore',
   'backbone',
-  'text!../../templates/karyawanList.html',
-  'text!../../templates/karyawanForm.html'
+  'text!../templates/karyawanList.html',
+  'text!../templates/karyawanForm.html'
 ], function($, _, Backbone, karyawanList,karyawanForm){
 
   var HomeView = Backbone.View.extend({

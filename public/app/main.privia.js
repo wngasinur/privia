@@ -106,7 +106,7 @@ require([
  setTimeout('$("html").removeClass("js")',500);
  $('.antiScroll').antiscroll().data('antiscroll');
 // $('#constructionModal').modal();
-
+ window.app = app;
  app.router = new Router();
 /* $(document).on("click", "a[data-parent]", function(evt) {
   var href = { prop: $(this).prop("href"), attr: $(this).attr("href") };

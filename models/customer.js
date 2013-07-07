@@ -10,32 +10,40 @@ var mongoose = require('mongoose')
   , Schema = mongoose.Schema
 
 /**
- * Getters
- */
-
-var getTags = function (tags) {
-  return tags.join(',')
-}
-
-/**
- * Setters
- */
-
-var setTags = function (tags) {
-  return tags.split(',')
-}
-
-/**
  * Properti Schema
  */
 
-var CabangSchema = new Schema({
-  kodeCabang: {type : String, default : '', trim : true, unique: true},
-  namaCabang: {type : String, default : '', trim : true},
-  alamat: {type : String, default : '', trim : true},
-  kodePos: {type : String, default : '', trim : true},
-  kota: {type : String, default : '', trim : true},
-  telepon: {type : String, default : '', trim : true}
+var CustomerSchema = new Schema({
+  noIdentitas: {type : String, default : '', trim : true},
+
+    imgProfile: {type : String, default : '', trim : true},
+
+    tipeIdentitas: {type : String, default : '', trim : true},
+  namaCustomer: {type : String, default : '', trim : true},
+  gender: {type : String, default : '', trim : true},
+  kantor: {type : String, default : '', trim : true},
+  alamat: {
+      jalan : {type : String, default : '', trim : true},
+      rt : {type : String, default : '', trim : true},
+      rw : {type : String, default : '', trim : true},
+      lurah : {type : String, default : '', trim : true},
+      camat : {type : String, default : '', trim : true},
+      kotamadya : {type : String, default : '', trim : true},
+      kodePos: {type : String, default : '', trim : true},
+      kota: {type : String, default : '', trim : true}
+  },
+    telepon: {
+        rmh : {type : String, default : '', trim : true},
+        kantor : {type : String, default : '', trim : true},
+        hp1 : {type : String, default : '', trim : true},
+        hp2 : {type : String, default : '', trim : true}
+    },
+    email: {type : String, default : '', trim : true},
+      bank: {
+          nama : {type : String, default : '', trim : true},
+          noRekening : {type : String, default : '', trim : true},
+          atasNama : {type : String, default : '', trim : true}
+      }
 })
 
 /**
@@ -51,7 +59,7 @@ var CabangSchema = new Schema({
  * Methods
  */
 
-CabangSchema.methods = {
+CustomerSchema.methods = {
 
   /**
    * Save Properti and upload image
@@ -79,7 +87,7 @@ CabangSchema.methods = {
   /**
    * Add comment
    *
-   * @param {Cabang} user
+   * @param {Customer} user
    * @param {Object} comment
    * @param {Function} cb
    * @api private
@@ -95,7 +103,7 @@ CabangSchema.methods = {
 
     notify.comment({
       Properti: this,
-      currentCabang: user,
+      currentCustomer: user,
       comment: comment.body
     })
 
@@ -108,7 +116,7 @@ CabangSchema.methods = {
  * Statics
  */
 
-CabangSchema.statics = {
+CustomerSchema.statics = {
 
   /**
    * Find Properti by id
@@ -143,10 +151,10 @@ CabangSchema.statics = {
     this.find(criteria)
       .limit(options.perPage)
       .skip(options.perPage * (options.page))
-      .select(options.select)
+      .select(select)
       .exec(cb)
   }
 
 }
 
-mongoose.model('Cabang', CabangSchema)
+mongoose.model('Customer', CustomerSchema)
