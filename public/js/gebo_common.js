@@ -34,39 +34,7 @@
 		    //* popovers
             gebo_popOver.init();
         }*/
-		//* sidebar
-        gebo_sidebar.init();
-		gebo_sidebar.make_active();
-		//* breadcrumbs
-        /*gebo_crumbs.init();
-		//* pre block prettify
-		if(typeof prettyPrint == 'function') {
-			prettyPrint();
-		}
-		//* external links
-		gebo_external_links.init();
-		//* accordion icons
-		gebo_acc_icons.init();
-		//* colorbox single
-		gebo_colorbox_single.init();
-		//* main menu mouseover
-		gebo_nav_mouseover.init();
-		//* top submenu
-		gebo_submenu.init();
-		*/
-		
-		gebo_sidebar.make_scroll();
-		gebo_sidebar.update_scroll();
-		
-		//* style switcher
-		/*gebo_style_sw.init();
-		*/
-		//* fix for dropdown menu (touch devices)
-		$('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
-		
-	});
-    
-    gebo_sidebar = {
+        var gebo_sidebar = {
         init: function() {
 			// sidebar onload state
 			if($(window).width() > 979){
@@ -135,6 +103,38 @@
 			}
         }
     };
+		//* sidebar
+        gebo_sidebar.init();
+		gebo_sidebar.make_active();
+		//* breadcrumbs
+        /*gebo_crumbs.init();
+		//* pre block prettify
+		if(typeof prettyPrint == 'function') {
+			prettyPrint();
+		}
+		//* external links
+		gebo_external_links.init();
+		//* accordion icons
+		gebo_acc_icons.init();
+		//* colorbox single
+		gebo_colorbox_single.init();
+		//* main menu mouseover
+		gebo_nav_mouseover.init();
+		//* top submenu
+		gebo_submenu.init();
+		*/
+		
+		gebo_sidebar.make_scroll();
+		gebo_sidebar.update_scroll();
+		
+		//* style switcher
+		/*gebo_style_sw.init();
+		*/
+		//* fix for dropdown menu (touch devices)
+		$('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
+		
+	});
+    
 
 	//* tooltips
 	gebo_tips = {
