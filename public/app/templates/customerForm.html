@@ -85,11 +85,11 @@
                             <div class="control-group">
                                 <div class="row-fluid">
                                     <div class="span4">
-                                        <label>RT<span class="f_req">*</span></label>
+                                        <label>RT</label>
                                         <input type="text" name="alamat[rt]" class="span12" value="<%=alamat.rt%>">
                                     </div>
                                     <div class="span4">
-                                        <label>RW <span class="f_req">*</span></label>
+                                        <label>RW </label>
                                         <input type="text" name="alamat[rw]" class="span12" value="<%=alamat.rw%>">
                                     </div>
                                 </div>
@@ -97,16 +97,16 @@
                             <div class="control-group">
                                 <div class="row-fluid">
                                     <div class="span4">
-                                        <label>Kelurahan<span class="f_req">*</span></label>
+                                        <label>Kelurahan</label>
                                         <input type="text" name="alamat[lurah]" class="span12" value="<%=alamat.lurah%>">
                                     </div>
                                     <div class="span4">
-                                        <label>Kecamatan<span class="f_req">*</span></label>
+                                        <label>Kecamatan</label>
                                         <input type="text" name="alamat[camat]" class="span12" value="<%=alamat.camat%>">
                                     </div>
 
                                     <div class="span4">
-                                        <label>Kotamadya<span class="f_req">*</span></label>
+                                        <label>Kotamadya</label>
                                         <input type="text" name="alamat[kotamadya]" class="span12" value="<%=alamat.kotamadya%>">
                                     </div>
                                 </div>
@@ -122,11 +122,11 @@
                             <div class="control-group">
                                 <div class="row-fluid">
                                     <div class="span4">
-                                        <label>Tlpn. Rmh<span class="f_req">*</span></label>
+                                        <label>Tlpn. Rmh</label>
                                         <input type="text" name="telepon[rmh]" class="span12" value="<%=telepon.rmh%>">
                                     </div>
                                     <div class="span4">
-                                        <label>Tlpn. Kantor <span class="f_req">*</span></label>
+                                        <label>Tlpn. Kantor </label>
                                         <input type="text" name="telepon[kantor]" class="span12" value="<%=telepon.kantor%>">
                                     </div>
                                 </div>
@@ -134,15 +134,15 @@
                             <div class="control-group">
                                 <div class="row-fluid">
                                     <div class="span4">
-                                        <label>HP1<span class="f_req">*</span></label>
+                                        <label>HP1</label>
                                         <input type="text" name="telepon[hp1]" class="span12" value="<%=telepon.hp1%>">
                                     </div>
                                     <div class="span4">
-                                        <label>HP2 <span class="f_req">*</span></label>
+                                        <label>HP2 </label>
                                         <input type="text" name="telepon[hp2]" class="span12" value="<%=telepon.hp2%>">
                                     </div>
                                     <div class="span4">
-                                        <label>Email<span class="f_req">*</span></label>
+                                        <label>Email</label>
                                         <input type="text" name="email" class="span12" value="<%=email%>">
                                     </div>
                                 </div>
@@ -155,11 +155,11 @@
                             <div class="control-group">
                                 <div class="row-fluid">
                                     <div class="span4">
-                                        <label>Bank<span class="f_req">*</span></label>
+                                        <label>Bank</label>
                                         <input type="text" name="bank[nama]" class="span12" value="<%=bank.nama%>">
                                     </div>
                                     <div class="span4">
-                                        <label>No Rekening <span class="f_req">*</span></label>
+                                        <label>No Rekening </label>
                                         <input type="text" name="bank[noRekening]" class="span12"  value="<%=bank.noRekening%>">
                                     </div>
                                 </div>
@@ -167,7 +167,7 @@
                             <div class="control-group">
                                 <div class="row-fluid">
                                     <div class="span4">
-                                        <label>Atas Nama<span class="f_req">*</span></label>
+                                        <label>Atas Nama</label>
                                         <input type="text" name="bank[atasNama]" class="span12"  value="<%=bank.atasNama%>">
                                     </div>
                                 </div>
@@ -191,12 +191,12 @@
 
                 $('#img-uploader').fineUploader({
                     request: {
-                        endpoint: '/upload'
+                        endpoint: '/api/upload'
                     },
                     multiple: false,
                     validation: {
                         allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
-                        sizeLimit: 51200
+                        sizeLimit: 112000
                     },
                     text: {
                         uploadButton: 'Click or Drop'

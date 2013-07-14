@@ -3,8 +3,8 @@ define(["jquery", "backbone"],
     function($, Backbone) {
 
         // Creates a new Backbone Model class object
-        var ChangePassword = Backbone.Model.extend({
-            urlRoot :'/api/user/changePassword',
+        var Cabang = Backbone.Model.extend({
+            urlRoot :'/api/cabang',
             // Model Constructor
             initialize: function() {
             },
@@ -12,7 +12,8 @@ define(["jquery", "backbone"],
             // Default values for all of the Model attributes
             defaults: {
                 _id:'',
-                password:''
+                kodeCabang:'',
+                namaCabang:''
             },
 
             // Gets called automatically by Backbone when the set and/or save methods are called (Add your own logic)
@@ -23,7 +24,7 @@ define(["jquery", "backbone"],
         });
 
         // Returns the Model class
-        return ChangePassword;
+        return Cabang;
 
     }
 

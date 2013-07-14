@@ -30,47 +30,13 @@
 				<input type="text" name="telepon">
 			</div>
 			<div class="form-actions">
-				<button type="submit" class="finish btn btn-primary"><i class="icon-ok icon-white"></i> Save</button>
-				<button class="btn">Cancel</button>
+				<button type="button" class="finish btn btn-primary save" data-loading-text="Loading ..."><i class="icon-ok icon-white"></i> Save</button>
+				<a class="btn cancel">Cancel</a>
 			</div>
 		</form>
 	</div>
 </div>
 
 <script>
-	$("#cabangForm").validate({
-		onkeyup: false,
-		errorClass: 'error',
-		validClass: 'valid',
-		highlight: function(element) {
-			$(element).closest('div').addClass("f_error");
-		},
-		unhighlight: function(element) {
-			$(element).closest('div').removeClass("f_error");
-		},
-		errorPlacement: function(error, element) {
-			$(element).closest('div').append(error);
-		}, 
-		rules: {
-			kodeCabang: "required",
-			namaCabang: "required"
-		}
-	});
-
-	 var options = { 
-        success:       showResponse  // post-submit callback 
-        ,clearForm: true,
-         url :'/cabang/add', 
-        error : errorHandler
-    }; 
-	$('#cabangForm').ajaxForm(options); 
-
-	function showResponse(responseText, statusText, xhr, $form) {
-		if(responseText.success) {
-			console.log('success');
-		}
-	}
-	function errorHandler(context, xhr, status, responseText) {
-		console.log(context.responseText);
-	}
+	
 </script>

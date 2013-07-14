@@ -11,10 +11,12 @@ require.config({
     "bootstrap" : "../bootstrap/js/bootstrap.min",
     "jquery" : "/js/jquery.min",
     "jquery.ui" : "../lib/jquery-ui/jquery-ui-1.10.2.custom.min",
+    "jquery.inputmask" : "/js/forms/jquery.inputmask.min",
     "jquery.validate" : "../lib/validation/jquery.validate.min",    
     "jquery.serializeObject" : "/js/jquery.serializeObject",
     "antiscroll" : "../lib/antiscroll/antiscroll.min",
     "jquery.form" : "/js/forms/jquery.form",
+    "jquery.actual" : "/js/jquery.actual.min",
     "jquery.fineuploader" : "../lib/jquery.fineuploader-3.5.0.min",    
     "select2" : "../lib/select2.min",
     "stepy" : "../lib/stepy/js/jquery.stepy.min",
@@ -24,6 +26,8 @@ require.config({
     "flot.pie" : "../lib/flot/jquery.flot.pie.min",        
     "qtip2" : "../lib/qtip2/jquery.qtip.min",
     "text" : "/js/text",
+    "gebo_common" : "/js/gebo_common",
+    "datejs" : "/js/date",
     "router" : "router.privia",
     "app" : "app.privia"
   },
@@ -39,6 +43,9 @@ require.config({
     'underscore': {
       exports: '_'
     },
+     'gebo_common' : {
+      deps : ['jquery','jquery.actual']
+    },
     'antiscroll' : {
       deps : ['jquery']
     },
@@ -46,6 +53,12 @@ require.config({
       deps : ['jquery']
     },
     'jquery.form' : {
+      deps : ['jquery']
+    },
+     'jquery.actual' : {
+      deps : ['jquery']
+    },
+    'jquery.inputmask' : {
       deps : ['jquery']
     },
     'jquery.ui' : {
@@ -101,7 +114,7 @@ require([
 'app','router','backbone','jquery.ui','jquery.validate','jquery.form','bootstrap','jquery.serializeObject',
 'dataTables','dataTables.sorting','dataTables.bootstrap','antiscroll','jquery.fineuploader',
 'select2','stepy','flot','flot.categories','flot.time','flot.pie','qtip2',
-'backbone.syphon'], function(app,Router) {
+'backbone.syphon','jquery.inputmask','datejs','gebo_common'], function(app,Router) {
 
  setTimeout('$("html").removeClass("js")',500);
  $('.antiScroll').antiscroll().data('antiscroll');

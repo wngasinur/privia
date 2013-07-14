@@ -20,11 +20,19 @@ exports.get = function(req, res){
 exports.search = function(req, res){
 
     var searchCustomername = req.query.q;
-    console.log(searchCustomername);
-    var criteria = {namaCustomer:new RegExp(searchCustomername, "i")};
-    var select = {name:true};
+    if(searchCustomername.length!=24)
+        var objId = '99d92f8be2c2f8a842000003';
+    else 
+        var objId = searchCustomername;
+
+    console.log(searchCustomername.length);
+    var criteria = {$or:[{namaCustomer:new RegExp(searchCustomername, "i")},{_id:objId}]};
+    var select = {namaCustomer:true,alamat:true,telepon:true,imgProfile:true};
     Customer.list({perPage:10,page:0,criteria:criteria,select:select},function(err,result){
-        res.json(result);
+        if(err)
+            console.log(err);
+        else
+            res.json(result);
     });
 
 };

@@ -1,21 +1,20 @@
  
 <div class="row-fluid">
     <div class="span12">
-        <h3 class="heading">Daftar Users</h3>
+        <h3 class="heading">Daftar Quotes</h3>
         <div class="row-fluid">
             <div class="span3">
-                <input type="text" placeholder="Username" class="span8" id="username">
-            </div>
-            <div class="span3">
-                <input type="text" placeholder="Username" class="span8">
+                <input type="text" placeholder="Nama Customer" class="span8" id="namaCustomer">
             </div>
         </div>
         <table class="table table-bordered table-striped  dTableR" id="privia_grid" aria-describedby="dt_gal_info">
             <thead>
                 <tr>
-                    <th>Username</th>
-                    <th>Tgl Terakhir Login</th>
-                    <th>Status</th>
+                    <th>Customer</th>
+                    <th>Kendaraan</th>
+                    <th>Alamat</th>
+                    <th>Lama Pinjaman</th>
+                    <th>Tanggal</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -40,24 +39,40 @@
                 // defaults to the column being worked with, in this case is the first
                 // Using `row[0]` is equivalent.
                 "mRender": function ( data, type, row ) {
-                    
-                    return '<a href="#/users/edit/'+data+'">Ubah</a>';
+                   return row.jenisKendaraan +' - '+ row.namaKendaraan +' ('+row.tahunBuat+')';
                 },
-                "aTargets": [ 3 ]
+                "aTargets": [ 1 ]
+            },
+              {
+                "mRender": function ( data, type, row ) {
+                    console.log(data);
+                    return Date.parse(data,'yyyy-M-d');
+                },
+                "aTargets": [4  ]
+            },
+            {
+                "mRender": function ( data, type, row ) {
+
+                    return '<a href="#/quote/edit/'+data+'">Ubah</a>';
+                },
+                "aTargets": [5  ]
             }
             ],
         "aoColumns": [
-        { "mData": "username" },
-        { "mData": "tglTerakhirLogin" },
-        { "mData": "status" },
+        { "mData": "namaCustomer" },
+        { "mData": "jenisKendaraan" },
+        { "mData": "alamat" },
+        { "mData": "lamaPinjaman" },
+        { "mData": "tglTambah" },
         { "mData": "_id" }
         ],
-        "sAjaxSource": "/users"
+        "sAjaxSource": "/api/quotes"
     } );
 
-   $('#username').keyup( function() { 
+   $('#namaCustomer').keyup( function() {
       
-           oTable.fnFilter( 'username|'+this.value );
+           oTable.fnFilter( 'namaCustomer|'+this.value );
         
     } );
     </script>
+

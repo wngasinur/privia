@@ -45,7 +45,6 @@
             },
             {
                 "mRender": function ( data, type, row ) {
-                    console.log(data);
                     var alamat = _.template( $("#alamatSection").html(),data);
 
                     return alamat;
@@ -66,7 +65,7 @@
         { "mData": "alamat" },
         { "mData": "_id" }
         ],
-        "sAjaxSource": "/customers"
+        "sAjaxSource": "/api/customers"
     } );
 
    $('#namaCustomer').keyup( function() {

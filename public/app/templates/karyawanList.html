@@ -11,11 +11,10 @@
             <thead>
                 <tr>
                     <th>Profile</th>
-                    <th>Username</th>
                     <th>Nama</th>
-                    <th>Handphone</th>
                     <th>Cabang</th>
                     <th>Status</th>
+                    <th>Action</th>
                 </tr>
             </thead>
 
@@ -44,17 +43,23 @@
                     return '<img src="http://www.placehold.it/40x40/EFEFEF/AAAAAA" alt="" id="thumbnail-profile"></div>';
                 },
                 "aTargets": [ 0 ]
+            },
+              {
+                "mRender": function ( data, type, row ) {
+
+                    return '<a href="#/karyawan/edit/'+data+'">Ubah</a>';
+                },
+                "aTargets": [4]
             }
             ],
         "aoColumns": [
         { "mData": "imgProfile" },
-        { "mData": "username" },
         { "mData": "nama" },
-        { "mData": "handphone" },
         { "mData": "cabang" },
-        { "mData": "status" }
+        { "mData": "status" },
+        { "mData": "_id" }
         ],
-        "sAjaxSource": "/karyawan"
+        "sAjaxSource": "/api/karyawan"
     } );
 
    $('#username').keyup( function() { 

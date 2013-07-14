@@ -1,1 +1,6 @@
+<script>
+	var tmpAkses = '{{currentUser.akses}}';
+	if(tmpAkses=='') location.href='/login';
+	var arrAkses=tmpAkses.split(",");
+</script>
 <script data-main="/app/main.privia" src="/lib/require.js"></script>

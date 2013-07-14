@@ -4,15 +4,16 @@ define([
     'backbone',
     'text!../templates/quoteList.html',
     'text!../templates/quoteForm.html',
-    'text!../templates/quoteEditForm.html',
+    'text!../templates/quoteForm.html',
     '../models/quote'
 ], function($, _, Backbone, listTemplate,formTemplate,formEditTemplate,Model){
 
-    var UserView = Backbone.View.extend({
+    var QuoteView = Backbone.View.extend({
         el: $('#container'),
         events: {
             "click .save"   : "save",
-            "click .cancel"   : "cancel"
+            "click .cancel"   : "cancel",
+            "click #tambahCustomer"   : "tambahCustomer"
         },
         initialize:function(options){
             console.log('initialize quote view ');
@@ -32,29 +33,35 @@ define([
                 var alertError = $('#alertError').clone();
                 $('span',alertError).html('Terjadi masalah : '+err);
                 alertError.show().appendTo('.formMessage');
-                that.userForm.find('.save').button('reset');
+                that.quoteForm.find('.save').button('reset');
+
 
             });
             this.listenTo(this.model,'sync', function(e) {
                 console.log('sukses');
+                this.model.set(new Model().toJSON() );
                 that.render('form',function(){
                     var alertInfo = $('#alertInfo').clone();
-                    $('span',alertInfo).html('Sukses menyimpan user');
+                    $('span',alertInfo).html('Sukses menyimpan Proposal');
                     alertInfo.show().appendTo('.formMessage');
-                    that.userForm.find('.save').button('reset');
+                    that.quoteForm.find('.save').button('reset');
                 });
 
             });
 
         },
-        save:function() {
-            this.userForm = this.$el.find('#userForm');
-            //console.log(this.userForm.serializeObject());
-            if(this.userForm.valid()) {
-                this.model.set(this.userForm.serializeObject());
-                this.userForm.find('.save').button('loading');
+        save:function(e) {
+            this.quoteForm = this.$el.find('#quoteForm');
+            console.log(this.quoteForm.serializeObject());
+
+            if(this.quoteForm.valid()) {
+                this.model.set(this.quoteForm.serializeObject());
+                this.quoteForm.find('.save').button('loading');
                 this.model.save();
             }
+        },
+        tambahCustomer:function(e) {
+            app.router.navigate('/customer/add',{trigger:true});
         },
         cancel:function() {
             app.router.navigate('/quote',{trigger:true});
@@ -76,65 +83,15 @@ define([
                 template=formEditTemplate;
 
                 console.log('load '+id);
-                var user = new Model({id:id});
-                this.changePasswordModel = new ChangePasswordModel({id:id});
-                user.fetch({
-                    success: function (user) {
-                        var data = user.toJSON();
+                var quote = new Model({id:id});
+                quote.fetch({
+                    success: function (quote) {
+                        var data = quote.toJSON();
                         that.model.set (data);
                         var compiledTemplate = _.template( template, data );
                         that.$el.html( compiledTemplate );
-                        that.userForm = that.$el.find('#userForm');
-                        console.log(that.$el.find('#userForm'));
-                        //console.log(that.userForm.serializeObject());
-                        that.userForm.validate({
-                            onkeyup: false,
-                            errorClass: 'error',
-                            validClass: 'valid',
-                            highlight: function(element) {
-                                $(element).closest('div').addClass("f_error");
-                            },
-                            unhighlight: function(element) {
-                                $(element).closest('div').removeClass("f_error");
-                            },
-                            errorPlacement: function(error, element) {
-                                $(element).closest('div').append(error);
-                            },
-                            rules: {
-                                username: "required"
-                            },
-                            messages: {
-                                username: "Please enter your username"
-                            }
-                        });
-
-                        that.changePasswordForm = that.$el.find('#changePasswordForm');
-
-                        that.changePasswordForm.validate({
-                            onkeyup: false,
-                            errorClass: 'error',
-                            validClass: 'valid',
-                            highlight: function(element) {
-                                $(element).closest('div').addClass("f_error");
-                            },
-                            unhighlight: function(element) {
-                                $(element).closest('div').removeClass("f_error");
-                            },
-                            errorPlacement: function(error, element) {
-                                $(element).closest('div').append(error);
-                            },
-                            rules: {
-                                password : {
-                                    required :true,
-                                    minlength : 1
-                                },
-                                confirmPassword : {
-                                    required :true,
-                                    minlength : 1,
-                                    equalTo : "input[name=password]"
-                                }
-                            }
-                        });
+                        that.quoteForm = that.$el.find('#quoteForm');
+                    
 
                         if(cb) cb();
 
@@ -142,48 +99,19 @@ define([
                 });
             }
             else {
+                console.log(this.model.toJSON());
                 var compiledTemplate = _.template( template, this.model.toJSON() );
                 // Append our compiled template to this Views "el"
                 this.$el.html( compiledTemplate );
 
-                this.userForm = this.$el.find('#userForm');
-                console.log(this.$el.find('#userForm'));
+                this.quoteForm = this.$el.find('#quoteForm');
+               // console.log(this.$el.find('#quoteForm'));
 
-
-                this.userForm.validate({
-                    onkeyup: false,
-                    errorClass: 'error',
-                    validClass: 'valid',
-                    highlight: function(element) {
-                        $(element).closest('div').addClass("f_error");
-                    },
-                    unhighlight: function(element) {
-                        $(element).closest('div').removeClass("f_error");
-                    },
-                    errorPlacement: function(error, element) {
-                        $(element).closest('div').append(error);
-                    },
-                    rules: {
-                        username: "required",
-                        password : {
-                            required :true,
-                            minlength : 1
-                        },
-                        confirmPassword : {
-                            required :true,
-                            minlength : 1,
-                            equalTo : "input[name=password]"
-                        }
-                    },
-                    messages: {
-                        username: "Please enter your username"
-                    }
-                });
 
                 if(cb) cb();
             }
         }
     });
     // Our module now returns our view
-    return  UserView;
+    return  QuoteView;
 });

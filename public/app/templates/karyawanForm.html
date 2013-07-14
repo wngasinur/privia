@@ -1,14 +1,18 @@
 	<div class="row-fluid">
 		<div class="span12">
-			<h3 class="heading">Tambah Karyawan</h3>
+			<h3 class="heading">Form Karyawan</h3>
 			<form id="karyawanForm" method="post">
-				<input type="hidden" name="imgProfile" id="imgProfile">
+				<div class="formMessage">
+	  			</div>		
+	  			<input type="hidden" name="oldUsername" value="<%=username%>">		
+           		<input type="hidden" name="imgProfile" id="imgProfile" value="<%=imgProfile%>">
 				<div class="row-fluid">
 					<div class="span5">
 						<div class="control-group">
 							<div data-provides="fileupload" class="fileupload fileupload-new">
 								<div style="width: 80px; height: 80px;" class="fileupload-new thumbnail">
-									<img src="http://www.placehold.it/80x80/EFEFEF/AAAAAA" alt="" id="thumbnail-profile"></div>
+                                        <img src="<%=imgProfile!=''?imgProfile:'http://www.placehold.it/80x80/EFEFEF/AAAAAA'%>" alt="" id="thumbnail-profile">
+                                    </div>
 									<div style="width: 80px; height: 80px; line-height: 80px;" class="fileupload-preview fileupload-exists thumbnail"></div>
 									<span id="img-uploader" class="btn btn-file"></span>
 									<a data-dismiss="fileupload" class="btn fileupload-exists" href="#">Remove</a>
@@ -16,7 +20,7 @@
 							</div>
 							<div class="control-group">
 								<label>Username<span class="f_req">*</span></label>
-								<input name="username" id="username">
+								<input name="username" id="username"  value="<%=username%>">
 							</div>
 
 							<div class="control-group">
@@ -27,7 +31,7 @@
 										<select name="jenisIdentitas" class="span4">
 											<option>KTP</option>
 											<option>SIM</option>
-										</select>	<input type="text" name="noIndentitas">
+										</select>	<input type="text" name="noIdentitas"  value="<%=noIdentitas%>">
 									</div>
 								</div>
 
@@ -35,7 +39,7 @@
 									<div class="row-fluid">
 										<div class="span6">
 											<label>Nama<span class="f_req">*</span></label>
-											<input type="text" name="nama" class="span10">
+											<input type="text" name="nama" class="span10" value="<%=nama%>">
 										</div>
 
 
@@ -54,8 +58,8 @@
 								<div class="control-group">
 									<label>Tempat/Tanggal Lahir</label>
 
-									<input type="text" name="tempatLahir" class="input-small">
-									<input type="text" name="tglLahir" id="tglLahir">
+									<input type="text" name="tempatLahir" class="input-small"  value="<%=tempatLahir%>">
+									<input type="text" name="tglLahir" id="tglLahir"  value="<%=tglLahir%>">
 								</div>
 							</div>
 							<div class="span6 well">
@@ -63,27 +67,27 @@
 								<div class="control-group">
 									<label>Alamat</label>
 
-									<textarea name="alamat"></textarea>
+									<textarea name="alamat"><%=alamat%></textarea>
 								</div>
 
 								<div class="control-group">
 									<div class="span4">
 										<label>Telepon</label>
-										<input type="text" name="telepon" class="span12">
+										<input type="text" name="telepon" class="span12"  value="<%=telepon%>">
 									</div>
 									<div class="span4">
 										<label>Handphone 1</label>
-										<input type="text" name="handphone" class="span12">
+										<input type="text" name="hp1" class="span12"  value="<%=hp1%>">
 									</div>
 									<div class="span4">
 										<label>Handphone 2</label>
-										<input type="text" name="handphone" class="span12">
+										<input type="text" name="hp2" class="span12"  value="<%=hp2%>">
 									</div>
 								</div>
 
 								<div class="control-group">
 									<label>Email</label>
-									<input type="text" name="email">
+									<input type="text" name="email"  value="<%=email%>">
 								</div>
 
 							</div>
@@ -108,11 +112,12 @@
 
 						<div class="control-group">
 							<label>Cabang<span class="f_req">*</span></label>
-							<input type="text" name="cabang">
+							<input name="cabang" id="cabang"  value="<%=cabang%>">
+					
 						</div>
 						<div class="form-actions">
-							<button type="submit" class="finish btn btn-primary"><i class="icon-ok icon-white"></i> Save</button>
-							<button class="btn">Cancel</button>
+							<button type="button" class="finish btn btn-primary save" data-loading-text="Loading ..."><i class="icon-ok icon-white"></i> Save</button>
+				<a class="btn cancel">Cancel</a>
 						</div>
 					</form>
 				</div>
@@ -121,7 +126,7 @@
 			$(document).ready(function() {
 				$('#username').select2({  
 					ajax: {
-						url: "/users/search",
+						url: "/api/users/search",
 						quietMillis: 100,
 						data: function (term, page) { 
 							return {
@@ -132,7 +137,7 @@
 							return {
 								results : $.map(data, function(item) {
 									return {
-										id : item.username,
+										id : item._id,
 										text : item.username
 									};
 								})
@@ -143,9 +148,43 @@
 						console.log(callback);
 						var id=$(element).val();
 						if (id!=="") {
-							$.ajax("/users/search?q="+id).done(function(data) { 
-								data[0].id=data[0].username;
+							$.ajax("/api/users/search?q="+id).done(function(data) { 
+								data[0].id=data[0]._id;
 								data[0].text=data[0].username;
+								var obj =data[0];
+								callback(obj); });
+						}
+					}
+				});
+
+
+				$('#cabang').select2({  
+					ajax: {
+						url: "/api/cabangs/search",
+						quietMillis: 100,
+						data: function (term, page) { 
+							return {
+								q:term
+							}
+						},
+						results : function(data) {
+							return {
+								results : $.map(data, function(item) {
+									return {
+										id : item._id,
+										text : item.namaCabang
+									};
+								})
+							};
+						}
+					},
+					initSelection: function(element, callback) {
+						console.log(callback);
+						var id=$(element).val();
+						if (id!=="") {
+							$.ajax("/api/cabangs/search?q="+id).done(function(data) { 
+								data[0].id=data[0]._id;
+								data[0].text=data[0].namaCabang;
 								var obj =data[0];
 								callback(obj); });
 						}
@@ -153,12 +192,12 @@
 				});
 				$('#img-uploader').fineUploader({
 					request: {
-						endpoint: '/upload'
+						endpoint: '/api/upload'
 					},
 					multiple: false,
 					validation: {
 						allowedExtensions: ['jpeg', 'jpg', 'gif', 'png'],
-						sizeLimit: 51200 
+						sizeLimit: 102400 
 					},
 					text: {
 						uploadButton: 'Click or Drop'
@@ -175,52 +214,9 @@
 					}
 				});
 
-				var options = { 
-					success:       showResponse,
-					clearForm: true,
-					beforeSubmit: preForm,
-					url :'/karyawan/save', 
-					error : errorHandler
-				}; 
-				$("#tglLahir").datepicker();
+				$("#tglLahir").datepicker({ dateFormat: 'dd-mm-yy' });
 
-				$("#karyawanForm").validate({
-			onkeyup: false,
-			errorClass: 'error',
-			validClass: 'valid',
-			highlight: function(element) {
-				$(element).closest('div').addClass("f_error");
-			},
-			unhighlight: function(element) {
-				$(element).closest('div').removeClass("f_error");
-			},
-			errorPlacement: function(error, element) {
-				$(element).closest('div').append(error);
-			}, 
-			rules: {
-				username: "required",
-				nama: "required",
-				jenisKelamin : "required",
-				noIndentitas : "required",
-				bank : "required",
-				noRekening :"required"
-			}
-		});
+				
 
-				$('#karyawanForm').ajaxForm(options); 
-
-				function preForm(arr, $form, options) { 
-
-					return true;
-				}
-				function showResponse(responseText, statusText, xhr, $form) {
-					if(responseText.success) {
-
-						console.log('success');
-					}
-				}
-				function errorHandler(context, xhr, status, responseText) {
-					console.log(context.responseText);
-				}
 			});
 	</script>

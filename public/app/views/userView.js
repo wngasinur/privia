@@ -1,5 +1,5 @@
 define([
-    'jquery',
+  'jquery',
   'underscore',
   'backbone',
   'text!../templates/userList.html',
@@ -27,17 +27,17 @@ define([
           var err;
           try {
            var response = JSON.parse(e.responseText);
-            err = response.err;
-          }catch(ex) {
-            err =  e.responseText;
-          }
-          var alertError = $('#alertError').clone();
-          $('span',alertError).html('Terjadi masalah : '+err);
-          alertError.show().appendTo('.formMessage');
-          that.userForm.find('.save').button('reset');
+           err = response.err;
+         }catch(ex) {
+          err =  e.responseText;
+        }
+        var alertError = $('#alertError').clone();
+        $('span',alertError).html('Terjadi masalah : '+err);
+        alertError.show().appendTo('.formMessage');
+        that.userForm.find('.save').button('reset');
 
-        });
-       this.listenTo(this.model,'sync', function(e) {
+      });
+        this.listenTo(this.model,'sync', function(e) {
           console.log('sukses');
           that.render('form',function(){
             var alertInfo = $('#alertInfo').clone();
@@ -49,11 +49,17 @@ define([
         });
 
       },
-     save:function() {
+      save:function() {
         this.userForm = this.$el.find('#userForm');
-        //console.log(this.userForm.serializeObject());
+       
         if(this.userForm.valid()) {   
-          this.model.set(this.userForm.serializeObject());
+          var updatedModel = this.userForm.serializeObject();
+          
+          this.model.set(updatedModel);
+          console.log(!updatedModel.akses);
+          if(!updatedModel.akses)
+            this.model.set('akses',[]);
+
           this.userForm.find('.save').button('loading');
           this.model.save();
         }
@@ -61,44 +67,44 @@ define([
       cancel:function() {
         app.router.navigate('/users',{trigger:true});
       },
-     changePassword:function() {
+      changePassword:function() {
 
-      this.changePasswordForm = this.$el.find('#changePasswordForm');
-      if(this.changePasswordForm.valid()) {
+        this.changePasswordForm = this.$el.find('#changePasswordForm');
+        if(this.changePasswordForm.valid()) {
         //console.log(this.changePasswordModel);
         this.changePasswordModel.set('password',this.$el.find('#password').val());
         this.changePasswordModel.save();
         $('#changePasswordModal').modal('hide');
       }
-  },
+    },
 
- render: function(page,cb){
-  console.log('render user view');
-  var that = this;
-  var id = this.options.id;
-  var data = {};
-  var template;
+    render: function(page,cb){
+      console.log('render user view');
+      var that = this;
+      var id = this.options.id;
+      var data = {};
+      var template;
 
-  if(page=='form') {
-    template=formTemplate;
-  }
-  else
-    template=listTemplate;
+      if(page=='form') {
+        template=formTemplate;
+      }
+      else
+        template=listTemplate;
 
-  if(id) {
-    template=formEditTemplate;
+      if(id) {
+        template=formEditTemplate;
 
-    console.log('load '+id);
-    var user = new Model({id:id});
-    this.changePasswordModel = new ChangePasswordModel({id:id});
-    user.fetch({
-      success: function (user) {
-        var data = user.toJSON();
-        that.model.set (data);
-        var compiledTemplate = _.template( template, data );
-        that.$el.html( compiledTemplate );
-        that.userForm = that.$el.find('#userForm');
-        console.log(that.$el.find('#userForm'));
+        console.log('load '+id);
+        var user = new Model({id:id});
+        this.changePasswordModel = new ChangePasswordModel({id:id});
+        user.fetch({
+          success: function (user) {
+            var data = user.toJSON();
+            that.model.set (data);
+            var compiledTemplate = _.template( template, data );
+            that.$el.html( compiledTemplate );
+            that.userForm = that.$el.find('#userForm');
+        
         //console.log(that.userForm.serializeObject());
         that.userForm.validate({
           onkeyup: false,
@@ -153,16 +159,14 @@ define([
 
       }
     });
-  }
-  else {
-         var compiledTemplate = _.template( template, this.model.toJSON() );
+}
+else {
+ var compiledTemplate = _.template( template, this.model.toJSON() );
         // Append our compiled template to this Views "el"
         this.$el.html( compiledTemplate );
 
         this.userForm = this.$el.find('#userForm');
-        console.log(this.$el.find('#userForm'));
-        
-        
+       
         this.userForm.validate({
           onkeyup: false,
           errorClass: 'error',
@@ -180,11 +184,11 @@ define([
             username: "required",
             password : {
               required :true,
-              minlength : 1
+              minlength : 3
             },
             confirmPassword : {
               required :true,
-              minlength : 1,
+              minlength : 3,
               equalTo : "input[name=password]"
             }
           },

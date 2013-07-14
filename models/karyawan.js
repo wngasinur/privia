@@ -30,7 +30,7 @@ var setTags = function (tags) {
  */
 
 var KaryawanSchema = new Schema({
-  username: {type : String, default : '', trim : true, unique: true},
+  username: {type: Schema.Types.ObjectId, ref: 'User'},
   password: {type : String, default : '', trim : true},
   imgProfile: {type : String, default : '', trim : true},
   nama: {type : String, default : '', trim : true},
@@ -39,12 +39,13 @@ var KaryawanSchema = new Schema({
   tempatLahir: {type : String, default : '', trim : true},
   alamat: {type : String, default : '', trim : true},
   telepon: {type : String, default : '', trim : true},
-  handphone: {type : Array},
+  hp1: {type : String, default : '', trim : true},
+  hp2: {type : String, default : '', trim : true},
   email: {type : String, default : '', trim : true},
   bank: {type : String, default : '', trim : true},
   noRekening: {type : String, default : '', trim : true},
   atasNama: {type : String, default : '', trim : true},
-  cabang: {type : String, default : '', trim : true},
+  cabang: {type: Schema.Types.ObjectId, ref: 'Cabang'},
   status: {type : String, default : '', trim : true},
   tglTambah: { type : Date, default : Date.now },
   tglLahir: { type : Date, default : Date.now },

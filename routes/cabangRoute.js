@@ -1,6 +1,6 @@
 
 /*
- * GET users listing.
+ * GET cabangs listing.
  */
  var mongoose = require('mongoose'),
  moment = require('moment'),
@@ -8,15 +8,33 @@
  $ = require('jquery'),
  Cabang = mongoose.model('Cabang')
 
+exports.get = function(req, res){
+
+    var id = req.params.id;
+    console.log(id);
+    Cabang.load(id,function(err,result){
+
+        res.json(result);
+    });
+};
+
  exports.search = function(req, res){
 
   var searchCabang = req.query.q;
-  console.log(searchCabang);
-  var criteria = {kodeCabang:new RegExp(searchCabang, "i")};
-  var select = {kodeCabang:true,namaCabang:true};
+  if(searchCabang.length!=24)
+      var objId = '99d92f8be2c2f8a842000003';
+  else 
+      var objId = searchCabang;
 
-  User.list({perPage:10,page:1,criteria:criteria,select:select},function(err,result){
-    res.json(result);
+  var criteria = {$or:[{kodeCabang:new RegExp(searchCabang, "i")},{_id:objId}]};
+  
+
+  Cabang.list({perPage:10,page:0,criteria:criteria},function(err,result){
+    console.log(result);
+        if(err)
+            console.log(err);
+        else
+            res.json(result);
   });
 
 };
@@ -63,17 +81,38 @@ exports.list = function(req, res){
 
 };
 
-exports.add = function(req, res){
+exports.save = function(req, res){
 
- var json = req.body;
- var cabang = new Cabang(json);
- cabang.save(function (err) {
-  if (err) {
-   return res.json(500, err);
-	}// saved!
-	
-  res.json( { success: 'true' });
+ console.log(req.body);
 
-	})	
+ var cabang = new Cabang(req.body);
+ if(cabang._id) {
+  console.log('edit %j',cabang);
+  var conditions = { _id: cabang._id }
+  , update = { akses: cabang.akses }
+  , options = { multi: false };
+
+  Cabang.update(conditions, update, options, function(err,result){
+    if(err)
+      console.log(err);
+    else
+      res.json( { success: 'true' });
+
+  });
+}
+else {
+  console.log('add');
+  delete req.body._id;
+  cabang = new Cabang(req.body);
+  cabang.set('status','Aktif');
+  cabang.save(function (err) {
+    if (err) {
+     console.log(err)
+     return res.json(500, err);
+      }// saved!
+      res.json( { success: 'true' });
+
+    });
+} 
  
 };

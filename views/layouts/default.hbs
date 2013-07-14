@@ -61,7 +61,7 @@
 
 
 
-      {{> sidebars}}
+    {{> sidebars}}
     {{> scripts}}
 
     {{{block "pageScripts"}}}
@@ -88,11 +88,266 @@
         <a class="close" data-dismiss="alert">×</a>
         <span></span>
     </div>
+<script type="text/html" id='latestTransactionSection'>
+<tr>
+                        <td class="latest"> 
+                        <div class="vcard">
+                        <img alt="" src="<%=ditambahOleh.imgProfile%>" class="thumbnail" />
+                            <div class="vcard-label">
+                            <label><%=ditambahOleh.nama%></label>
+                            </div>
+                        </div>
+                        <div class="info">
+                            <span class="badge">Proposal</span>
+                            <small>Telah mengajukan proposal pinjaman selama <%=lamaPinjaman%> tahun kepada <b><%=namaCustomer%></b> dengan total pinjaman <%=cashNCarry.formatPrice()%> , dan pembayaran bulanan <%=payPerMonth.formatPrice()%>
+ <blockquote>1 Jam Lalu</blockquote>
+                        </small>
+                        </div>
 
+                        </td>
+                       
+                    </tr>
+</script>
 
     <script type="text/html" id='alamatSection'>
         <div class="alamatSection">
             <%=jalan%> RT <%=rt%> RW <%=rw%>
+        </div>
+    </script>
+     <script type="text/html" id='teleponSection'>
+        <div class="teleponSection">
+            HP1 : <%=hp1%> HP2 :  <%=hp2%> Rumah : <%=rmh%> Kantor : <%=kantor%>
+        </div>
+    </script>
+
+    <script type="text/html" id="sidebarsMenuSection">
+    <div id="side_accordion" class="accordion">
+                    
+                     <%
+                     if(_.contains(akses,'admin')) {
+                     %>
+
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a href="#/analisis" class="accordion-toggle">
+                                <i class="icon-signal"></i> Analisis
+                            </a>
+                        </div>
+                    </div>
+                    <%
+                     }
+                     %>
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a href="#collapseOne" data-parent="#side_accordion" data-toggle="collapse" class="accordion-toggle">
+                                <i class="icon-folder-close"></i> Master
+                            </a>
+                        </div>
+                        <div class="accordion-body collapse" id="collapseOne">
+                            <div class="accordion-inner">
+                                <ul class="nav nav-list">
+                                    <!-- <li class="nav-header"></li>
+                                    <li><a href="#/leasing">Daftar Leasing</a></li>
+                                    <li><a href="#/leasing/add">Buat Leasing</a></li>
+                                    <li class="divider"></li> -->
+                                    <%
+                                     if(_.contains(akses,'admin')) {
+                                     %>
+                                    <li class="nav-header">Users</li>
+                                    <li><a href="#/users">Daftar Users</a></li>
+                                    <li><a href="#/users/add">Buat Users</a></li>
+                                    <li class="divider"></li>
+                                    <li class="nav-header">Karyawan</li>
+                                    <li><a href="#/karyawan">Daftar Karyawan</a></li>
+                                    <li><a href="#/karyawan/add">Buat Karyawan</a></li>
+                                    <li class="divider"></li>
+                                    <li class="nav-header">Cabang</li>
+                                    <li><a href="#/cabang">Daftar Cabang</a></li>
+                                    <li><a href="#/cabang/add">Buat Cabang</a></li>
+                                     <%
+                                     }
+                                     %>
+                                    <li class="divider"></li>
+                                    <li class="nav-header">Customer</li>
+                                    <li><a href="#/customer">Daftar Customer</a></li>
+                                    <li><a href="#/customer/add">Buat Customer</a></li>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a href="#collapseTwo" data-parent="#side_accordion" data-toggle="collapse" class="accordion-toggle collapsed">
+                                <i class="icon-th"></i> Transaksi
+                            </a>
+                        </div>
+                        <div class="accordion-body collapse" id="collapseTwo" style="height: 0px;">
+                            <div class="accordion-inner">
+                                <ul class="nav nav-list">
+                                    <li class="nav-header">Proposal Leasing</li>
+                                    <li><a href="#/quote">Daftar Proposal</a></li>
+                                    <li><a href="#/quote/add">Buat Proposal</a></li>
+                                    <!-- <li class="divider"></li>
+                                    <li><a href="#/leasing/add">Sales Leasing</a></li>
+                                    <li><a href="#constructionModal" data-toggle="modal">Daftar Leasing</a></li>
+                                    <li><a href="#constructionModal" data-toggle="modal">Piutang Nasabah</a></li>
+                                    -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <%
+                     if(_.contains(akses,'admin')) {
+                     %>
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a href="#collapseThree" data-parent="#side_accordion" data-toggle="collapse" class="accordion-toggle">
+                                <i class="icon-list"></i> Laporan
+                            </a>
+                        </div>
+                        <div class="accordion-body collapse" id="collapseThree">
+                            <div class="accordion-inner">
+                                <ul class="nav nav-list">
+                                    <li><a href="#constructionModal" data-toggle="modal">Keuntungan</a></li>
+                                    <li><a href="#constructionModal" data-toggle="modal">Transaksi Leasing</a></li>
+                                    <li><a href="#constructionModal" data-toggle="modal">Karyawan</a></li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                     <%
+                                     }
+                                     %>
+    </script>
+    <script type="text/html" id="quotePrintSection">
+
+       <div class="row-fluid">
+            <div class="span8">
+                <h1 class="invoice_heading">MEGA OTO FINANCE since 2000</h1>
+            </div>
+            <div class="span4">
+                <p class="sepH_a"><span class="muted sepV_b">Nama Kendaraan</span><strong><%=namaKendaraan%></strong></p>
+                <p><span class="muted sepV_b">Tahun Buat</span><strong><%=tahunBuat%></strong></p>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span4">
+                <p><strong class="muted">Kepada</strong></p>
+                <address>
+                    <strong><%=namaCustomer%></strong><br>
+                    <%=alamat%>
+                </address>  
+            </div>
+        </div>
+        <div class"row-fluid">
+        
+        <table class="table span6">
+
+         <tr>
+            <td>
+                <p class="sepH_a"><span class="muted sepV_b">Lama Pinjaman </span><%=lamaPinjaman%> tahun</p>
+                <p class="sepH_a"><span class="muted sepV_b">Bunga Tahun <%=lamaPinjaman%></span><%=bungaDibayar%></p>
+                <p class="sepH_a"><span class="muted sepV_b">Ass <%=lamaPinjaman%> Thn TLO</span><%=bungaAssDibayar%></p>
+                </td>
+                <td>
+                <p class="sepH_a"><span class="muted sepV_b">Cash Back</span><%=cashBack%> </p>
+                <p class="sepH_a"><span class="muted sepV_b">Depreciation</span><%=carDepreciation%> </p>
+                <p class="sepH_a"><span class="muted sepV_b">Pengurang Akhir</span><%=pengurangTerakhir%></p>
+                <p class="sepH_a"><span class="muted sepV_b">Provisi</span><%=provisi%></p>
+            </td>
+        </tr>
+        </table>
+        </div>
+        <div class="row-fluid">
+            <div class="span12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th width=50%>Item</th>
+                            <th width=25%></th>
+                            <th width=25%></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Price On The Roads</td>
+                        <td></td>
+                        <td><%=hargaOTR%></td>
+                    </tr>
+                    <tr>
+                        <td>Car Depreciation</td>
+                        <td><%=carDepreciation%></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Maximal Revenue</td>
+                        <td><%=maxRevenue%></td>
+                        <td></td>
+                    </tr>
+                     <tr>
+                        <td>Promo Cash Back</td>
+                        <td><%=cashBack%></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Total Maximal Revenue</td>
+                        <td></td>
+                        <td><%=totalMaxRevenue%></td>
+                    </tr>
+                      <tr>
+                        <td>Adm & Polis Insurance</td>
+                        <td><%=admInsurance%></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Insurance TLO For <%=lamaPinjaman%> years </td>
+                        <td><%=bungaAssDibayar%></td>
+                        <td></td>
+                    </tr>
+                     <tr>
+                        <td>Provisi & Fiducia Legal</td>
+                        <td><%=provisi%></td>
+                        <td></td>
+                    </tr>
+                     <tr>
+                        <td>Pay per Month</td>
+                        <td><%=payPerMonth%></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Cash & Carry in your hands</td>
+                        <td></td>
+                        <td><%=cashNCarry%></td>
+                    </tr>
+                   
+                </tbody></table>
+            </div>
+        </div>
+         <div class="row-fluid">
+            <div class="span12">
+            <small class="muted">
+                   CATATAN :       
+                   <ol>
+                   <li>BIAYA DIATAS SUDAH TERMASUK PEMBAYARAN ANGSURAN 1</li>
+                   <li>SEGALA MACAM BENTUK PEMALSUAN KEPEMILIKAN , AKAN DI PROSES DIJALUR HUKUM </li>
+                   <li>PEMALSUAN BPKB DIKETAHUI DALAM 5 MENIT. URUNGKAN SAAT INI JUGA</li>
+                   <li>PENCAIRAN DANA FULL, MENGIKUTI SYARAT DAN KETENTUAN YG ADA  </li>
+                   <li>STNK HIDUP, FISIK KENDARAAN HADIR SERTA TIDAK DALAM KEADAAN RUSAK.</li>
+                   </ol>   
+            </small>
+            </div>
+        </div>
+         <div class="row-fluid">
+            <div class="span8">
+            </div>
+            <div class="span4">
+              <p><strong>Jakarta, 11 April 2013</strong></p>
+              <p><strong >Disetujui untuk dikerjakan,</strong></p>
+              <br><br><br><br>
+              <p>..........................................</p>
+            </div>
         </div>
     </script>
   </body>

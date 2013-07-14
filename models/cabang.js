@@ -50,60 +50,6 @@ var CabangSchema = new Schema({
 /**
  * Methods
  */
-
-CabangSchema.methods = {
-
-  /**
-   * Save Properti and upload image
-   *
-   * @param {Object} images
-   * @param {Function} cb
-   * @api private
-   */
-
-  uploadAndSave: function (images, cb) {
-    if (!images || !images.length) return this.save(cb)
-
-    var imager = new Imager(imagerConfig, 'S3')
-    var self = this
-
-    imager.upload(images, function (err, cdnUri, files) {
-      if (err) return cb(err)
-      if (files.length) {
-        self.image = { cdnUri : cdnUri, files : files }
-      }
-      self.save(cb)
-    }, 'Properti')
-  },
-
-  /**
-   * Add comment
-   *
-   * @param {Cabang} user
-   * @param {Object} comment
-   * @param {Function} cb
-   * @api private
-   */
-
-  addComment: function (user, comment, cb) {
-    var notify = require('../mailer/notify')
-
-    this.comments.push({
-      body: comment.body,
-      user: user._id
-    })
-
-    notify.comment({
-      Properti: this,
-      currentCabang: user,
-      comment: comment.body
-    })
-
-    this.save(cb)
-  }
-
-}
-
 /**
  * Statics
  */

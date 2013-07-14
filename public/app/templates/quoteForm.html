@@ -4,183 +4,183 @@
 
 <div class="row-fluid">
 <div class="span12">
-<form id="validate_wizard" class="stepy-wizzard form-horizontal">
+<form id="quoteForm" class="stepy-wizzard form-horizontal"  method="post">
+<div class="formMessage">
+            </div>
+
+    <input type="hidden" name="admInsurance" id="admInsurance">
+    <input type="hidden" name="alamat" id="alamat">
+    <input type="hidden" name="telepon" id="telepon">
+    <input type="hidden" name="namaCustomer" id="namaCustomer">
+    <input type="hidden" name="imgProfile" id="imgProfile" >
+    <input type="hidden" name="cashBack" id="cashBack">
+    <input type="hidden" name="carDepreciation" id="carDepreciation">
+    <input type="hidden" name="pengurangTerakhir" id="pengurangTerakhir">
+    <input type="hidden" name="provisi" id="provisi" >
+    <input type="hidden" name="hargaOTR" id="hargaOTR" >
+    <input type="hidden" name="payPerMonth" id="payPerMonth" >
+    <input type="hidden" name="cashNCarry" id="cashNCarry" >
 <fieldset title="Pemohon">
     <legend class="hide">Informasi Pemohon</legend>
     <div class="row-fluid control-group">
         <div class="span5">
-            <div class="well">
-                <p><span class="label label-inverse">Informasi Pemohon</span></p>
-                <div class="control-group">
-                    <label for="v_password">No Identitas:</label>
+                        <div class="well">
+                            <p><span class="label label-inverse">Informasi Pemohon</span></p>
+                            <div class="control-group">
+                                <div data-provides="fileupload" class="fileupload fileupload-new">
+                                    <div style="width: 80px; height: 80px;" class="fileupload-new thumbnail">
+                                        <img src="<%=imgProfile!=''?imgProfile:'http://www.placehold.it/80x80/EFEFEF/AAAAAA'%>" alt="" id="thumbnail-profile"></div>
+                                    <div style="width: 80px; height: 80px; line-height: 80px;" class="fileupload-preview fileupload-exists thumbnail"></div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="row-fluid">
+                                    <div class="span6">
+                                        <label for="kodeCustomer">Nama<span class="f_req">*</span>
+                                         <span class="right"><a class="btn" id="tambahCustomer">Tambah Customer</a></span></label>
+                                        <input type="text" name="kodeCustomer" id="kodeCustomer"  class="span12" value="<%=kodeCustomer%>">
+                                    </div> 
+                                </div>
+                            </div>
 
-                    <div class="input-prepend">
-                        <select name="jenisIdentitas" class="span4">
-                            <option>KTP</option>
-                            <option>SIM</option>
-                        </select>&nbsp;	<input type="text" name="noIndentitas" class="span8">
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <div class="span6">
-
-            <div class="well">
-                <p><span class="label label-inverse">Informasi Kontak</span></p>
-
-                <div class="control-group">
-                    <div class="row-fluid">
-                        <div class="span4">
-                            <label>Tlpn. Rmh<span class="f_req">*</span></label>
-                            <input type="text" name="reg_first_name" class="span12">
-                        </div>
-                        <div class="span4">
-                            <label>Tlpn. Kantor <span class="f_req">*</span></label>
-                            <input type="text" name="reg_first_name" class="span12">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="well">
-                <p><span class="label label-inverse">Informasi Bank</span></p>
-
-                <div class="control-group">
-                    <div class="row-fluid">
-                        <div class="span4">
-                            <label>Bank<span class="f_req">*</span></label>
-                            <input type="text" name="reg_first_name" class="span12">
-                        </div>
-                        <div class="span4">
-                            <label>No Rekening <span class="f_req">*</span></label>
-                            <input type="text" name="reg_first_name" class="span12">
+                            <div class="control-group">
+                                <div class="row-fluid">
+                                    <div class="span6">
+                                        <label>Alamat</label>
+                                        <div id="quoteAlamat">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                              <div class="control-group">
+                                <div class="row-fluid">
+                                    <div class="span6">
+                                        <label>Telepon</label>
+                                         <div id="quoteTelepon">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-        </div>
+                    <div class="span6">
+
+                        <div class="well">
+                            <p><span class="label label-inverse">Informasi Kendaraan</span></p>
+
+                            <div class="control-group">
+                                <div class="row-fluid">
+                                    <div class="span4">
+                                        <label for="kendaraanRoda">Kendaraan Roda:</label>
+                                         <select name="kendaraanRoda"  class="span12">
+                                            <option value="Mobil" <%=kendaraanRoda=='Mobil'?'checked':''%> >Mobil</option>
+                                            <option value="Motor" <%=kendaraanRoda=='Motor'?'checked':''%> >Motor</option>
+                                        </select>
+                                        <%=kendaraanRoda%>  
+                                    </div>
+                                    <div class="span4">
+                                       <label for="jenisKendaraan">Jenis Kendaraan:</label>
+                                        <input type="text" name="jenisKendaraan" id="jenisKendaraan" value="<%=jenisKendaraan%>" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="row-fluid">
+                                    <div class="span4">
+                                       <label for="namaKendaraan">Nama Kendaraan:</label>
+                                        <input type="text" class="span12"  name="namaKendaraan" id="namaKendaraan" value="<%=namaKendaraan%>" />
+                                    </div>
+                                    <div class="span3">
+                                       <label for="tahunBuat">Tahun Buat:</label>
+                                         <input type="text" class="span8"  name="tahunBuat" id="tahunBuat" value="<%=tahunBuat%>" />
+                                    </div>
+                                    <div class="span5">
+                                        <label for="hargaOTR">Harga OTR:</label>
+                                        <input type="text"  class="span14 price" name="hargaOTRMask" id="hargaOTRMask" value="<%=hargaOTR%>"  />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>            
     </div>
 </fieldset>
-<fieldset title="Penjamin">
-    <legend class="hide">Informasi Penjamin&hellip;</legend>
+<fieldset title="Kredit">
+    <legend class="hide">Informasi Kredit&hellip;</legend>
     <div class="row-fluid control-group">
         <div class="span5">
-            <div class="well">
-                <p><span class="label label-inverse">Informasi Penjamin</span>
-
-                    <span class="label label-warning"><input type="checkbox" name="v_email" id="v_email"  /> Penjamin tidak datang</span>
-                </p>
+                <p><span class="label label-inverse">Informasi Kredit</span></p>
                 <div class="control-group">
-                    <label for="v_password">No Identitas:</label>
+                    <label for="v_password">Perusahaan Kredit:</label>
 
                     <div class="input-prepend">
-                        <select name="jenisIdentitas" class="span4">
-                            <option>KTP</option>
-                            <option>SIM</option>
-                        </select>&nbsp;	<input type="text" name="noIndentitas" class="span8">
+                        <select name="perusahaanKredit">
+                            <option <%=perusahaanKredit=='ARTHA'?'checked':''%> >ARTHA</option>
+                            <option <%=perusahaanKredit=='BCA'?'checked':''%>>BCA</option>
+                            <option <%=perusahaanKredit=='BHAKTI'?'checked':''%>>BHAKTI</option>
+                            <option <%=perusahaanKredit=='MNC'?'checked':''%>>MNC</option>
+                            <option <%=perusahaanKredit=='MAXIMA'?'checked':''%>>MAXIMA</option>
+                            <option <%=perusahaanKredit=='MANDIRI'?'checked':''%>>MANDIRI</option>
+                            <option <%=perusahaanKredit=='MITRA'?'checked':''%>>MITRA</option>
+                            <option <%=perusahaanKredit=='STAR'?'checked':''%>>STAR</option>
+                            <option <%=perusahaanKredit=='INTI'?'checked':''%>>INTI</option>
+                        </select>&nbsp;	
                     </div>
                 </div>
                 <div class="control-group">
                     <div class="row-fluid">
                         <div class="span6">
-                            <label for="v_email">Nama:</label>
-                            <input type="text" name="v_email" id="v_email"  class="span12" />
-                        </div>
-
-                        <div class="span6">
-                            <label >Jenis Kelamin:</label>
-                            <label class="radio inline">
-                                <input name="jenisKelamin" value="L" type="radio">Laki
-                            </label>
-                            <label class="radio inline">
-                                <input name="jenisKelamin" value="P" type="radio">Perempuan
-                            </label>
+                            <label for="lamaPinjaman">Lama Pinjaman:</label>
+                            <input type="text" name="lamaPinjaman" id="lamaPinjaman"  class="span4 numeric" maxlength="2" value="<%=lamaPinjaman%>" /> tahun
                         </div>
                     </div>
                 </div>
 
                 <div class="control-group">
                     <div class="row-fluid">
-                        <div class="span6">
-                            <label>Hubungan<span class="f_req">*</span></label>
-                            <input type="text" name="reg_first_name" class="span12">
+                        <div class="span3">
+                            <label>Suku Bunga<span class="f_req">*</span></label>
+                            <input type="text" name="sukuBunga" class="span8 percentage"  value="<%=sukuBunga%>"  > %
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="well">
-                <p><span class="label label-inverse">Informasi Tempat Tinggal</span></p>
-                <div class="control-group">
-                    <label for="v_email">Alamat:</label>
-
-                    <textarea name="v_email" id="v_email" />
-                </div>
-                <div class="control-group">
-                    <div class="row-fluid">
-                        <div class="span4">
-                            <label>RT<span class="f_req">*</span></label>
-                            <input type="text" name="reg_first_name" class="span12">
-                        </div>
-                        <div class="span4">
-                            <label>RW <span class="f_req">*</span></label>
-                            <input type="text" name="reg_first_name" class="span12">
-                        </div>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <div class="row-fluid">
-                        <div class="span4">
-                            <label>Kelurahan<span class="f_req">*</span></label>
-                            <input type="text" name="reg_first_name" class="span12">
-                        </div>
-                        <div class="span4">
-                            <label>Kecamatan<span class="f_req">*</span></label>
-                            <input type="text" name="reg_first_name" class="span12">
-                        </div>
-
-                        <div class="span4">
-                            <label>Kotamadya<span class="f_req">*</span></label>
-                            <input type="text" name="reg_first_name" class="span12">
+                        <div class="span3">
+                            <label>Asst Tlo<span class="f_req">*</span></label>
+                            <input type="text" name="asstTlo" class="span8 percentage" value="<%=asstTlo%>"   > %
                         </div>
                     </div>
                 </div>
 
-            </div>
         </div>
         <div class="span6">
-
-            <div class="well">
-                <p><span class="label label-inverse">Informasi Kontak</span></p>
-
-                <div class="control-group">
-                    <div class="row-fluid">
-                        <div class="span4">
-                            <label>Tlpn. Rmh<span class="f_req">*</span></label>
-                            <input type="text" name="reg_first_name" class="span12">
-                        </div>
-                        <div class="span4">
-                            <label>Tlpn. Kantor <span class="f_req">*</span></label>
-                            <input type="text" name="reg_first_name" class="span12">
-                        </div>
+            <div class="control-group">
+                <div class="row-fluid">
+                    <div class="span4">
+                        <label>Cash Back<span class="f_req">*</span></label>
+                        <input type="text" name="cashBackMask" id="cashBackMask" class="span12 price"  value="<%=cashBack%>"  >
+                    </div>
+                    <div class="span4">
+                        <label>Car Depreciation <span class="f_req">*</span></label>
+                        <input type="text" name="carDepreciationMask" id="carDepreciationMask" class="span12 price"  value="<%=carDepreciation%>" >
                     </div>
                 </div>
-                <div class="control-group">
-                    <div class="row-fluid">
-                        <div class="span4">
-                            <label>HP1<span class="f_req">*</span></label>
-                            <input type="text" name="reg_first_name" class="span12">
-                        </div>
-                        <div class="span4">
-                            <label>HP2 <span class="f_req">*</span></label>
-                            <input type="text" name="reg_first_name" class="span12">
-                        </div>
-                        <div class="span4">
-                            <label>Email<span class="f_req">*</span></label>
-                            <input type="text" name="reg_first_name" class="span12">
-                        </div>
+            </div>
+            <div class="control-group">
+                <div class="row-fluid">
+                    <div class="span4">
+                        <label>Pengurang Terakhir<span class="f_req">*</span></label>
+                        <input type="text" name="pengurangTerakhirMask" id="pengurangTerakhirMask" class="span12 price" value="<%=pengurangTerakhir%>" >
+                    </div>
+                    <div class="span4">
+                        <label>Provisi <span class="f_req">*</span></label>
+                        <input type="text" name="provisiMask" id="provisiMask" class="span12 price" value="<%=provisi%>">
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="row-fluid">
+                    <div class="span4">
+                        <label>Adm & Polis Insurance<span class="f_req">*</span></label>
+                        <input type="text" name="admInsuranceMask" id="admInsuranceMask" class="span12 price" value="<%=admInsurance%>" >
                     </div>
                 </div>
             </div>
@@ -188,353 +188,14 @@
         </div>
     </div>
 </fieldset>
-<fieldset title="Kendaraan">
-    <legend class="hide">Informasi Kendaraan&hellip;</legend>
-    <div class="row-fluid">
-        <div class="well">
-            <p><span class="label label-inverse">Informasi BPKB</span>
-                <span class="label label-warning"> <input type="checkbox" name="v_email" id="v_email"  /> Masih Kredit</span>
-            </p>
-
-            <div class="control-group">
-                <div class="row-fluid">
-                    <div class="span3">
-                        <label for="v_email">Kendaraan Roda:</label>
-                        <input type="text" name="v_email" id="v_email" />
-                    </div>
-                    <div class="span3">
-                        <label for="v_email">No Polisi:</label>
-                        <input type="text" name="v_email" id="v_email" />
-                    </div>
-                    <div class="span3">
-                        <label for="v_email">No. Mesin:</label>
-                        <input type="text" name="v_email" id="v_email" />
-                    </div>
-                    <div class="span3">
-                        <label for="v_email">No. Rangka:</label>
-                        <input type="text" name="v_email" id="v_email" />
-                    </div>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="row-fluid">
-                    <div class="span3">
-                        <label for="v_email">Tahun Buat:</label>
-                        <input type="text" name="v_email" id="v_email" />
-                    </div>
-                    <div class="span3">
-                        <label for="v_email">Warna:</label>
-                        <input type="text" name="v_email" id="v_email" />
-                    </div>
-                    <div class="span3">
-                        <label for="v_email">Merk:</label>
-                        <input type="text" name="v_email" id="v_email" />
-                    </div>
-                    <div class="span3">
-                        <label for="v_email">Type:</label>
-                        <input type="text" name="v_email" id="v_email" />
-                    </div>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="row-fluid">
-                    <div class="span3">
-                        <label for="v_email">No. Faktur:</label>
-                        <input type="text" name="v_email" id="v_email" />
-                    </div>
-                    <div class="span3">
-                        <label for="v_email">Nama Faktur:</label>
-                        <input type="text" name="v_email" id="v_email" />
-                    </div>
-                    <div class="span3">
-                        <label for="v_email">No. BPKB:</label>
-                        <input type="text" name="v_email" id="v_email" />
-                    </div>
-                    <div class="span3">
-                        <label for="v_email">Nama BPKB:</label>
-                        <input type="text" name="v_email" id="v_email" />
-                    </div>
-                </div>
-            </div>
-            <div class="control-group">
-                <div class="row-fluid">
-                    <div class="span3">
-                        <label for="v_email">Alamat BPKB:</label>
-                        <textarea name="v_email" id="v_email" />
-                    </div>
-                    <div class="span3">
-                        <label for="v_email">Catatan Tambahan:</label>
-                        <input type="text" name="v_email" id="v_email" />
-                    </div>
-                </div>
-            </div>
-        </div>
+<fieldset title="Summary">
+    <legend class="hide">Summary&hellip;</legend>
+    <div id="quotePrint">
     </div>
-    <div class="row-fluid">
-        <div class="span6">
-            <div class="well">
-                <p><span class="label label-inverse">BPKB Atas Nama Orang Lain</span></p>
-                <div class="row-fluid">
-                    <div class="span5">
-                        <div class="control-group">
-                            <label for="v_email">Pemilik Sebelum:</label>
-                            <input type="text" name="v_email" id="v_email" class="span12" />
-                        </div>
-                        <div class="control-group">
-                            <label for="v_email">Cara Pembayaran:</label>
-                            <input type="text" name="v_email" id="v_email" class="span12"  />
-                        </div>
-                        <div class="control-group">
-                            <label for="v_email">Tanggal Pembayaran:</label>
-                            <input type="text" name="v_email" id="v_email" class="span12"  />
-                        </div>
-                    </div>
-                    <div class="span5">
-                        <div class="control-group">
-                            <label for="v_email">Nilai Pembelian:</label>
-                            <input type="text" name="v_email" id="v_email" class="span12"  />
-                        </div>
-                        <div class="control-group">
-                            <label for="v_email">Kwitansi:</label>
-                            <input type="text" name="v_email" id="v_email" class="span12"  />
-                        </div>
-                        <div class="control-group">
-                            <label for="v_email">Hari ini:</label>
-                            <input type="text" name="v_email" id="v_email" class="span12"  />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="span6">
-
-            <div class="well">
-                <p><span class="label label-inverse">Status Masih Kredit</span></p>
-                <div class="row-fluid">
-                    <div class="span5">
-                        <div class="control-group">
-                            <label for="v_email">Leasing Sebelum:</label>
-                            <input type="text" name="v_email" id="v_email" class="span12"  />
-                        </div>
-                        <div class="control-group">
-                            <label for="v_email">Cara Pelunasan:</label>
-                            <input type="text" name="v_email" id="v_email" class="span12"  />
-                        </div>
-                    </div>
-                    <div class="span5">
-                        <div class="control-group">
-                            <label for="v_email">Nilai Terhutang:</label>
-                            <input type="text" name="v_email" id="v_email" class="span12"  />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+   
 </fieldset>
-<fieldset title="Leasing">
-    <legend class="hide">Informasi Leasing&hellip;</legend>
-    <div class="well">
-        <div class="row-fluid">
-            <div class="span5">
-                <p><span class="label label-inverse">Informasi Leasing</span>
-
-										<span class="label label-warning">
-										<input type="checkbox" name="v_email" id="v_email"  /> Atas Nama Orang Lain</span>
-                </p>
-
-
-                <div class="control-group">
-                    <label for="v_message" class="control-label">Tanggal:</label>
-                    <div class="controls">
-                        <input name="v_message" id="v_message" type="text">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label for="v_message" class="control-label">Penerimaan Bersih:</label>
-                    <div class="controls">
-                        <input name="v_message" id="v_message" type="text">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label for="v_message" class="control-label">Lama Asuransi:</label>
-                    <div class="controls">
-                        <input name="v_message" id="v_message" type="text">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label for="v_message" class="control-label">Total Terima:</label>
-                    <div class="controls">
-                        <input name="v_message" id="v_message" type="text">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label for="v_message" class="control-label">Titipan uang:</label>
-                    <div class="controls">
-                        <input name="v_message" id="v_message" type="text">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label for="v_message" class="control-label">Digunakan untuk:</label>
-                    <div class="controls">
-                        <input name="v_message" id="v_message" type="text">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label for="v_message" class="control-label">Leasing ditunjuk:</label>
-                    <div class="controls">
-                        <input name="v_message" id="v_message" type="text">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label for="v_message" class="control-label">Mulai Angsur:</label>
-                    <div class="controls">
-                        <input name="v_message" id="v_message" type="text" class="input-mini">
-                        <input name="v_message" id="v_message" type="text" class="input-small">
-                    </div>
-                </div>
-            </div>
-            <div class="span6">
-                <div class="control-group">
-                    &nbsp;
-                </div>
-                <div class="control-group">
-                    <label for="v_message" class="control-label">Hari Ini:</label>
-                    <div class="controls">
-                        <input name="v_message" id="v_message" type="text">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label for="v_message" class="control-label">Cash Back:</label>
-                    <div class="controls">
-                        <input name="v_message" id="v_message" type="text">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label for="v_message" class="control-label">Jenis Asuransi:</label>
-                    <div class="controls">
-                        <input name="v_message" id="v_message" type="text">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label for="v_message" class="control-label">Jatuh Tempo:</label>
-                    <div class="controls">
-                        <input name="v_message" id="v_message" type="text">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label for="v_message" class="control-label">Angsuran:</label>
-                    <div class="controls">
-                        <input name="v_message" id="v_message" type="text">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label for="v_message" class="control-label">Biaya Pembatalan:</label>
-                    <div class="controls">
-                        <input name="v_message" id="v_message" type="text">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label for="v_message" class="control-label">Leasing ditunjuk:</label>
-                    <div class="controls">
-                        <input name="v_message" id="v_message" type="text">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row-fluid">
-        <div class="span6">
-            <div class="well">
-                <p><span class="label label-inverse">Pemberi Kuasa</span>
-                </p>
-                <div class="control-group">
-                    <label for="v_password">No Identitas:</label>
-
-                    <div class="input-prepend">
-                        <select name="jenisIdentitas" class="span4">
-                            <option>KTP</option>
-                            <option>SIM</option>
-                        </select>&nbsp;	<input type="text" name="noIndentitas" class="span8">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <div class="row-fluid">
-                        <div class="span6">
-                            <label for="v_email">Nama:</label>
-                            <input type="text" name="v_email" id="v_email"  class="span12" />
-                        </div>
-                        <div class="span6">
-                            <label >Jenis Kelamin:</label>
-                            <label class="radio inline">
-                                <input name="jenisKelamin" value="L" type="radio">Laki
-                            </label>
-                            <label class="radio inline">
-                                <input name="jenisKelamin" value="P" type="radio">Perempuan
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <div class="row-fluid">
-                        <div class="span6">
-                            <label>Alamat<span class="f_req">*</span></label>
-                            <input type="text" name="reg_first_name" class="span12">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="span6">
-            <div class="well">
-                <p><span class="label label-inverse">Penerima Kuasa</span>
-                </p>
-                <div class="control-group">
-                    <label for="v_password">No Identitas:</label>
-
-                    <div class="input-prepend">
-                        <select name="jenisIdentitas" class="span4">
-                            <option>KTP</option>
-                            <option>SIM</option>
-                        </select>&nbsp;	<input type="text" name="noIndentitas" class="span8">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <div class="row-fluid">
-                        <div class="span6">
-                            <label for="v_email">Nama:</label>
-                            <input type="text" name="v_email" id="v_email"  class="span12" />
-                        </div>
-                        <div class="span6">
-                            <label >Jenis Kelamin:</label>
-                            <label class="radio inline">
-                                <input name="jenisKelamin" value="L" type="radio">Laki
-                            </label>
-                            <label class="radio inline">
-                                <input name="jenisKelamin" value="P" type="radio">Perempuan
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <div class="row-fluid">
-                        <div class="span6">
-                            <label>Alamat<span class="f_req">*</span></label>
-                            <input type="text" name="reg_first_name" class="span12">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row-fluid">
-
-    </div>
-</fieldset>
-<button type="button" class="finish btn btn-primary"><i class="icon-ok icon-white"></i> Save</button>
+<button type="button" class="finish btn btn-primary save" data-loading-text="Loading ..."><i class="icon-ok icon-white"></i> Save</button>
+               
 </form>
 </div>
 </div>
@@ -544,14 +205,92 @@
 </div>
 <script>
     $(document).ready(function() {
+        $('#kodeCustomer').select2({  
+            ajax: {
+                url: "/api/customers/search",
+                quietMillis: 100,
+                data: function (term, page) { 
+                    return {
+                        q:term
+                    }
+                },
+                results : function(data) {
+                    return {
+                        results : $.map(data, function(item) {
+                            return {
+                                id : item._id,
+                                text : item.namaCustomer,
+                                obj : item
+                            };
+                        })
+                    };
+                }
+            },
 
-        $('#validate_wizard').stepy({
+            formatSelection:function(object,container) {
+                //console.log(object.obj);
+                if(typeof object.obj!=='undefined') {
+
+                    $('#thumbnail-profile').attr('src',object.obj.imgProfile);
+                    $('#imgProfile').val(object.obj.imgProfile);
+                    $('#namaCustomer').val(object.obj.namaCustomer);
+                    $('#quoteAlamat').html(_.template( $("#alamatSection").html(),object.obj.alamat));
+                    $('#quoteTelepon').html(_.template( $("#teleponSection").html(),object.obj.telepon));
+                    $('#alamat').val($('#quoteAlamat').html());
+                    
+                }
+                return object.text;
+            },
+            initSelection: function(element, callback) {
+                var id=$(element).val();
+                console.log('aaa '+id);
+                if (id!=="") {
+                    $.ajax("/api/customers/search?q="+id).done(function(data) { 
+                        if(data.length!=0) {
+                        data[0].id=data[0]._id;
+                        data[0].text=data[0].namaCustomer;
+                        data[0].obj=data[0];
+                        var obj =data[0];
+                        callback(obj); 
+                        }
+                    });
+
+                }
+            }
+        });
+
+        $('#quoteForm').stepy({
             nextLabel:      'Forward <i class="icon-chevron-right icon-white"></i>',
             backLabel:      '<i class="icon-chevron-left"></i> Backward',
             block		: true,
             errorImage	: true,
             titleClick	: true,
-            validate	: true
+            validate	: true,
+            finish : function(){
+
+                var cashBack = $('#cashBackMask').inputmask('unmaskedvalue');
+                var carDepreciation = $('#carDepreciationMask').inputmask('unmaskedvalue');
+                var pengurangTerakhir = $('#pengurangTerakhirMask').inputmask('unmaskedvalue');
+                var provisi = $('#provisiMask').inputmask('unmaskedvalue');
+                var admInsurance = $('#admInsuranceMask').inputmask('unmaskedvalue');
+                var hargaOTR = $('#hargaOTRMask').inputmask('unmaskedvalue');
+                
+                $('#cashBack').val(cashBack);
+                $('#carDepreciation').val(carDepreciation);
+                $('#pengurangTerakhir').val(pengurangTerakhir);
+                $('#provisi').val(provisi);
+                $('#admInsurance').val(admInsurance);
+                $('#hargaOTR').val(hargaOTR);
+                return false;
+            },
+             next: function(index) {
+                if(index==3) {
+                  var formData = $('#quoteForm').serializeObject();
+                  formData = calculateQuote(formData);
+                  var quotePrint = _.template( $("#quotePrintSection").html(),formData);
+                  $('#quotePrint').html(quotePrint);
+                }
+             }
         });
 
         $('.stepy-titles').each(function(){
@@ -561,28 +300,53 @@
             })
         });
 
-        var options = {
-            success:       showResponse  // post-submit callback
-            ,clearForm: true,
-            beforeSubmit: preForm,
-            url :'/leasing/save',
-            error : errorHandler
-        };
+        $('#quoteForm .numeric').inputmask("integer");
+        $('#quoteForm .percentage').inputmask("decimal");
+        $('#quoteForm .price').inputmask('Rp. 999.999.999.999', { numericInput: true })
 
-        $('#leasingForm').ajaxForm(options);
+        function calculateQuote(f) {
+            var cashBack = $('#cashBackMask').inputmask('unmaskedvalue')*1;
+            var carDepreciation = $('#carDepreciationMask').inputmask('unmaskedvalue')*1;
+            var pengurangTerakhir = $('#pengurangTerakhirMask').inputmask('unmaskedvalue')*1;
+            var provisi = $('#provisiMask').inputmask('unmaskedvalue')*1;
+            var admInsurance = $('#admInsuranceMask').inputmask('unmaskedvalue')*1;
+            var hargaOTR = $('#hargaOTRMask').inputmask('unmaskedvalue')*1;
+                
 
-        function preForm(arr, $form, options) {
+            $('#cashBack').val(cashBack);
+            $('#carDepreciation').val(carDepreciation);
+            $('#pengurangTerakhir').val(pengurangTerakhir);
+            $('#provisi').val(provisi);
 
-            return true;
-        }
-        function showResponse(responseText, statusText, xhr, $form) {
-            if(responseText.success) {
+            var loanPrincipal = 0;
+            loanPrincipal = hargaOTR-(0.3*hargaOTR)-loanPrincipal; 
 
-                console.log('success');
-            }
-        }
-        function errorHandler(context, xhr, status, responseText) {
-            console.log(context.responseText);
+            var bungaDibayar = (f.sukuBunga*1/100)*loanPrincipal*f.lamaPinjaman;
+            var bungaAssDibayar = (f.asstTlo*1/100)*hargaOTR;
+            var maxRevenue = loanPrincipal - pengurangTerakhir - carDepreciation;
+            var totalMaxRevenue = maxRevenue + cashBack;
+            var payPerMonth = (bungaDibayar + loanPrincipal) / (f.lamaPinjaman*12);
+            var cashNCarry = totalMaxRevenue - admInsurance - bungaAssDibayar - provisi - payPerMonth;
+            $('#payPerMonth').val(payPerMonth);
+            $('#cashNCarry').val(cashNCarry);
+
+            var ext = {
+                cashBack: cashBack.formatPrice(),
+                carDepreciation: carDepreciation.formatPrice(),
+                pengurangTerakhir: pengurangTerakhir.formatPrice(),
+                provisi: provisi.formatPrice(),
+                bungaDibayar: bungaDibayar.formatPrice(),
+                bungaAssDibayar: bungaAssDibayar.formatPrice(),
+                admInsurance : admInsurance.formatPrice(),  
+                hargaOTR : hargaOTR.formatPrice(),
+                maxRevenue : maxRevenue.formatPrice(),
+                totalMaxRevenue : totalMaxRevenue.formatPrice(),
+                provisi : provisi.formatPrice(),
+                loanPrincipal : loanPrincipal.formatPrice(),
+                payPerMonth : payPerMonth.formatPrice(),
+                cashNCarry : cashNCarry.formatPrice()
+            };
+            return $.extend(f,ext);
         }
     });
 </script>

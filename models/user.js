@@ -35,7 +35,17 @@ var UserSchema = new Schema({
   status: {type : String, default : '', trim : true},
   tglTambah: { type : Date, default : Date.now },
   tglTerakhirLogin: { type : Date, default : Date.now },
-  akses: {type : Array}
+  akses: {type : Array},
+  karyawan : {
+    _id: {type:Schema.Types.ObjectId},
+    imgProfile: {type : String, default : '', trim : true},
+    nama: {type : String, default : '', trim : true}
+  },
+  cabang: {
+    _id: {type:Schema.Types.ObjectId},
+    kodeCabang: {type : String, default : '', trim : true},
+    namaCabang: {type : String, default : '', trim : true}
+  }
   
 })
 
@@ -85,7 +95,10 @@ UserSchema.methods = {
    * @param {Function} cb
    * @api private
    */
-
+  isAdmin:function(){
+    console.log(this.akses);
+    return true;
+  },
   addComment: function (user, comment, cb) {
     var notify = require('../mailer/notify')
 
@@ -138,15 +151,14 @@ UserSchema.statics = {
           .exec(cb)
   },
 
-  list: function (options, cb) {
-    var criteria = options.criteria || {};
-    var select = options.select || {};
+ list: function (options, cb) {
+    var criteria = options.criteria || {}
+    var select = options.select || {}
     this.find(criteria)
-      .sort({'createdAt': -1}) // sort by date
-      .limit(options.perPage)
-      .skip(options.perPage * 1 * (options.page))
-      .select(options.select)
-      .exec(cb)
+    .limit(options.perPage)
+    .skip(options.perPage * (options.page))
+    .select(select)
+    .exec(cb)
   }
 
 }

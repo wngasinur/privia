@@ -54,10 +54,6 @@
 		//* top submenu
 		gebo_submenu.init();
 		
-		//* mobile navigation
-		selectnav('mobile-nav', {
-			indent: '-'
-		});
 		
 		gebo_sidebar.make_scroll();
 		gebo_sidebar.update_scroll();
@@ -75,10 +71,7 @@
 			// sidebar onload state
 			if($(window).width() > 979){
                 if(!$('body').hasClass('sidebar_hidden')) {
-                    if( $.cookie('gebo_sidebar') == "hidden") {
-                        $('body').addClass('sidebar_hidden');
-                        $('.sidebar_switch').toggleClass('on_switch off_switch').attr('title','Show Sidebar');
-                    }
+                   
                 } else {
                     $('.sidebar_switch').toggleClass('on_switch off_switch').attr('title','Show Sidebar');
                 }
@@ -92,12 +85,11 @@
             $('.sidebar_switch').click(function(){
                 $('.sidebar_switch').removeClass('on_switch off_switch');
                 if( $('body').hasClass('sidebar_hidden') ) {
-                    $.cookie('gebo_sidebar', null);
+                 
                     $('body').removeClass('sidebar_hidden');
                     $('.sidebar_switch').addClass('on_switch').show();
                     $('.sidebar_switch').attr( 'title', "Hide Sidebar" );
                 } else {
-                    $.cookie('gebo_sidebar', 'hidden');
                     $('body').addClass('sidebar_hidden');
                     $('.sidebar_switch').addClass('off_switch');
                     $('.sidebar_switch').attr( 'title', "Show Sidebar" );

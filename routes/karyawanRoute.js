@@ -6,7 +6,9 @@
  moment = require('moment'),
  async = require('async'),
  $ = require('jquery'),
- Karyawan = mongoose.model('Karyawan')
+ Karyawan = mongoose.model('Karyawan'),
+ User = mongoose.model('User'),
+ Cabang = mongoose.model('Cabang')
 
  exports.search = function(req, res){
 
@@ -20,7 +22,15 @@
   });
 
 };
+exports.get = function(req, res){
 
+  var id = req.params.id;
+  console.log(id);
+  Karyawan.load(id,function(err,result){
+
+    res.json(result);
+  });
+};
 exports.list = function(req, res){
 
 
@@ -36,7 +46,7 @@ exports.list = function(req, res){
           console.log(sSearch);
         }
         var perPage = req.query.iDisplayLength*1;
-        var criteria = {username:new RegExp(searchUsername, 'i')};
+        var criteria = {nama:new RegExp(searchUsername, 'i')};
         console.log(searchUsername);
         var displayStart = req.query.iDisplayStart*1;
         var page = displayStart/perPage;
@@ -65,20 +75,80 @@ exports.list = function(req, res){
 
 };
 
-exports.add = function(req, res){
-  
- var json = req.body;
- console.log(json.tglLahir+'aaa');
- json.tglLahir = moment(json.tglLahir,'MM-DD-YYYY');
- console.log(json);
- var karyawan = new Karyawan(json);
- karyawan.save(function (err) {
-  if (err) {
-   console.log(err)
-   return res.json(500, err);
-		  }// saved!
-		  res.json( { success: 'true' });
+exports.save = function(req, res){
 
-		})	
- 
+
+ console.log(req.body);
+ var json = req.body;
+ json.tglLahir = moment(json.tglLahir,'DD-MM-YYYY');
+
+ var karyawan = new Karyawan(json);
+
+ var editKaryawan = json;
+
+ if(karyawan._id) {
+
+  delete editKaryawan._id;
+  delete editKaryawan.__v;
+
+  console.log('edit %j',editKaryawan);
+  var conditions = { _id: karyawan._id }
+  , update = editKaryawan
+  , options = { multi: false };
+
+  Karyawan.update(conditions, update, options, function(err,result){
+    if(err)
+      console.log(err);
+    else
+      res.json( { success: 'true' });
+
+  });
+
+     /*// an example using an object instead of an array
+     async.series({
+      one: function(callback){
+      
+        callback(null);
+      },
+      two: function(callback){
+
+   
+
+        callback(null);
+      }
+    },
+    function(err, results) {
+    // results is now equal to: {one: 1, two: 2}
+  });*/
+
+if(json.oldUsername!='' && json.oldUsername!=json.username) {
+
+ User.update({_id:json.oldUsername}, { $set: { status:'Aktif', karyawan:null,cabang:null}}, { upsert: false },function(err,result){});      
+}
+
+Cabang.load(json.cabang,function(err,cabang1){
+  var cabang = null;
+  if(!err) {
+    cabang={_id:cabang1._id,kodeCabang:cabang1.kodeCabang,namaCabang:cabang1.namaCabang};
+  }
+  karyawan={_id:karyawan._id,imgProfile:karyawan.imgProfile,nama:karyawan.nama}
+  User.update({_id:json.username}, { $set:   { status:'Aktif',cabang:cabang,karyawan:karyawan}  }, { upsert : true},function(err,result){});
+
+}); 
+
+}
+else {
+  console.log('add');
+  delete json._id;
+  karyawan = new Karyawan(json);
+  karyawan.save(function (err) {
+    if (err) {
+      console.log(err)
+      return res.json(500, err);
+            }// saved!
+            res.json( { success: 'true' });
+
+          });
+}
+
 };
