@@ -95,7 +95,7 @@ exports.save = function(req, res){
   var conditions = { _id: karyawan._id }
   , update = editKaryawan
   , options = { multi: false };
-
+  update.tglLahir=null;
   Karyawan.update(conditions, update, options, function(err,result){
     if(err)
       console.log(err);
@@ -141,12 +141,23 @@ else {
   console.log('add');
   delete json._id;
   karyawan = new Karyawan(json);
-  karyawan.save(function (err) {
+  karyawan.save(function (err,karyawan) {
+
     if (err) {
       console.log(err)
       return res.json(500, err);
-            }// saved!
-            res.json( { success: 'true' });
+    }// saved!
+    res.json( { success: 'true' });
+
+Cabang.load(json.cabang,function(err,cabang1){
+  var cabang = null;
+  if(!err) {
+    cabang={_id:cabang1._id,kodeCabang:cabang1.kodeCabang,namaCabang:cabang1.namaCabang};
+  }
+  karyawan={_id:karyawan._id,imgProfile:karyawan.imgProfile,nama:karyawan.nama}
+  User.update({_id:json.username}, { $set:   { status:'Aktif',cabang:cabang,karyawan:karyawan}  }, { upsert : true},function(err,result){});
+
+}); 
 
           });
 }
