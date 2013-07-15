@@ -14,7 +14,7 @@
                     <th>Kendaraan</th>
                     <th>Alamat</th>
                     <th>Lama Pinjaman</th>
-                    <th>Tanggal</th>
+                    <th>Waktu</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -45,8 +45,8 @@
             },
               {
                 "mRender": function ( data, type, row ) {
-                    console.log(data);
-                    return Date.parse(data,'yyyy-M-d');
+                    
+                    return moment(data).fromNow();
                 },
                 "aTargets": [4  ]
             },

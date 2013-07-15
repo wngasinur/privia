@@ -100,7 +100,7 @@
                         <div class="info">
                             <span class="badge">Proposal</span>
                             <small>Telah mengajukan proposal pinjaman selama <%=lamaPinjaman%> tahun kepada <b><%=namaCustomer%></b> dengan total pinjaman <%=cashNCarry.formatPrice()%> , dan pembayaran bulanan <%=payPerMonth.formatPrice()%>
- <blockquote>1 Jam Lalu</blockquote>
+ <blockquote><%=moment(tglTambah).fromNow()%></blockquote>
                         </small>
                         </div>
 

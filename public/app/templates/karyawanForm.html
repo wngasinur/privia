@@ -6,6 +6,8 @@
 	  			</div>		
 	  			<input type="hidden" name="oldUsername" value="<%=username%>">		
            		<input type="hidden" name="imgProfile" id="imgProfile" value="<%=imgProfile%>">
+
+           		<input type="hidden" name="namaCabang" id="namaCabang" value="<%=namaCabang%>">
 				<div class="row-fluid">
 					<div class="span5">
 						<div class="control-group">
@@ -59,7 +61,7 @@
 									<label>Tempat/Tanggal Lahir</label>
 
 									<input type="text" name="tempatLahir" class="input-small"  value="<%=tempatLahir%>">
-									<input type="text" name="tglLahir" id="tglLahir"  value="<%=tglLahir%>">
+									<input type="text" name="tglLahir" id="tglLahir"  value="<%=tglLahir!=null?moment(tglLahir).format('DD-MMM-YYYY'):''%>">
 								</div>
 							</div>
 							<div class="span6 well">
@@ -177,9 +179,18 @@
 								})
 							};
 						}
-					},
+					}, formatSelection:function(object,container) {
+		               
+		                if(typeof object!=='undefined') {
+
+		                    $('#namaCabang').val(object.namaCabang);
+		                    
+		                }
+		                return object.text;
+            		},
+
 					initSelection: function(element, callback) {
-						console.log(callback);
+						
 						var id=$(element).val();
 						if (id!=="") {
 							$.ajax("/api/cabangs/search?q="+id).done(function(data) { 
@@ -214,7 +225,7 @@
 					}
 				});
 
-				$("#tglLahir").datepicker({ dateFormat: 'dd-mm-yy' });
+				$("#tglLahir").datepicker({ dateFormat: 'dd-M-yy',changeYear :true,changeMonth: true  });
 
 				
 

@@ -27,7 +27,7 @@ require.config({
     "qtip2" : "../lib/qtip2/jquery.qtip.min",
     "text" : "/js/text",
     "gebo_common" : "/js/gebo_common",
-    "datejs" : "/js/date",
+    "moment" : "../lib/moment_js/moment.min",
     "router" : "router.privia",
     "app" : "app.privia"
   },
@@ -114,7 +114,7 @@ require([
 'app','router','backbone','jquery.ui','jquery.validate','jquery.form','bootstrap','jquery.serializeObject',
 'dataTables','dataTables.sorting','dataTables.bootstrap','antiscroll','jquery.fineuploader',
 'select2','stepy','flot','flot.categories','flot.time','flot.pie','qtip2',
-'backbone.syphon','jquery.inputmask','datejs','gebo_common'], function(app,Router) {
+'backbone.syphon','jquery.inputmask','moment','gebo_common'], function(app,Router) {
 
  setTimeout('$("html").removeClass("js")',500);
  $('.antiScroll').antiscroll().data('antiscroll');

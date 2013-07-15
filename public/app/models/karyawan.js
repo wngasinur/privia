@@ -28,6 +28,7 @@ define(["jquery", "backbone"],
                 noRekening:'',
                 atasNama:'',
                 cabang:'',
+                namaCabang:'',
                 status:''
             },
 

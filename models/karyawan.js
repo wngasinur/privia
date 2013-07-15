@@ -46,6 +46,7 @@ var KaryawanSchema = new Schema({
   noRekening: {type : String, default : '', trim : true},
   atasNama: {type : String, default : '', trim : true},
   cabang: {type: Schema.Types.ObjectId, ref: 'Cabang'},
+  namaCabang : {type : String, default : '', trim : true},
   status: {type : String, default : '', trim : true},
   tglTambah: { type : Date, default : Date.now },
   tglLahir: { type : Date, default : Date.now },

@@ -80,7 +80,8 @@ exports.save = function(req, res){
 
  console.log(req.body);
  var json = req.body;
- json.tglLahir = moment(json.tglLahir,'DD-MM-YYYY');
+ if(json.tglLahir!='')
+   json.tglLahir = moment(json.tglLahir,'DD-MMM-YYYY').toDate();
 
  var karyawan = new Karyawan(json);
 
@@ -95,7 +96,7 @@ exports.save = function(req, res){
   var conditions = { _id: karyawan._id }
   , update = editKaryawan
   , options = { multi: false };
-  update.tglLahir=null;
+
   Karyawan.update(conditions, update, options, function(err,result){
     if(err)
       console.log(err);

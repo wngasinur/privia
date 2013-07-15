@@ -14,7 +14,7 @@
             <thead>
                 <tr>
                     <th>Username</th>
-                    <th>Tgl Terakhir Login</th>
+                    <th>Terakhir Login</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
@@ -45,6 +45,13 @@
                 },
                 "aTargets": [ 3 ]
             }
+            ,    {
+                "mRender": function ( data, type, row ) {
+                    
+                    return moment(data).fromNow();
+                },
+                "aTargets": [1  ]
+            },
             ],
         "aoColumns": [
         { "mData": "username" },
