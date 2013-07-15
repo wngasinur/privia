@@ -47,8 +47,9 @@
             }
             ,    {
                 "mRender": function ( data, type, row ) {
-                    
+                    if(data)
                     return moment(data).fromNow();
+                    else return '';
                 },
                 "aTargets": [1  ]
             },
