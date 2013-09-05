@@ -1,0 +1,26 @@
+h1 {
+  color: #000;
+  background: none;
+}
+
+header, nav, aside,.sidebar,.stepy-titles,.heading,.no-print,.btn {
+  display: none;
+}
+
+body, article {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  line-height:90%;
+}
+
+small{
+	font-size:8px;
+	line-height:70% !important;
+}
+
+
+.footer {
+    position: fixed;
+    bottom: 0;
+}

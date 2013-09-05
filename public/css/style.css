@@ -741,7 +741,7 @@
     .editable-input .datepicker table tr td, .editable-input .datepicker table tr th {background:transparent}
     
 	/* invoice */
-		.invoice_heading {font-size:32px;font-family: "PT Sans",sans-serif;}
+		.invoice_heading {font-size:28px;font-family: "PT Sans",sans-serif;}
 		td.invoice_tar,th.invoice_tar {text-align:right}
 		
 	/* media queries */

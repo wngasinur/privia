@@ -71,10 +71,9 @@ define([
 
         this.changePasswordForm = this.$el.find('#changePasswordForm');
         if(this.changePasswordForm.valid()) {
-        //console.log(this.changePasswordModel);
-        this.changePasswordModel.set('password',this.$el.find('#password').val());
-        this.changePasswordModel.save();
-        $('#changePasswordModal').modal('hide');
+          this.changePasswordModel.set('password',this.$el.find('#password').val());
+          this.changePasswordModel.save();
+          $('#changePasswordModal').modal('hide');
       }
     },
 

@@ -26,7 +26,7 @@
 
                             </div>
                             <div class="control-group">
-                                <label for="noIdentitas">No Identitas:</label>
+                                <label for="noIdentitas">No Identitas<span class="f_req">*</span></label>
 
                                 <div class="input-prepend">
                                     <select name="tipeIdentitas" class="span4" id="tipeIdentitas">
@@ -43,7 +43,7 @@
                                     </div>
 
                                     <div class="span6">
-                                        <label >Jenis Kelamin</label>
+                                        <label>Jenis Kelamin<span class="f_req">*</span></label>
                                         <label class="radio inline">
                                             <input name="gender" value="L" type="radio" <%=gender=='L'?'checked':''%> >Laki
                                         </label>
@@ -134,7 +134,7 @@
                             <div class="control-group">
                                 <div class="row-fluid">
                                     <div class="span4">
-                                        <label>HP1</label>
+                                        <label>HP1 <span class="f_req">*</span></label>
                                         <input type="text" name="telepon[hp1]" class="span12" value="<%=telepon.hp1%>">
                                     </div>
                                     <div class="span4">

@@ -1,0 +1,125 @@
+<div class="row-fluid">
+    <div class="span8">
+        <h2 class="invoice_heading">MEGA OTO FINANCE since 2000</h2>
+    </div>
+    <div class="span4">
+        <p class="sepH_a"><span class="muted sepV_b">Nama Kendaraan</span><strong><%=namaKendaraan%></strong></p>
+        <p><span class="muted sepV_b">Tahun Buat</span><strong><%=tahunBuat%></strong></p>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span4">
+        <p><strong class="muted">Kepada</strong></p>
+        <address>
+            <strong><%=namaCustomer%></strong>
+        </address>  
+    </div>
+</div>
+<div class"row-fluid">
+<aside>
+<table class="table span6">
+ <tr>
+    <td>
+        <p class="sepH_a"><span class="muted sepV_b">Lama Pinjaman </span><%=lamaPinjaman%> tahun</p>
+        <p class="sepH_a"><span class="muted sepV_b">Bunga Tahun <%=lamaPinjaman%></span><%=bungaDibayar%></p>
+        <p class="sepH_a"><span class="muted sepV_b">Ass <%=lamaPinjaman%> Thn TLO</span><%=bungaAssDibayar%></p>
+        </td>
+        <td>
+        <p class="sepH_a"><span class="muted sepV_b">Cash Back</span><%=cashBack%> </p>
+        <p class="sepH_a"><span class="muted sepV_b">Depreciation</span><%=carDepreciation%> </p>
+        <p class="sepH_a"><span class="muted sepV_b">Pengurang Akhir</span><%=pengurangTerakhir%></p>
+        <p class="sepH_a"><span class="muted sepV_b">Provisi</span><%=provisi%></p>
+    </td>
+</tr>
+</table>
+</aside>
+</div>
+<div class="row-fluid">
+    <div class="span12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th width=50%>Item</th>
+                    <th width=25%></th>
+                    <th width=25%></th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Price On The Roads</td>
+                <td></td>
+                <td><%=hargaOTR%></td>
+            </tr>
+            <tr>
+                <td>Car Depreciation</td>
+                <td><%=carDepreciation%></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Maximal Revenue</td>
+                <td><%=maxRevenue%></td>
+                <td></td>
+            </tr>
+             <tr>
+                <td>Promo Cash Back</td>
+                <td><%=cashBack%></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Total Maximal Revenue</td>
+                <td></td>
+                <td><%=totalMaxRevenue%></td>
+            </tr>
+              <tr>
+                <td>Adm & Polis Insurance</td>
+                <td><%=admInsurance%></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Insurance TLO For <%=lamaPinjaman%> years </td>
+                <td><%=bungaAssDibayar%></td>
+                <td></td>
+            </tr>
+             <tr>
+                <td>Provisi & Fiducia Legal</td>
+                <td><%=provisi%></td>
+                <td></td>
+            </tr>
+             <tr>
+                <td>Pay per Month</td>
+                <td><%=payPerMonth%></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Cash & Carry in your hands</td>
+                <td></td>
+                <td><%=cashNCarry%></td>
+            </tr>
+           
+        </tbody></table>
+    </div>
+</div>
+ <div class="row-fluid">
+    <div class="span12">
+    <small class="muted">
+           CATATAN :       
+           <ol>
+           <li>BIAYA DIATAS SUDAH TERMASUK PEMBAYARAN ANGSURAN 1</li>
+           <li>SEGALA MACAM BENTUK PEMALSUAN KEPEMILIKAN , AKAN DI PROSES DIJALUR HUKUM </li>
+           <li>PEMALSUAN BPKB DIKETAHUI DALAM 5 MENIT. URUNGKAN SAAT INI JUGA</li>
+           <li>PENCAIRAN DANA FULL, MENGIKUTI SYARAT DAN KETENTUAN YG ADA  </li>
+           <li>STNK HIDUP, FISIK KENDARAAN HADIR SERTA TIDAK DALAM KEADAAN RUSAK.</li>
+           </ol>   
+    </small>
+    </div>
+</div>
+ <div class="row-fluid">
+    <div class="span8">
+    </div>
+    <div class="span4">
+      <p><strong>Jakarta, <%=moment().format("DD MMMM YYYY")%></strong></p>
+      <p><strong>Disetujui untuk dikerjakan,</strong></p>
+      <br><br><br><br>
+      <p>..........................................</p>
+    </div>
+</div>

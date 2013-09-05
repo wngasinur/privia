@@ -88,7 +88,7 @@
                             <div class="control-group">
                                 <div class="row-fluid">
                                     <div class="span4">
-                                       <label for="namaKendaraan">Nama Kendaraan:</label>
+                                       <label for="namaKendaraan">Tipe Kendaraan:</label>
                                         <input type="text" class="span12"  name="namaKendaraan" id="namaKendaraan" value="<%=namaKendaraan%>" />
                                     </div>
                                     <div class="span3">
@@ -112,10 +112,10 @@
         <div class="span5">
                 <p><span class="label label-inverse">Informasi Kredit</span></p>
                 <div class="control-group">
-                    <label for="v_password">Perusahaan Kredit:</label>
+                    <label for="perusahaanKredit">Perusahaan Kredit:</label>
 
                     <div class="input-prepend">
-                        <select name="perusahaanKredit">
+                        <select name="perusahaanKredit" id="perusahaanKredit">
                             <option <%=perusahaanKredit=='ARTHA'?'checked':''%> >ARTHA</option>
                             <option <%=perusahaanKredit=='BCA'?'checked':''%>>BCA</option>
                             <option <%=perusahaanKredit=='BHAKTI'?'checked':''%>>BHAKTI</option>
@@ -167,7 +167,7 @@
             <div class="control-group">
                 <div class="row-fluid">
                     <div class="span4">
-                        <label>Pengurang Terakhir<span class="f_req">*</span></label>
+                        <label>Pengurang DP<span class="f_req">*</span></label>
                         <input type="text" name="pengurangTerakhirMask" id="pengurangTerakhirMask" class="span12 price" value="<%=pengurangTerakhir%>" >
                     </div>
                     <div class="span4">
@@ -205,148 +205,7 @@
 </div>
 <script>
     $(document).ready(function() {
-        $('#kodeCustomer').select2({  
-            ajax: {
-                url: "/api/customers/search",
-                quietMillis: 100,
-                data: function (term, page) { 
-                    return {
-                        q:term
-                    }
-                },
-                results : function(data) {
-                    return {
-                        results : $.map(data, function(item) {
-                            return {
-                                id : item._id,
-                                text : item.namaCustomer,
-                                obj : item
-                            };
-                        })
-                    };
-                }
-            },
-
-            formatSelection:function(object,container) {
-                //console.log(object.obj);
-                if(typeof object.obj!=='undefined') {
-
-                    $('#thumbnail-profile').attr('src',object.obj.imgProfile);
-                    $('#imgProfile').val(object.obj.imgProfile);
-                    $('#namaCustomer').val(object.obj.namaCustomer);
-                    $('#quoteAlamat').html(_.template( $("#alamatSection").html(),object.obj.alamat));
-                    $('#quoteTelepon').html(_.template( $("#teleponSection").html(),object.obj.telepon));
-                    $('#alamat').val($('#quoteAlamat').html());
-                    
-                }
-                return object.text;
-            },
-            initSelection: function(element, callback) {
-                var id=$(element).val();
-                console.log('aaa '+id);
-                if (id!=="") {
-                    $.ajax("/api/customers/search?q="+id).done(function(data) { 
-                        if(data.length!=0) {
-                        data[0].id=data[0]._id;
-                        data[0].text=data[0].namaCustomer;
-                        data[0].obj=data[0];
-                        var obj =data[0];
-                        callback(obj); 
-                        }
-                    });
-
-                }
-            }
-        });
-
-        $('#quoteForm').stepy({
-            nextLabel:      'Forward <i class="icon-chevron-right icon-white"></i>',
-            backLabel:      '<i class="icon-chevron-left"></i> Backward',
-            block		: true,
-            errorImage	: true,
-            titleClick	: true,
-            validate	: true,
-            finish : function(){
-
-                var cashBack = $('#cashBackMask').inputmask('unmaskedvalue');
-                var carDepreciation = $('#carDepreciationMask').inputmask('unmaskedvalue');
-                var pengurangTerakhir = $('#pengurangTerakhirMask').inputmask('unmaskedvalue');
-                var provisi = $('#provisiMask').inputmask('unmaskedvalue');
-                var admInsurance = $('#admInsuranceMask').inputmask('unmaskedvalue');
-                var hargaOTR = $('#hargaOTRMask').inputmask('unmaskedvalue');
-                
-                $('#cashBack').val(cashBack);
-                $('#carDepreciation').val(carDepreciation);
-                $('#pengurangTerakhir').val(pengurangTerakhir);
-                $('#provisi').val(provisi);
-                $('#admInsurance').val(admInsurance);
-                $('#hargaOTR').val(hargaOTR);
-                return false;
-            },
-             next: function(index) {
-                if(index==3) {
-                  var formData = $('#quoteForm').serializeObject();
-                  formData = calculateQuote(formData);
-                  var quotePrint = _.template( $("#quotePrintSection").html(),formData);
-                  $('#quotePrint').html(quotePrint);
-                }
-             }
-        });
-
-        $('.stepy-titles').each(function(){
-            $(this).children('li').each(function(index){
-                var myIndex = index + 1
-                $(this).append('<span class="stepNb">'+myIndex+'</span>');
-            })
-        });
-
-        $('#quoteForm .numeric').inputmask("integer");
-        $('#quoteForm .percentage').inputmask("decimal");
-        $('#quoteForm .price').inputmask('Rp. 999.999.999.999', { numericInput: true })
-
-        function calculateQuote(f) {
-            var cashBack = $('#cashBackMask').inputmask('unmaskedvalue')*1;
-            var carDepreciation = $('#carDepreciationMask').inputmask('unmaskedvalue')*1;
-            var pengurangTerakhir = $('#pengurangTerakhirMask').inputmask('unmaskedvalue')*1;
-            var provisi = $('#provisiMask').inputmask('unmaskedvalue')*1;
-            var admInsurance = $('#admInsuranceMask').inputmask('unmaskedvalue')*1;
-            var hargaOTR = $('#hargaOTRMask').inputmask('unmaskedvalue')*1;
-                
-
-            $('#cashBack').val(cashBack);
-            $('#carDepreciation').val(carDepreciation);
-            $('#pengurangTerakhir').val(pengurangTerakhir);
-            $('#provisi').val(provisi);
-
-            var loanPrincipal = 0;
-            loanPrincipal = hargaOTR-(0.3*hargaOTR)-loanPrincipal; 
-
-            var bungaDibayar = (f.sukuBunga*1/100)*loanPrincipal*f.lamaPinjaman;
-            var bungaAssDibayar = (f.asstTlo*1/100)*hargaOTR;
-            var maxRevenue = loanPrincipal - pengurangTerakhir - carDepreciation;
-            var totalMaxRevenue = maxRevenue + cashBack;
-            var payPerMonth = (bungaDibayar + loanPrincipal) / (f.lamaPinjaman*12);
-            var cashNCarry = totalMaxRevenue - admInsurance - bungaAssDibayar - provisi - payPerMonth;
-            $('#payPerMonth').val(payPerMonth);
-            $('#cashNCarry').val(cashNCarry);
-
-            var ext = {
-                cashBack: cashBack.formatPrice(),
-                carDepreciation: carDepreciation.formatPrice(),
-                pengurangTerakhir: pengurangTerakhir.formatPrice(),
-                provisi: provisi.formatPrice(),
-                bungaDibayar: bungaDibayar.formatPrice(),
-                bungaAssDibayar: bungaAssDibayar.formatPrice(),
-                admInsurance : admInsurance.formatPrice(),  
-                hargaOTR : hargaOTR.formatPrice(),
-                maxRevenue : maxRevenue.formatPrice(),
-                totalMaxRevenue : totalMaxRevenue.formatPrice(),
-                provisi : provisi.formatPrice(),
-                loanPrincipal : loanPrincipal.formatPrice(),
-                payPerMonth : payPerMonth.formatPrice(),
-                cashNCarry : cashNCarry.formatPrice()
-            };
-            return $.extend(f,ext);
-        }
+       
+        
     });
 </script>

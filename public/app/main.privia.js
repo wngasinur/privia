@@ -5,7 +5,7 @@ require.config({
     "dataTables.sorting" :"../lib/datatables/jquery.dataTables.sorting",
     "dataTables.bootstrap" : "../lib/datatables/jquery.dataTables.bootstrap.min",
     "underscore" : "../lib/underscore",
-    "backbone" :"../lib/backbone",
+    "backbone" :"../lib/backbone-min",
     "backbone.syphon" :"../lib/backbone.syphon",
     "util" : "../util.nganterin",
     "bootstrap" : "../bootstrap/js/bootstrap.min",
@@ -55,7 +55,7 @@ require.config({
     'jquery.form' : {
       deps : ['jquery']
     },
-     'jquery.actual' : {
+    'jquery.actual' : {
       deps : ['jquery']
     },
     'jquery.inputmask' : {
@@ -111,13 +111,12 @@ require.config({
 
 require([
 
-'app','router','backbone','jquery.ui','jquery.validate','jquery.form','bootstrap','jquery.serializeObject',
+'app','router','backbone','jquery.ui','jquery.validate','jquery.form','jquery.actual','bootstrap','jquery.serializeObject',
 'dataTables','dataTables.sorting','dataTables.bootstrap','antiscroll','jquery.fineuploader',
 'select2','stepy','flot','flot.categories','flot.time','flot.pie','qtip2',
 'backbone.syphon','jquery.inputmask','moment','gebo_common'], function(app,Router) {
 
  setTimeout('$("html").removeClass("js")',500);
- $('.antiScroll').antiscroll().data('antiscroll');
 // $('#constructionModal').modal();
  window.app = app;
  app.router = new Router();

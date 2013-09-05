@@ -112,7 +112,10 @@ define([
                         $(element).closest('div').append(error);
                     },
                     rules: {
-                        namaCustomer: "required"
+                        namaCustomer: "required",
+                        noIdentitas : "required",
+                        gender : "required",
+                        "telepon[hp1]":"required"
                     },
                     messages: {
 

@@ -5,8 +5,9 @@ define([
     'text!../templates/quoteList.html',
     'text!../templates/quoteForm.html',
     'text!../templates/quoteForm.html',
+    'text!../templates/quotePrintSection.html',
     '../models/quote'
-], function($, _, Backbone, listTemplate,formTemplate,formEditTemplate,Model){
+], function($, _, Backbone, listTemplate,formTemplate,formEditTemplate,print1SectionTemplate,Model){
 
     var QuoteView = Backbone.View.extend({
         el: $('#container'),
@@ -66,6 +67,50 @@ define([
         cancel:function() {
             app.router.navigate('/quote',{trigger:true});
         },
+        calculateQuote:function(f) {
+            var cashBack = $('#cashBackMask').inputmask('unmaskedvalue')*1;
+            var carDepreciation = $('#carDepreciationMask').inputmask('unmaskedvalue')*1;
+            var pengurangTerakhir = $('#pengurangTerakhirMask').inputmask('unmaskedvalue')*1;
+            var provisi = $('#provisiMask').inputmask('unmaskedvalue')*1;
+            var admInsurance = $('#admInsuranceMask').inputmask('unmaskedvalue')*1;
+            var hargaOTR = $('#hargaOTRMask').inputmask('unmaskedvalue')*1;
+                
+
+            $('#cashBack').val(cashBack);
+            $('#carDepreciation').val(carDepreciation);
+            $('#pengurangTerakhir').val(pengurangTerakhir);
+            $('#provisi').val(provisi);
+
+            var loanPrincipal = 0;
+            loanPrincipal = hargaOTR-(0.3*hargaOTR)-loanPrincipal; 
+
+            var bungaDibayar = (f.sukuBunga*1/100)*loanPrincipal*f.lamaPinjaman;
+            var bungaAssDibayar = (f.asstTlo*1/100)*hargaOTR;
+            var maxRevenue = loanPrincipal - pengurangTerakhir - carDepreciation;
+            var totalMaxRevenue = maxRevenue + cashBack;
+            var payPerMonth = (bungaDibayar + loanPrincipal) / (f.lamaPinjaman*12);
+            var cashNCarry = totalMaxRevenue - admInsurance - bungaAssDibayar - provisi - payPerMonth;
+            $('#payPerMonth').val(payPerMonth);
+            $('#cashNCarry').val(cashNCarry);
+
+            var ext = {
+                cashBack: cashBack.formatPrice(),
+                carDepreciation: carDepreciation.formatPrice(),
+                pengurangTerakhir: pengurangTerakhir.formatPrice(),
+                provisi: provisi.formatPrice(),
+                bungaDibayar: bungaDibayar.formatPrice(),
+                bungaAssDibayar: bungaAssDibayar.formatPrice(),
+                admInsurance : admInsurance.formatPrice(),  
+                hargaOTR : hargaOTR.formatPrice(),
+                maxRevenue : maxRevenue.formatPrice(),
+                totalMaxRevenue : totalMaxRevenue.formatPrice(),
+                provisi : provisi.formatPrice(),
+                loanPrincipal : loanPrincipal.formatPrice(),
+                payPerMonth : payPerMonth.formatPrice(),
+                cashNCarry : cashNCarry.formatPrice()
+            };
+            return $.extend(f,ext);
+        },
         render: function(page,cb){
             console.log('render quote view');
             var that = this;
@@ -91,10 +136,9 @@ define([
                         var compiledTemplate = _.template( template, data );
                         that.$el.html( compiledTemplate );
                         that.quoteForm = that.$el.find('#quoteForm');
-                    
+                        that.initializeForm();
 
                         if(cb) cb();
-
                     }
                 });
             }
@@ -106,11 +150,119 @@ define([
 
                 this.quoteForm = this.$el.find('#quoteForm');
                // console.log(this.$el.find('#quoteForm'));
-
+                that.initializeForm();
 
                 if(cb) cb();
             }
-        }
+
+            
+
+          
+
+    },
+    initializeForm:function(){
+        that=this;
+        this.$el.find('#kodeCustomer').select2({  
+            ajax: {
+                url: "/api/customers/search",
+                quietMillis: 100,
+                data: function (term, page) { 
+                    return {
+                        q:term
+                    }
+                },
+                results : function(data) {
+                    return {
+                        results : $.map(data, function(item) {
+                            return {
+                                id : item._id,
+                                text : item.namaCustomer,
+                                obj : item
+                            };
+                        })
+                    };
+                }
+            },
+
+            formatSelection:function(object,container) {
+                //console.log(object.obj);
+                if(typeof object.obj!=='undefined') {
+
+                    $('#thumbnail-profile').attr('src',object.obj.imgProfile);
+                    $('#imgProfile').val(object.obj.imgProfile);
+                    $('#namaCustomer').val(object.obj.namaCustomer);
+                    $('#quoteAlamat').html(_.template( $("#alamatSection").html(),object.obj.alamat));
+                    $('#quoteTelepon').html(_.template( $("#teleponSection").html(),object.obj.telepon));
+                    $('#alamat').val($('#quoteAlamat').html());
+                    
+                }
+                return object.text;
+            },
+            initSelection: function(element, callback) {
+                var id=$(element).val();
+                console.log('aaa '+id);
+                if (id!=="") {
+                    $.ajax("/api/customers/search?q="+id).done(function(data) { 
+                        if(data.length!=0) {
+                        data[0].id=data[0]._id;
+                        data[0].text=data[0].namaCustomer;
+                        data[0].obj=data[0];
+                        var obj =data[0];
+                        callback(obj); 
+                        }
+                    });
+
+                }
+            }
+            });
+
+        this.quoteForm.stepy({
+            nextLabel:      'Forward <i class="icon-chevron-right icon-white"></i>',
+            backLabel:      '<i class="icon-chevron-left"></i> Backward',
+            block       : true,
+            errorImage  : true,
+            titleClick  : true,
+            validate    : true,
+            finish : function(){
+
+                var cashBack = $('#cashBackMask').inputmask('unmaskedvalue');
+                var carDepreciation = $('#carDepreciationMask').inputmask('unmaskedvalue');
+                var pengurangTerakhir = $('#pengurangTerakhirMask').inputmask('unmaskedvalue');
+                var provisi = $('#provisiMask').inputmask('unmaskedvalue');
+                var admInsurance = $('#admInsuranceMask').inputmask('unmaskedvalue');
+                var hargaOTR = $('#hargaOTRMask').inputmask('unmaskedvalue');
+                
+                $('#cashBack').val(cashBack);
+                $('#carDepreciation').val(carDepreciation);
+                $('#pengurangTerakhir').val(pengurangTerakhir);
+                $('#provisi').val(provisi);
+                $('#admInsurance').val(admInsurance);
+                $('#hargaOTR').val(hargaOTR);
+                return false;
+            },
+             next: function(index) {
+                if(index==3) {
+                  var formData = that.quoteForm.serializeObject();
+                  formData = that.calculateQuote(formData);
+                  var quotePrint = _.template( print1SectionTemplate    ,formData);
+                  that.$el.find('#quotePrint').html(quotePrint);
+                }
+             }
+        });
+
+        this.$el.find('.stepy-titles').each(function(){
+            $(this).children('li').each(function(index){
+                var myIndex = index + 1
+                $(this).append('<span class="stepNb">'+myIndex+'</span>');
+            })
+        });
+
+        this.quoteForm.find('.numeric').inputmask("integer");
+
+        this.quoteForm.find('.percentage').inputmask("decimal");
+        this.quoteForm.find('.price').inputmask('Rp. 999.999.999.999', { numericInput: true });
+    }
+                      
     });
     // Our module now returns our view
     return  QuoteView;
