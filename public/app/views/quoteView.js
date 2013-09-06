@@ -107,14 +107,16 @@ define([
             $('#provisi').val(provisi);
 
             var loanPrincipal = 0;
-            loanPrincipal = hargaOTR-(f.percentDP*1/100*hargaOTR)-loanPrincipal; 
-
+            loanPrincipal = hargaOTR-(f.percentDP*1/100*hargaOTR)-loanPrincipal;
+            var kreditProtection = 0;
+            if(f.kreditProtection!=0) 
+            kreditProtection = loanPrincipal * (f.kreditProtection*1/100);
             var bungaDibayar = (f.sukuBunga*1/100)*loanPrincipal*f.lamaPinjaman;
             var bungaAssDibayar = (f.asstTlo*1/100)*hargaOTR;
             var maxRevenue = loanPrincipal - pengurangTerakhir - carDepreciation;
             var totalMaxRevenue = maxRevenue + cashBack;
             var payPerMonth = (bungaDibayar + loanPrincipal) / (f.lamaPinjaman*12);
-            var cashNCarry = totalMaxRevenue - admInsurance - bungaAssDibayar - provisi - payPerMonth;
+            var cashNCarry = totalMaxRevenue - admInsurance - bungaAssDibayar - provisi - payPerMonth - kreditProtection;
             $('#payPerMonth').val(payPerMonth);
             $('#cashNCarry').val(cashNCarry);
 
@@ -129,10 +131,10 @@ define([
                 hargaOTR : hargaOTR.formatPrice(),
                 maxRevenue : maxRevenue.formatPrice(),
                 totalMaxRevenue : totalMaxRevenue.formatPrice(),
-                provisi : provisi.formatPrice(),
                 loanPrincipal : loanPrincipal.formatPrice(),
                 payPerMonth : payPerMonth.formatPrice(),
-                cashNCarry : cashNCarry.formatPrice()
+                cashNCarry : cashNCarry.formatPrice(),
+                kreditProtection : kreditProtection.formatPrice()
             };
             return $.extend(f,ext);
         },

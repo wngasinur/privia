@@ -81,11 +81,11 @@
                 <td></td>
             </tr>
              <%
-                 if(kreditProtection!=0) {
-                 %>
+             if(kreditProtection!='Rp. 0') {
+             %>
             <tr>
                 <td>Kredit Protection </td>
-                <td>Rp. 0</td>
+                <td><%=kreditProtection%></td>
                 <td></td>
             </tr>
             <% } %>
