@@ -24,7 +24,11 @@ var QuoteSchema = new Schema({
     namaKendaraan: {type : String, default : '', trim : true},
     tahunBuat: {type : String, default : '', trim : true},
     hargaOTR: {type : Number, default : 0},
-    perusahaanKredit: {type : String, default : '', trim : true},
+    perusahaanKredit: {
+        _id: {type:Schema.Types.ObjectId},
+        inisial: {type : String, default : '', trim : true},
+        namaPerusahaanKredit: {type : String, default : '', trim : true}
+    },
     lamaPinjaman: {type : String, default : '', trim : true},
     sukuBunga: {type : Number, default : 0},
     asstTlo: {type : Number, default : 0},
@@ -32,6 +36,9 @@ var QuoteSchema = new Schema({
     carDepreciation: {type : Number, default : 0},
     pengurangTerakhir: {type : Number, default : 0},
     provisi: {type : Number, default : 0}, 
+    percentDP :{type : Number, default : 0},
+    coverage :{type : String, default : '', trim : true},
+    kreditProtection :{type : Number, default : 0},
     admInsurance  : {type : Number, default : 0}, 
     payPerMonth  : {type : Number, default : 0}, 
     cashNCarry  : {type : Number, default : 0},
@@ -48,7 +55,7 @@ var QuoteSchema = new Schema({
       _id: {type:Schema.Types.ObjectId}
     },
     cabang : {
-      _id: {type:Schema.Types.ObjectId},
+        _id: {type:Schema.Types.ObjectId},
         kodeCabang: {type : String, default : '', trim : true},
         namaCabang: {type : String, default : '', trim : true}
     }

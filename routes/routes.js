@@ -45,11 +45,9 @@ module.exports = function (app) {
     app.post('/api/cabang',cabang.save);
 
     var customer = require('./customerRoute');
-
     app.all('/api/customers',customer.list);
     app.get('/api/customers/search',customer.search);
     app.get('/api/customer/:id',customer.get);
-
     app.put('/api/customer/:id',customer.save);
     app.post('/api/customer',customer.save);
 
@@ -58,8 +56,15 @@ module.exports = function (app) {
     app.post('/api/quote',quote.save);
     app.put('/api/quote/:id',quote.save);
     app.all('/api/quotes',quote.list);
-     app.all('/api/quotes/latest',quote.latest);
+    app.all('/api/quotes/latest',quote.latest);
     app.get('/api/quotes/search',quote.search);
     app.get('/api/quote/:id',quote.get);
+
+    var perusahaanKredit = require('./perusahaanKreditRoute');
+    app.all('/api/perusahaanKredits',perusahaanKredit.list);
+    app.get('/api/perusahaanKredit/search',perusahaanKredit.search);
+    app.get('/api/perusahaanKredit/:id',perusahaanKredit.get);
+    app.put('/api/perusahaanKredit/:id',perusahaanKredit.save);
+    app.post('/api/perusahaanKredit',perusahaanKredit.save);
 
 }

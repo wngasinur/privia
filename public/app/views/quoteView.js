@@ -13,8 +13,31 @@ define([
         el: $('#container'),
         events: {
             "click .save"   : "save",
+            "click .print"   : "print",
             "click .cancel"   : "cancel",
-            "click #tambahCustomer"   : "tambahCustomer"
+            "click #tambahCustomer"   : "tambahCustomer",
+            "change #lamaPinjaman": "updateSukuBunga"
+        },
+         print:function(){
+            window.print();
+         },
+        updateSukuBunga:function(){
+            var lamaPinjaman = this.$el.find('#lamaPinjaman').val()*1;
+            var sukuBunga = 0;
+            if(lamaPinjaman) {
+                if(lamaPinjaman==1)
+                    sukuBunga = this.sukuBunga.thn1;
+                else if(lamaPinjaman==2)
+                    sukuBunga = this.sukuBunga.thn2;
+                else if(lamaPinjaman==3)
+                    sukuBunga = this.sukuBunga.thn3;
+                else if(lamaPinjaman==4)
+                    sukuBunga = this.sukuBunga.thn4;
+            console.log('update suku bunga '+ sukuBunga);
+            if(this.$el.find('#kreditProtectionSection:visible'))
+              this.$el.find('#kreditProtection').val((0.3*lamaPinjaman).toFixed(1));
+            this.$el.find('#sukuBunga').val(sukuBunga);
+            }
         },
         initialize:function(options){
             console.log('initialize quote view ');
@@ -40,7 +63,8 @@ define([
             });
             this.listenTo(this.model,'sync', function(e) {
                 console.log('sukses');
-                this.model.set(new Model().toJSON() );
+                if(!that.options.id)
+                   this.model.set(new Model().toJSON());
                 that.render('form',function(){
                     var alertInfo = $('#alertInfo').clone();
                     $('span',alertInfo).html('Sukses menyimpan Proposal');
@@ -57,6 +81,7 @@ define([
 
             if(this.quoteForm.valid()) {
                 this.model.set(this.quoteForm.serializeObject());
+                this.model.set('perusahaanKredit',that.perusahaanKredit);
                 this.quoteForm.find('.save').button('loading');
                 this.model.save();
             }
@@ -82,7 +107,7 @@ define([
             $('#provisi').val(provisi);
 
             var loanPrincipal = 0;
-            loanPrincipal = hargaOTR-(0.3*hargaOTR)-loanPrincipal; 
+            loanPrincipal = hargaOTR-(f.percentDP*1/100*hargaOTR)-loanPrincipal; 
 
             var bungaDibayar = (f.sukuBunga*1/100)*loanPrincipal*f.lamaPinjaman;
             var bungaAssDibayar = (f.asstTlo*1/100)*hargaOTR;
@@ -200,7 +225,6 @@ define([
             },
             initSelection: function(element, callback) {
                 var id=$(element).val();
-                console.log('aaa '+id);
                 if (id!=="") {
                     $.ajax("/api/customers/search?q="+id).done(function(data) { 
                         if(data.length!=0) {
@@ -216,6 +240,71 @@ define([
             }
             });
 
+          
+          this.$el.find('#perusahaanKredit').select2({  
+            ajax: {
+                url: "/api/perusahaanKredit/search",
+                quietMillis: 100,
+                data: function (term, page) { 
+                    return {
+                        q:term
+                    }
+                },
+                results : function(data) {
+                    return {
+                        results : $.map(data, function(item) {
+                            return {
+                                id : item._id,
+                                text : item.inisial,
+                                obj : item
+                            };
+                        })
+                    };
+                }
+            },
+
+            formatSelection:function(object,container) {
+                //console.log(object.obj);
+                if(typeof object.obj!=='undefined') {
+/*
+                    $('#thumbnail-profile').attr('src',object.obj.imgProfile);
+                    $('#imgProfile').val(object.obj.imgProfile);
+                    $('#namaCustomer').val(object.obj.namaCustomer);
+                    $('#quoteAlamat').html(_.template( $("#alamatSection").html(),object.obj.alamat));
+                    $('#quoteTelepon').html(_.template( $("#teleponSection").html(),object.obj.telepon));
+                    $('#alamat').val($('#quoteAlamat').html());*/
+                    console.log('format %j',object.obj);
+                    that.sukuBunga = object.obj.sukuBunga;
+                    that.perusahaanKredit = object.obj;
+                    that.$el.find('#lamaPinjaman').trigger('change');
+                    if(object.obj.kreditProtection) {
+                        that.$el.find('#kreditProtectionSection').show();
+                    }
+                    else {
+                        that.$el.find('#kreditProtection').val(0);
+                        that.$el.find('#kreditProtectionSection').hide();
+                    }
+
+                }
+
+                return object.text;
+            },
+            initSelection: function(element, callback) {
+                var id=$(element).val();
+                if (id!=="") {
+                    $.ajax("/api/perusahaanKredit/search?q="+id).done(function(data) { 
+                        if(data.length!=0) {
+                        data[0].id=data[0]._id;
+                        data[0].text=data[0].inisial;
+                        data[0].obj=data[0];
+                        var obj =data[0];
+                        callback(obj); 
+                        }
+                    });
+
+                }
+            }
+            });
         this.quoteForm.stepy({
             nextLabel:      'Forward <i class="icon-chevron-right icon-white"></i>',
             backLabel:      '<i class="icon-chevron-left"></i> Backward',
@@ -244,7 +333,14 @@ define([
                 if(index==3) {
                   var formData = that.quoteForm.serializeObject();
                   formData = that.calculateQuote(formData);
-                  var quotePrint = _.template( print1SectionTemplate    ,formData);
+                  var tglTambah = that.model.get('tglTambah');
+                  if(!tglTambah)
+                    tglTambah = new Date();
+
+                  //console.log('perusahaan kredit %j',that.perusahaanKredit);
+                  formData = $.extend(formData,{tglTambah:tglTambah,inisial:that.perusahaanKredit.inisial});
+                
+                  var quotePrint = _.template( print1SectionTemplate ,formData);
                   that.$el.find('#quotePrint').html(quotePrint);
                 }
              }

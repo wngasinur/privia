@@ -1,6 +1,6 @@
 <div class="row-fluid">
 <div class="span12">
-<h3 class="heading">Pengajuan Leasing</h3>
+<h3 class="heading">Pengajuan Proposal</h3>
 
 <div class="row-fluid">
 <div class="span12">
@@ -37,7 +37,7 @@
                                 <div class="row-fluid">
                                     <div class="span6">
                                         <label for="kodeCustomer">Nama<span class="f_req">*</span>
-                                         <span class="right"><a class="btn" id="tambahCustomer">Tambah Customer</a></span></label>
+                                        <span class="right"><a class="btn" id="tambahCustomer">Tambah Customer</a></span></label>
                                         <input type="text" name="kodeCustomer" id="kodeCustomer"  class="span12" value="<%=kodeCustomer%>">
                                     </div> 
                                 </div>
@@ -76,8 +76,7 @@
                                          <select name="kendaraanRoda"  class="span12">
                                             <option value="Mobil" <%=kendaraanRoda=='Mobil'?'checked':''%> >Mobil</option>
                                             <option value="Motor" <%=kendaraanRoda=='Motor'?'checked':''%> >Motor</option>
-                                        </select>
-                                        <%=kendaraanRoda%>  
+                                        </select> 
                                     </div>
                                     <div class="span4">
                                        <label for="jenisKendaraan">Jenis Kendaraan:</label>
@@ -112,20 +111,12 @@
         <div class="span5">
                 <p><span class="label label-inverse">Informasi Kredit</span></p>
                 <div class="control-group">
+                    <div class="row-fluid">
+                    <div class="span6">
                     <label for="perusahaanKredit">Perusahaan Kredit:</label>
 
-                    <div class="input-prepend">
-                        <select name="perusahaanKredit" id="perusahaanKredit">
-                            <option <%=perusahaanKredit=='ARTHA'?'checked':''%> >ARTHA</option>
-                            <option <%=perusahaanKredit=='BCA'?'checked':''%>>BCA</option>
-                            <option <%=perusahaanKredit=='BHAKTI'?'checked':''%>>BHAKTI</option>
-                            <option <%=perusahaanKredit=='MNC'?'checked':''%>>MNC</option>
-                            <option <%=perusahaanKredit=='MAXIMA'?'checked':''%>>MAXIMA</option>
-                            <option <%=perusahaanKredit=='MANDIRI'?'checked':''%>>MANDIRI</option>
-                            <option <%=perusahaanKredit=='MITRA'?'checked':''%>>MITRA</option>
-                            <option <%=perusahaanKredit=='STAR'?'checked':''%>>STAR</option>
-                            <option <%=perusahaanKredit=='INTI'?'checked':''%>>INTI</option>
-                        </select>&nbsp;	
+                    <input type="text" name="perusahaanKredit[_id]" id="perusahaanKredit" value="<%=perusahaanKredit._id%>">
+                    </div>
                     </div>
                 </div>
                 <div class="control-group">
@@ -134,18 +125,26 @@
                             <label for="lamaPinjaman">Lama Pinjaman:</label>
                             <input type="text" name="lamaPinjaman" id="lamaPinjaman"  class="span4 numeric" maxlength="2" value="<%=lamaPinjaman%>" /> tahun
                         </div>
+                         <div class="span6 hide" id="kreditProtectionSection">
+                            <label for="lamaPinjaman">% Kredit Protection:</label>
+                            <input type="text" name="kreditProtection" id="kreditProtection"  class="span4 percentage" readonly value="<%=kreditProtection%>" />
+                        </div>
                     </div>
                 </div>
 
                 <div class="control-group">
                     <div class="row-fluid">
-                        <div class="span3">
-                            <label>Suku Bunga<span class="f_req">*</span></label>
-                            <input type="text" name="sukuBunga" class="span8 percentage"  value="<%=sukuBunga%>"  > %
+                        <div class="span4">
+                            <label> % Suku Bunga<span class="f_req">*</span></label>
+                            <input type="text" name="sukuBunga" id="sukuBunga" class="span8 percentage"  value="<%=sukuBunga%>">
                         </div>
-                        <div class="span3">
-                            <label>Asst Tlo<span class="f_req">*</span></label>
-                            <input type="text" name="asstTlo" class="span8 percentage" value="<%=asstTlo%>"   > %
+                        <div class="span5 input-prepend">
+                            <label> % Asst<span class="f_req">*</span></label>
+                            <select name="coverage" class="span8">
+                            <option>All Risk</option>
+                            <option>Tlo</option>
+                            </select>
+                            <input type="text" name="asstTlo" class="span6 percentage" value="<%=asstTlo%>">
                         </div>
                     </div>
                 </div>
@@ -166,18 +165,23 @@
             </div>
             <div class="control-group">
                 <div class="row-fluid">
+                      <div class="span4">
+                        <label>% DF <span class="f_req">*</span></label>
+                        <input type="text" name="percentDP" id="percentDP" class="span12 percentage" value="<%=percentDP%>">
+                    </div>
                     <div class="span4">
                         <label>Pengurang DP<span class="f_req">*</span></label>
                         <input type="text" name="pengurangTerakhirMask" id="pengurangTerakhirMask" class="span12 price" value="<%=pengurangTerakhir%>" >
                     </div>
-                    <div class="span4">
-                        <label>Provisi <span class="f_req">*</span></label>
-                        <input type="text" name="provisiMask" id="provisiMask" class="span12 price" value="<%=provisi%>">
-                    </div>
+                   
                 </div>
             </div>
             <div class="control-group">
                 <div class="row-fluid">
+                 <div class="span4">
+                        <label>Provisi <span class="f_req">*</span></label>
+                        <input type="text" name="provisiMask" id="provisiMask" class="span12 price" value="<%=provisi%>">
+                    </div>
                     <div class="span4">
                         <label>Adm & Polis Insurance<span class="f_req">*</span></label>
                         <input type="text" name="admInsuranceMask" id="admInsuranceMask" class="span12 price" value="<%=admInsurance%>" >
@@ -194,8 +198,9 @@
     </div>
    
 </fieldset>
+
 <button type="button" class="finish btn btn-primary save" data-loading-text="Loading ..."><i class="icon-ok icon-white"></i> Save</button>
-               
+    <button type="button" class="finish btn btn-inverse Print" data-loading-text="Loading ..."><i class="splashy-printer"></i> Print</button>&nbsp;           
 </form>
 </div>
 </div>

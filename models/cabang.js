@@ -90,6 +90,7 @@ CabangSchema.statics = {
       .limit(options.perPage)
       .skip(options.perPage * (options.page))
       .select(options.select)
+      .sort({kodeCabang:'asc'})
       .exec(cb)
   }
 

@@ -9,10 +9,12 @@ define([
   './views/cabangView',
   './views/leasingView',
   './views/quoteView',
-  './views/customerView'
+  './views/customerView',
+  './views/perusahaanKreditView'
   ], 
 
-  function($, _, Backbone, CommonView, AnalisaView, UserView, KaryawanView,CabangView,LeasingView,QuoteView,CustomerView) {
+  function($, _, Backbone, CommonView, AnalisaView, UserView, KaryawanView,CabangView,LeasingView,QuoteView,CustomerView,
+    PerusahaanKreditView) {
 
     var AppRouter = Backbone.Router.extend({
       initialize : function(option) {
@@ -35,7 +37,11 @@ define([
       'customer/add': 'addCustomer',
       'customer/edit/:id': 'editCustomer',
       'customer': 'showCustomer',
+      'perusahaanKredit/add': 'addPerusahaanKredit',
+      'perusahaanKredit/edit/:id': 'editPerusahaanKredit',
+      'perusahaanKredit': 'showPerusahaanKredit',
       'cabang/add': 'addCabang',
+      'cabang/edit/:id': 'editCabang',
       'cabang': 'showCabang',
       'home': 'showHome',
       'analisis': 'showAnalisa',
@@ -114,6 +120,17 @@ editCustomer: function(id) {
 
   new CustomerView({id:id}).render('form');
 },
+ addPerusahaanKredit: function() {
+  console.log('addPerusahaanKredit');
+  new PerusahaanKreditView().render('form');
+},
+showPerusahaanKredit: function() {
+  console.log('showPerusahaanKredit');
+  new PerusahaanKreditView().render();
+},
+editPerusahaanKredit: function(id) {
+  new PerusahaanKreditView({id:id}).render('form');
+},
 addCabang: function() {
   console.log('addCabang');
   new CabangView().render('form');
@@ -121,6 +138,9 @@ addCabang: function() {
 showCabang: function() {
   console.log('showCabang');
   new CabangView().render()
+},
+editCabang: function(id) {
+  new CabangView({id:id}).render('form');
 },
 showSuccess: function() {
   new SuccessView().render()

@@ -20,16 +20,19 @@ define(["jquery", "backbone"],
                 namaKendaraan:'',
                 tahunBuat:'',
                 hargaOTR:'',
-                perusahaanKredit:'',
+                perusahaanKredit:{},
                 lamaPinjaman:1,
                 sukuBunga:'',
                 asstTlo:'',
+                percentDP:30,
                 cashBack:'',
                 carDepreciation:'',
                 pengurangTerakhir:'',
-                provisi:'',
+                provisi:800000,
                 bungaDibayar:'',
-                admInsurance :''
+                admInsurance :5000000,
+                coverage:'',
+                kreditProtection :0
             },
 
             // Gets called automatically by Backbone when the set and/or save methods are called (Add your own logic)

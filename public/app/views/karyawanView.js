@@ -36,6 +36,8 @@ define([
         });
         this.listenTo(this.model,'sync', function(e) {
             console.log('sukses');
+            if(!that.options.id)
+                   this.model.set(new Model().toJSON());
             that.render('form',function(){
                 var alertInfo = $('#alertInfo').clone();
                 $('span',alertInfo).html('Sukses menyimpan karyawan');

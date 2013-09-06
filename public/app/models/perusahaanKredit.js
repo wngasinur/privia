@@ -3,8 +3,8 @@ define(["jquery", "backbone"],
     function($, Backbone) {
 
         // Creates a new Backbone Model class object
-        var Cabang = Backbone.Model.extend({
-            urlRoot :'/api/cabang',
+        var PerusahaanKredit = Backbone.Model.extend({
+            urlRoot :'/api/perusahaanKredit',
             // Model Constructor
             initialize: function() {
             },
@@ -12,12 +12,10 @@ define(["jquery", "backbone"],
             // Default values for all of the Model attributes
             defaults: {
                 _id:'',
-                kodeCabang:'',
-                namaCabang:'',
-                alamat:'',
-                kodePos:'',
-                telepon:'',
-                kota:''
+                inisial:'',
+                namaPerusahaanKredit:'',
+                kreditProtection:'',
+                sukuBunga:{},
             },
 
             // Gets called automatically by Backbone when the set and/or save methods are called (Add your own logic)
@@ -28,7 +26,7 @@ define(["jquery", "backbone"],
         });
 
         // Returns the Model class
-        return Cabang;
+        return PerusahaanKredit;
 
     }
 

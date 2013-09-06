@@ -1,18 +1,18 @@
 
 /*
- * GET cabangs listing.
+ * GET perusahaanKredits listing.
  */
  var mongoose = require('mongoose'),
  moment = require('moment'),
  async = require('async'),
  $ = require('jquery'),
- Cabang = mongoose.model('Cabang')
+ PerusahaanKredit = mongoose.model('PerusahaanKredit')
 
 exports.get = function(req, res){
 
     var id = req.params.id;
     console.log(id);
-    Cabang.load(id,function(err,result){
+    PerusahaanKredit.load(id,function(err,result){
 
         res.json(result);
     });
@@ -20,16 +20,16 @@ exports.get = function(req, res){
 
  exports.search = function(req, res){
 
-  var searchCabang = req.query.q;
-  if(searchCabang.length!=24)
+  var searchPerusahaanKredit = req.query.q;
+  if(searchPerusahaanKredit.length!=24)
       var objId = '99d92f8be2c2f8a842000003';
   else 
-      var objId = searchCabang;
+      var objId = searchPerusahaanKredit;
 
-  var criteria = {$or:[{kodeCabang:new RegExp(searchCabang, "i")},{_id:objId}]};
+  var criteria = {$or:[{inisial:new RegExp(searchPerusahaanKredit, "i")},{_id:objId}]};
   
 
-  Cabang.list({perPage:10,page:0,criteria:criteria},function(err,result){
+  PerusahaanKredit.list({perPage:10,page:0,criteria:criteria},function(err,result){
     console.log(result);
         if(err)
             console.log(err);
@@ -47,22 +47,22 @@ exports.list = function(req, res){
     async.parallel({
       data: function(callback){
         var searchStr = req.query.sSearch;
-        var searchCabang ='';
+        var searchPerusahaanKredit ='';
         if(searchStr) {
           var sSearch = searchStr.split('|');
-          searchCabang = sSearch[1];
+          searchPerusahaanKredit = sSearch[1];
         }
         var perPage = req.query.iDisplayLength*1;
-        var criteria = {kodeCabang:new RegExp(searchCabang, 'i')};
+        var criteria = {inisial:new RegExp(searchPerusahaanKredit, 'i')};
         var displayStart = req.query.iDisplayStart*1;
         var page = displayStart/perPage;
-        Cabang.list({perPage:perPage,page:page,criteria:criteria},function(err,result){
+        PerusahaanKredit.list({perPage:perPage,page:page,criteria:criteria},function(err,result){
           callback(null, result);
         });
 
       }, iTotalRecords : function(callback){
 
-        Cabang.counts({},function(err,result){
+        PerusahaanKredit.counts({},function(err,result){
          callback(null, result);
        });
 
@@ -85,16 +85,19 @@ exports.save = function(req, res){
 
  console.log(req.body);
 
- var cabang = new Cabang(req.body);
- if(cabang._id) {
-  var editCabang = req.body;
-  delete editCabang._id;
-  console.log('edit %j',cabang);
-  var conditions = { _id: cabang._id }
-  , update = editCabang
-  , options = { multi: false };
+ var perusahaanKredit = new PerusahaanKredit(req.body);
+ if(perusahaanKredit._id) {
+  var editPerusahaanKredit = req.body;
 
-  Cabang.update(conditions, update, options, function(err,result){
+  delete editPerusahaanKredit._id;
+  delete editPerusahaanKredit.__v;
+
+  console.log('edit %j',editPerusahaanKredit);
+        var conditions = { _id: perusahaanKredit._id }
+            , update = editPerusahaanKredit
+            , options = { multi: false };
+
+  PerusahaanKredit.update(conditions, update, options, function(err,result){
     if(err)
       console.log(err);
     else
@@ -105,9 +108,9 @@ exports.save = function(req, res){
 else {
   console.log('add');
   delete req.body._id;
-  cabang = new Cabang(req.body);
-  cabang.set('status','Aktif');
-  cabang.save(function (err) {
+  perusahaanKredit = new PerusahaanKredit(req.body);
+  //perusahaanKredit.set('status','Aktif');
+  perusahaanKredit.save(function (err) {
     if (err) {
      console.log(err)
      return res.json(500, err);

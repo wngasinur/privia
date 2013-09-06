@@ -129,7 +129,8 @@ exports.save = function(req, res){
             _id : currentUser.karyawan._id
         }
         quote.set('ditambahOleh',ditambahOleh);
-
+        if(req.session.currentUser.cabang)
+            quote.set('cabang',req.session.currentUser.cabang);
         quote.save(function (err) {
             if (err) {
                 console.log(err)

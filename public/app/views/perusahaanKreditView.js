@@ -2,20 +2,20 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'text!../templates/customerList.html',
-    'text!../templates/customerForm.html',
-    'text!../templates/customerForm.html',
-    '../models/customer'
+    'text!../templates/perusahaanKreditList.html',
+    'text!../templates/perusahaanKreditForm.html',
+    'text!../templates/perusahaanKreditForm.html',
+    '../models/perusahaanKredit'
 ], function($, _, Backbone, listTemplate,formTemplate,formEditTemplate,Model){
 
-    var CustomerView = Backbone.View.extend({
+    var PerusahaanKreditView = Backbone.View.extend({
         el: $('#container'),
         events: {
             "click .save"   : "save",
             "click .cancel"   : "cancel"
         },
         initialize:function(options){
-            console.log('initialize customer view ');
+            console.log('initialize perusahaanKredit view ');
             this.$el.undelegate();
 
             var that = this;
@@ -32,37 +32,39 @@ define([
                 var alertError = $('#alertError').clone();
                 $('span',alertError).html('Terjadi masalah : '+err);
                 alertError.show().appendTo('.formMessage');
-                that.customerForm.find('.save').button('reset');
+                that.perusahaanKreditForm.find('.save').button('reset');
 
             });
             this.listenTo(this.model,'sync', function(e) {
-                console.log('sukses');
                 if(!that.options.id)
                    this.model.set(new Model().toJSON());
                 that.render('form',function(){
                     var alertInfo = $('#alertInfo').clone();
-                    $('span',alertInfo).html('Sukses menyimpan customer');
+                    $('span',alertInfo).html('Sukses menyimpan Perusahaan Kredit');
                     alertInfo.show().appendTo('.formMessage');
-                    that.customerForm.find('.save').button('reset');
+                    that.perusahaanKreditForm.find('.save').button('reset');
                 });
 
             });
 
         },
+        initializeForm:function(){
+
+        },
         save:function() {
-            this.customerForm = this.$el.find('#customerForm');
+            this.perusahaanKreditForm = this.$el.find('#perusahaanKreditForm');
             //console.log(this.userForm.serializeObject());
-            if(this.customerForm.valid()) {
-                this.model.set(this.customerForm.serializeObject());
-                this.customerForm.find('.save').button('loading');
+            if(this.perusahaanKreditForm.valid()) {
+                this.model.set(this.perusahaanKreditForm.serializeObject());
+                this.perusahaanKreditForm.find('.save').button('loading');
                 this.model.save();
             }
         },
         cancel:function() {
-            app.router.navigate('customer',true);
+            app.router.navigate('perusahaanKredit',true);
         },
         render: function(page,cb){
-            console.log('render customer view');
+            console.log('render perusahaanKredit view');
             var that = this;
             var id = this.options.id;
             var data = {};
@@ -78,14 +80,14 @@ define([
                 template=formEditTemplate;
 
                 console.log('load '+id);
-                var customer = new Model({id:id});
-                customer.fetch({
-                    success: function (customer) {
-                        var data = customer.toJSON();
+                var perusahaanKredit = new Model({id:id});
+                perusahaanKredit.fetch({
+                    success: function (perusahaanKredit) {
+                        var data = perusahaanKredit.toJSON();
                         that.model.set (data);
                         var compiledTemplate = _.template( template, data );
                         that.$el.html( compiledTemplate );
-                        that.customerForm = that.$el.find('#customerForm');
+                        that.perusahaanKreditForm = that.$el.find('#perusahaanKreditForm');
 
                         if(cb) cb();
 
@@ -98,9 +100,9 @@ define([
                 // Append our compiled template to this Views "el"
                 this.$el.html( compiledTemplate );
 
-                this.customerForm = this.$el.find('#customerForm');
+                this.perusahaanKreditForm = this.$el.find('#perusahaanKreditForm');
 
-                this.customerForm.validate({
+                this.perusahaanKreditForm.validate({
                     onkeyup: false,
                     errorClass: 'error',
                     validClass: 'valid',
@@ -114,10 +116,12 @@ define([
                         $(element).closest('div').append(error);
                     },
                     rules: {
-                        namaCustomer: "required",
-                        noIdentitas : "required",
-                        gender : "required",
-                        "telepon[hp1]":"required"
+                        namaPerusahaanKredit: "required",
+                        inisial : "required",
+                        "sukuBunga[thn1]":"required",
+                        "sukuBunga[thn2]":"required",
+                        "sukuBunga[thn3]":"required",
+                        "sukuBunga[thn4]":"required"
                     },
                     messages: {
 
@@ -129,5 +133,5 @@ define([
         }
     });
     // Our module now returns our view
-    return  CustomerView;
+    return  PerusahaanKreditView;
 });

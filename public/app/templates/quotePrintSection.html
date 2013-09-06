@@ -22,7 +22,7 @@
     <td>
         <p class="sepH_a"><span class="muted sepV_b">Lama Pinjaman </span><%=lamaPinjaman%> tahun</p>
         <p class="sepH_a"><span class="muted sepV_b">Bunga Tahun <%=lamaPinjaman%></span><%=bungaDibayar%></p>
-        <p class="sepH_a"><span class="muted sepV_b">Ass <%=lamaPinjaman%> Thn TLO</span><%=bungaAssDibayar%></p>
+        <p class="sepH_a"><span class="muted sepV_b">Ass <%=lamaPinjaman%> Thn <%=coverage%></span><%=bungaAssDibayar%></p>
         </td>
         <td>
         <p class="sepH_a"><span class="muted sepV_b">Cash Back</span><%=cashBack%> </p>
@@ -41,7 +41,7 @@
                 <tr>
                     <th width=50%>Item</th>
                     <th width=25%></th>
-                    <th width=25%></th>
+                    <th width=25%><%=inisial%></th>
                 </tr>
             </thead>
             <tbody>
@@ -76,10 +76,19 @@
                 <td></td>
             </tr>
             <tr>
-                <td>Insurance TLO For <%=lamaPinjaman%> years </td>
+                <td>Insurance <%=coverage%> For <%=lamaPinjaman%> years </td>
                 <td><%=bungaAssDibayar%></td>
                 <td></td>
             </tr>
+             <%
+                 if(kreditProtection!=0) {
+                 %>
+            <tr>
+                <td>Kredit Protection </td>
+                <td>Rp. 0</td>
+                <td></td>
+            </tr>
+            <% } %>
              <tr>
                 <td>Provisi & Fiducia Legal</td>
                 <td><%=provisi%></td>
@@ -117,7 +126,7 @@
     <div class="span8">
     </div>
     <div class="span4">
-      <p><strong>Jakarta, <%=moment().format("DD MMMM YYYY")%></strong></p>
+      <p><strong>Jakarta, <%=moment(tglTambah).format("DD MMMM YYYY")%> </strong></p>
       <p><strong>Disetujui untuk dikerjakan,</strong></p>
       <br><br><br><br>
       <p>..........................................</p>
