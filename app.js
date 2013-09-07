@@ -36,10 +36,12 @@ app.set('layout', 'layouts') ;
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
-app.use(express.cookieParser());
+app.use(express.cookieParser('privia'));
 app.use(express.session({ secret: 'secret'}));
 app.use(express.methodOverride());
 app.use(function(req, res, next){
+
+
 if (req.session && req.session.currentUser) {
   var currentUser = req.session.currentUser;
   if(currentUser.karyawan && currentUser.karyawan.nama)
@@ -50,6 +52,7 @@ if (req.session && req.session.currentUser) {
   res.locals.currentUser = req.session.currentUser;
 }
   next();
+ 
 });
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
@@ -74,8 +77,12 @@ function restrict(req, res, next) {
           }
           else 
           {
-            req.session.error = 'Access denied!';
-            res.redirect('/login');
+            if(req.signedCookies.user)
+              res.redirect('/rememberMe');
+            else 
+              res.redirect('/login');
+ 
+            
           }  
           //
           //
@@ -111,4 +118,16 @@ Array.prototype.contains = function(k, callback) {
 
         return process.nextTick(check.bind(null, i+1));
     }(0));
+}
+
+
+function queryConditions(req) {
+    var conditions = [];
+    for(i=0;i<5;i++) {
+        var val = req.query['sSearch_'+i];
+        var col = req.query['mDataProp_'+i];
+        if(val)
+            conditions.push({'col':col,'val':val});
+    }
+    return conditions;
 }

@@ -3,15 +3,19 @@
     <div class="span12">
         <h3 class="heading">Daftar Karyawan</h3>
         <div class="row-fluid">
-            <div class="span3">
-                <input type="text" placeholder="Username" class="span8" id="username">
+             <div class="span2">
+                <input type="text" placeholder="Nama Karyawan" class="span12" id="namaKaryawan">
+            </div>
+             <div class="span2">
+                <input type="text" placeholder="Nama Cabang" class="span12" id="namaCabang">
             </div>
         </div>
         <table class="table table-bordered table-striped  dTableR" id="privia_grid" aria-describedby="dt_gal_info">
             <thead>
                 <tr>
                     <th>Profile</th>
-                    <th>Nama</th>
+                    <th>Username</th>
+                    <th>Nama Karyawan</th>
                     <th>Cabang</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -49,11 +53,12 @@
 
                     return '<a href="#/karyawan/edit/'+data+'">Ubah</a>';
                 },
-                "aTargets": [4]
+                "aTargets": [5]
             }
             ],
         "aoColumns": [
         { "mData": "imgProfile" },
+        { "mData": "username.username" },
         { "mData": "nama" },
         { "mData": "namaCabang" },
         { "mData": "status" },
@@ -62,9 +67,17 @@
         "sAjaxSource": "/api/karyawan"
     } );
 
-   $('#username').keyup( function() { 
-      
-           oTable.fnFilter( 'username|'+this.value );
-        
-    } );
+   
+   $('#namaKaryawan').keyup( function() { 
+       var that = this;
+        app.delay(function(){
+           oTable.fnFilter( that.value,2);
+       },1000);
+    });
+   $('#namaCabang').keyup( function() { 
+       var that = this;
+        app.delay(function(){
+           oTable.fnFilter( that.value,3);
+       },1000);
+    });
     </script>

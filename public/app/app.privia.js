@@ -1,7 +1,7 @@
 define([ 'jquery',
   'underscore',
   'backbone',
-  'text!./templates/sidebarsMenuSection.html','antiscroll'], function($, _, Backbone,sidebarsTemplate) {
+  'text!./templates/sidebarsMenuSection.html','antiscroll','jquery.actual'], function($, _, Backbone,sidebarsTemplate) {
 
     console.log('Initialize App'); 
     
@@ -191,6 +191,19 @@ Number.prototype.formatPrice = function() {
      // return this+"".replace(/(\d)(?=(\d{3})+)/g, "$1,");
    };
 
+   
+
+var delay = (function(){
+  var timer = 0;
+  return function(callback, ms){
+    clearTimeout (timer);
+    timer = setTimeout(callback, ms);
+  };
+})();
+
+app.delay = delay;
+
    return _.extend(app,{});
 
  });
+

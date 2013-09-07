@@ -87,7 +87,8 @@ define([
             }
         },
         tambahCustomer:function(e) {
-            app.router.navigate('/customer/add',{trigger:true});
+
+            app.router.addCustomerModal();
         },
         cancel:function() {
             app.router.navigate('/quote',{trigger:true});

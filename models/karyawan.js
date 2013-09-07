@@ -49,8 +49,7 @@ var KaryawanSchema = new Schema({
   namaCabang : {type : String, default : '', trim : true},
   status: {type : String, default : '', trim : true},
   tglTambah: { type : Date, default : Date.now },
-  tglLahir: { type : Date, default : Date.now },
-  tglTerakhirLogin: { type : Date, default : Date.now }
+  tglLahir: { type : Date, default : Date.now }
   
 })
 
@@ -159,10 +158,12 @@ KaryawanSchema.statics = {
     var criteria = options.criteria || {}
     var select = options.select || {}
     this.find(criteria)
+      .populate({  path: 'username'})
       .sort({'createdAt': -1}) // sort by date
       .limit(options.perPage)
       .skip(options.perPage * (options.page))
       .select(options.select)
+      
       .exec(cb)
   }
 

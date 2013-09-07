@@ -8,10 +8,11 @@ module.exports = function (app) {
 
     var index = require('./index');
     app.all('/',index.index);
-    app.all('/home',index.index);
+    app.all('/rememberMe',index.rememberMe);
+    app.all('/home',index.home);
 
     app.all('/login',index.login);
-     app.all('/logout',index.logout);
+    app.all('/logout',index.logout);
 
     var user = require('./userRoute');
     app.put('/api/user/:id',user.save);
@@ -35,7 +36,7 @@ module.exports = function (app) {
 
 
 	var cabang = require('./cabangRoute');
-     app.post('/api/cabang',cabang.save);
+    app.post('/api/cabang',cabang.save);
     app.put('/api/cabang/:id',cabang.save);
     app.get('/api/cabangs/search',cabang.search);
     app.all('/api/cabangs',cabang.list);

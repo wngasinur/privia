@@ -5,6 +5,7 @@
 
 var mongoose = require('mongoose')
   , Imager = require('imager')
+  , $ = require('jquery')
   , env = process.env.NODE_ENV || 'development'
   , config = require('../config')[env]
   , Schema = mongoose.Schema
@@ -96,8 +97,7 @@ UserSchema.methods = {
    * @api private
    */
   isAdmin:function(){
-    console.log(this.akses);
-    return true;
+    return $.inArray('admin',this.akses)>0?true:false;
   },
   addComment: function (user, comment, cb) {
     var notify = require('../mailer/notify')

@@ -10,11 +10,12 @@ define([
   './views/leasingView',
   './views/quoteView',
   './views/customerView',
-  './views/perusahaanKreditView'
+  './views/perusahaanKreditView',
+  './views/modalView'
   ], 
 
   function($, _, Backbone, CommonView, AnalisaView, UserView, KaryawanView,CabangView,LeasingView,QuoteView,CustomerView,
-    PerusahaanKreditView) {
+    PerusahaanKreditView,ModalView) {
 
     var AppRouter = Backbone.Router.extend({
       initialize : function(option) {
@@ -43,6 +44,7 @@ define([
       'cabang/add': 'addCabang',
       'cabang/edit/:id': 'editCabang',
       'cabang': 'showCabang',
+      'modal/customer': 'addCustomerModal',
       'home': 'showHome',
       'analisis': 'showAnalisa',
       'login': 'showLogin',
@@ -141,6 +143,10 @@ showCabang: function() {
 },
 editCabang: function(id) {
   new CabangView({id:id}).render('form');
+},
+addCustomerModal: function() {
+  console.log('addCustomerModal');
+  new ModalView().render('customer');
 },
 showSuccess: function() {
   new SuccessView().render()

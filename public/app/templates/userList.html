@@ -4,16 +4,18 @@
         <h3 class="heading">Daftar Users</h3>
         <div class="row-fluid">
             <div class="span3">
-                <input type="text" placeholder="Username" class="span8" id="username">
+                <input type="text" placeholder="Username" class="span12" id="username">
             </div>
             <div class="span3">
-                <input type="text" placeholder="Username" class="span8">
+                <input type="text" placeholder="Nama Karyawan" class="span12" id="namaKaryawan">
             </div>
         </div>
         <table class="table table-bordered table-striped  dTableR" id="privia_grid" aria-describedby="dt_gal_info">
             <thead>
                 <tr>
                     <th>Username</th>
+                    <th>Nama Karyawan</th>
+                    <th>Akses</th>
                     <th>Terakhir Login</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -43,7 +45,15 @@
                     
                     return '<a href="#/users/edit/'+data+'">Ubah</a>';
                 },
-                "aTargets": [ 3 ]
+                "aTargets": [ 5 ]
+            }
+            ,    {
+                "mRender": function ( data, type, row ) {
+                    if(data)
+                    return data.nama;
+                    else return '';
+                },
+                "aTargets": [1  ]
             }
             ,    {
                 "mRender": function ( data, type, row ) {
@@ -51,11 +61,13 @@
                     return moment(data).fromNow();
                     else return '';
                 },
-                "aTargets": [1  ]
+                "aTargets": [3 ]
             },
             ],
         "aoColumns": [
         { "mData": "username" },
+        { "mData": "karyawan" },
+        { "mData": "akses" },
         { "mData": "tglTerakhirLogin" },
         { "mData": "status" },
         { "mData": "_id" }
@@ -65,7 +77,18 @@
 
    $('#username').keyup( function() { 
       
-           oTable.fnFilter( 'username|'+this.value );
+         var that = this;
+        app.delay(function(){
+           oTable.fnFilter( that.value,0);
+       },1000);
         
     } );
+
+
+   $('#namaKaryawan').keyup( function() { 
+       var that = this;
+        app.delay(function(){
+           oTable.fnFilter( that.value,1);
+       },1000);
+    });
     </script>

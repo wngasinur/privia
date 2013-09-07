@@ -1,3 +1,12 @@
+@page  
+{ 
+    size: auto;   /* auto is the initial value */ 
+
+    /* this affects the margin in the printer settings */ 
+    margin: 0;  
+    border:none;
+} 
+
 h1 {
   color: #000;
   background: none;
@@ -6,12 +15,14 @@ h1 {
 header, nav, aside,.sidebar,.stepy-titles,.heading,.no-print,.btn {
   display: none;
 }
+.step {border:0px !important;}
 
-body, article {
+body{
   width: 100%;
   margin: 0;
   padding: 0;
-  line-height:90%;
+  border:none;
+  line-height: 0.9;
 }
 
 small{
@@ -20,7 +31,11 @@ small{
 }
 
 
-.footer {
+
+
+.signature {
     position: fixed;
-    bottom: 0;
+    left:450px;
+    bottom:50px;
+    float:right;
 }

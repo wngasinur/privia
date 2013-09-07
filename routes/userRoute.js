@@ -4,6 +4,7 @@
  */
  var mongoose = require('mongoose'),
  async = require('async'),
+ util = require('../util'),
  $ = require('jquery'),
  User = mongoose.model('User')
 
@@ -64,14 +65,21 @@ exports.list = function(req, res){
     async.parallel({
       data: function(callback){
         var searchStr = req.query.sSearch;
-        var searchUsername ='';
-        if(searchStr) {
-          var sSearch = searchStr.split('|');
-          searchUsername = sSearch[1];
-          console.log(sSearch);
-        }
+        
         var perPage = req.query.iDisplayLength*1;
-        var criteria = {username:new RegExp(searchUsername, 'i')};
+         var conditions = util.queryConditions(req);
+        
+         var criteria = {};
+          if(conditions.length!=0) {
+              for(i=0;i<conditions.length;i++) {
+                 if(conditions[i].col=='username')
+                    $.extend(criteria,{'username':new RegExp(conditions[i].val, "i")});
+                 else if(conditions[i].col=='karyawan')
+                     $.extend(criteria,{'karyawan.nama':new RegExp(conditions[i].val, "i")});
+               
+             }
+         }
+        console.log(criteria);
         var displayStart = req.query.iDisplayStart*1;
         var page = displayStart/perPage;
         User.list({perPage:perPage,page:page,criteria:criteria},function(err,result){
@@ -89,7 +97,7 @@ exports.list = function(req, res){
     },
     function(err, results) {
      $.extend(results,{'iTotalDisplayRecords':results.iTotalRecords});
-     console.log(results);
+    
      res.json(results);
    });
 

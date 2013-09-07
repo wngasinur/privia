@@ -5,16 +5,25 @@
  var mongoose = require('mongoose'),
  fs = require('fs')
  , User = mongoose.model('User')
- , Karyawan = mongoose.model('Karyawan')
 
 
  exports.index = function(req, res){
+  if(req.session.currentUser)
+    res.redirect('/home')
+  else
+    res.redirect('/login')
+//  res.render('index', { title: 'Express' });
+};
 
+
+ exports.home = function(req, res){
+ 
   res.render('index', { title: 'Express' });
 };
 
  exports.logout = function(req, res){
   req.session.currentUser=null;
+  res.clearCookie('user');
   res.redirect('/login');
 };
 
@@ -47,6 +56,39 @@ exports.thumbnail = function(req, res){
   res.sendfile(req.params.name,options);
 };
 
+exports.rememberMe = function(req, res){ 
+  var criteria = {'username':req.signedCookies.user};
+    var update = {'tglTerakhirLogin':new Date};
+    User.findOneAndUpdate(criteria,update,function(err,result){
+      if(err)
+      {
+        res.clearCookie('user');
+      }
+      else{
+
+        if(result)
+        {
+          var user = result;
+          if(user.akses==null || user.akses.length==0) {
+            res.clearCookie('user');
+            return;
+          }
+          else if(user.status!='Aktif'){
+            res.clearCookie('user');
+            return;
+          }
+
+          delete user.password;
+          req.session.currentUser = user;   
+          req.session.isAdmin = user.isAdmin();
+          console.log('redirecting to home' );
+          res.redirect('/home');
+        
+        }
+      }
+    });
+  
+};
 exports.login = function(req, res){
   if(req.xhr) {
     var username = req.body.username;
@@ -58,23 +100,23 @@ exports.login = function(req, res){
         akses:['admin']
       };
       req.session.currentUser = user;
-      res.json({success:true}); 
+      res.json({success:true});
+    
     }
     console.log('Login '+req.body.username);
     var criteria = {$and:[{'username':username},{'password':password}]};
-    
-    User.list({perPage:10,page:0,criteria:criteria},function(err,result){
+    var update = {'tglTerakhirLogin':new Date};
+    User.findOneAndUpdate(criteria,update,function(err,result){
       if(err)
       {
         res.json('403',{'error':'invalid username/password'});
         console.log(err);
       }
       else{
-        //console.log(result);
 
-        if(result.length==1)
+        if(result)
         {
-          var user = result[0];
+          var user = result;
           if(user.akses==null || user.akses.length==0) {
             res.json('403',{'error':'akses'});
             return;
@@ -86,6 +128,8 @@ exports.login = function(req, res){
 
           delete user.password;
           req.session.currentUser = user;
+          req.session.isAdmin = user.isAdmin();
+          res.cookie('user', username, {signed: true}); 
           res.json({success:true});
          
         }

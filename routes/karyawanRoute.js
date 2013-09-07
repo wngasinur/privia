@@ -5,6 +5,7 @@
  var mongoose = require('mongoose'),
  moment = require('moment'),
  async = require('async'),
+ util = require('../util'),
  $ = require('jquery'),
  Karyawan = mongoose.model('Karyawan'),
  User = mongoose.model('User'),
@@ -31,6 +32,8 @@ exports.get = function(req, res){
     res.json(result);
   });
 };
+
+
 exports.list = function(req, res){
 
 
@@ -46,12 +49,25 @@ exports.list = function(req, res){
           console.log(sSearch);
         }
         var perPage = req.query.iDisplayLength*1;
-        var criteria = {nama:new RegExp(searchUsername, 'i')};
-        console.log(searchUsername);
+
+        var conditions = util.queryConditions(req);
+         var criteria = {}, criteriaKaryawan= {};
+                if(conditions.length!=0) {
+                    for(i=0;i<conditions.length;i++) {
+                       if(conditions[i].col=='username.username')
+                       
+                           $.extend(criteriaKaryawan, {$and:[{'username':{'$ne':null}},{'username':new RegExp(conditions[i].val, "i")}]});
+                       else if(conditions[i].col=='nama')
+                           $.extend(criteria,{'nama':new RegExp(conditions[i].val, "i")});
+                        else if(conditions[i].col=='namaCabang')
+                           $.extend(criteria,{'namaCabang':new RegExp(conditions[i].val, "i")});
+                   }
+               }
+        console.log(criteria);
         var displayStart = req.query.iDisplayStart*1;
         var page = displayStart/perPage;
         console.log(page+' '+perPage)
-        Karyawan.list({perPage:perPage,page:page,criteria:criteria},function(err,result){
+        Karyawan.list({perPage:perPage,page:page,criteria:criteria,criteriaKaryawan:criteriaKaryawan},function(err,result){
           callback(null, result);
         });
 
@@ -141,6 +157,7 @@ Cabang.load(json.cabang,function(err,cabang1){
 else {
   console.log('add');
   delete json._id;
+  json.status='Aktif';
   karyawan = new Karyawan(json);
   karyawan.save(function (err,karyawan) {
 
