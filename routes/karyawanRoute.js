@@ -55,7 +55,7 @@ exports.list = function(req, res){
                 if(conditions.length!=0) {
                     for(i=0;i<conditions.length;i++) {
                        if(conditions[i].col=='username.username')
-                       
+
                            $.extend(criteriaKaryawan, {$and:[{'username':{'$ne':null}},{'username':new RegExp(conditions[i].val, "i")}]});
                        else if(conditions[i].col=='nama')
                            $.extend(criteria,{'nama':new RegExp(conditions[i].val, "i")});
@@ -66,7 +66,6 @@ exports.list = function(req, res){
         console.log(criteria);
         var displayStart = req.query.iDisplayStart*1;
         var page = displayStart/perPage;
-        console.log(page+' '+perPage)
         Karyawan.list({perPage:perPage,page:page,criteria:criteria,criteriaKaryawan:criteriaKaryawan},function(err,result){
           callback(null, result);
         });
@@ -109,17 +108,41 @@ exports.save = function(req, res){
   delete editKaryawan.__v;
 
   console.log('edit %j',editKaryawan);
-  var conditions = { _id: karyawan._id }
-  , update = editKaryawan
-  , options = { multi: false };
 
-  Karyawan.update(conditions, update, options, function(err,result){
+
+ async.series({
+      one: function(callback){
+          var conditions = { username: karyawan.username };
+      Karyawan.update(conditions,  { $set: { username:null}}, { multi: true },function(err,result){
     if(err)
       console.log(err);
     else
-      res.json( { success: 'true' });
+      console.log('result '+result);
+       callback(null);
 
   });
+       
+      },
+      two: function(callback){
+  var conditions = { _id: karyawan._id }
+  , update = editKaryawan
+  , options = { multi: false };
+     Karyawan.update(conditions, update, options, function(err,result){
+    if(err)
+      console.log(err);
+    else
+       callback(null);
+
+  });
+
+        callback(null);
+      }
+    },
+    function(err, results) {
+      res.json( { success: 'true' });
+    // results is now equal to: {one: 1, two: 2}
+  });
+  
 
      /*// an example using an object instead of an array
      async.series({

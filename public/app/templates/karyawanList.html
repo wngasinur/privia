@@ -54,11 +54,18 @@
                     return '<a href="#/karyawan/edit/'+data+'">Ubah</a>';
                 },
                 "aTargets": [5]
+            },
+              {
+                "mRender": function ( data, type, row ) {
+
+                    return data?data.username:'';
+                },
+                "aTargets": [1]
             }
             ],
         "aoColumns": [
         { "mData": "imgProfile" },
-        { "mData": "username.username" },
+        { "mData": "username" },
         { "mData": "nama" },
         { "mData": "namaCabang" },
         { "mData": "status" },

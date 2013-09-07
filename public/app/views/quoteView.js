@@ -81,7 +81,7 @@ define([
 
             if(this.quoteForm.valid()) {
                 this.model.set(this.quoteForm.serializeObject());
-                this.model.set('perusahaanKredit',that.perusahaanKredit);
+                this.model.set('perusahaanKredit',this.perusahaanKredit);
                 this.quoteForm.find('.save').button('loading');
                 this.model.save();
             }
@@ -268,7 +268,7 @@ define([
 
             formatSelection:function(object,container) {
                 //console.log(object.obj);
-                if(typeof object.obj!=='undefined') {
+                if(typeof object!=='undefined') {
 /*
                     $('#thumbnail-profile').attr('src',object.obj.imgProfile);
                     $('#imgProfile').val(object.obj.imgProfile);
@@ -276,11 +276,11 @@ define([
                     $('#quoteAlamat').html(_.template( $("#alamatSection").html(),object.obj.alamat));
                     $('#quoteTelepon').html(_.template( $("#teleponSection").html(),object.obj.telepon));
                     $('#alamat').val($('#quoteAlamat').html());*/
-                    console.log('format %j',object.obj);
-                    that.sukuBunga = object.obj.sukuBunga;
-                    that.perusahaanKredit = object.obj;
+                   
+                    that.sukuBunga = object.sukuBunga;
+                    that.perusahaanKredit = object;
                     that.$el.find('#lamaPinjaman').trigger('change');
-                    if(object.obj.kreditProtection) {
+                    if(object.kreditProtection) {
                         that.$el.find('#kreditProtectionSection').show();
                     }
                     else {
@@ -299,9 +299,9 @@ define([
                         if(data.length!=0) {
                         data[0].id=data[0]._id;
                         data[0].text=data[0].inisial;
-                        data[0].obj=data[0];
-                        var obj =data[0];
-                        callback(obj); 
+                        //data[0].obj=data[0];
+                        //var obj =data[0];
+                        callback(data[0]); 
                         }
                     });
 
