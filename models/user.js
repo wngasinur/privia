@@ -97,7 +97,8 @@ UserSchema.methods = {
    * @api private
    */
   isAdmin:function(){
-    return $.inArray('admin',this.akses)>0?true:false;
+
+    return $.inArray('admin',this.akses)>=0?true:false;
   },
   addComment: function (user, comment, cb) {
     var notify = require('../mailer/notify')
