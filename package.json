@@ -12,6 +12,7 @@
     "jquery":"1.8.3",
     "async": "0.2.8",
     "moment": "2.0.0",
-    "imager" :"0.1.9"
+    "imager" :"0.1.9",
+    "imagemagick" :"0.1.3"
   }
 }

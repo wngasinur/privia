@@ -17,7 +17,7 @@
                             <div class="control-group">
                                 <div data-provides="fileupload" class="fileupload fileupload-new">
                                     <div style="width: 80px; height: 80px;" class="fileupload-new thumbnail">
-                                        <img src="<%=imgProfile!=''?imgProfile:'http://www.placehold.it/80x80/EFEFEF/AAAAAA'%>" alt="" id="thumbnail-profile"></div>
+                                        <img src="<%=imgProfile!=''?'/thumbnail/'+imgProfile:'/img/80x80.gif'%>" alt="" id="thumbnail-profile"></div>
 
                                     <div style="width: 80px; height: 80px; line-height: 80px;" class="fileupload-preview fileupload-exists thumbnail"></div>
                                     <span id="img-uploader" class="btn btn-file"></span>
@@ -203,11 +203,11 @@
                     }
                 }).on('complete', function(event, id, fileName, response) {
                             if (response.success) {
-                                $('#thumbnail-profile').attr('src',response.path);
+                                $('#thumbnail-profile').attr('src','/thumbnail/'+response.path);
                                 $('#imgProfile').val(response.path);
                             }
                             else {
-                                $('#thumbnail-profile').attr('src','http://www.placehold.it/80x80/EFEFEF/AAAAAA');
+                                $('#thumbnail-profile').attr('src','/img/80x80.gif');
                                 $('#imgProfile').val('');
                             }
                         });

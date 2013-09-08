@@ -4,6 +4,7 @@
  */
  var mongoose = require('mongoose'),
  moment = require('moment'),
+ im = require('imagemagick'),
  async = require('async'),
  util = require('../util'),
  $ = require('jquery'),
@@ -52,17 +53,17 @@ exports.list = function(req, res){
 
         var conditions = util.queryConditions(req);
          var criteria = {}, criteriaKaryawan= {};
-                if(conditions.length!=0) {
-                    for(i=0;i<conditions.length;i++) {
-                       if(conditions[i].col=='username.username')
+          if(conditions.length!=0) {
+              for(i=0;i<conditions.length;i++) {
+                 if(conditions[i].col=='username.username')
 
-                           $.extend(criteriaKaryawan, {$and:[{'username':{'$ne':null}},{'username':new RegExp(conditions[i].val, "i")}]});
-                       else if(conditions[i].col=='nama')
-                           $.extend(criteria,{'nama':new RegExp(conditions[i].val, "i")});
-                        else if(conditions[i].col=='namaCabang')
-                           $.extend(criteria,{'namaCabang':new RegExp(conditions[i].val, "i")});
-                   }
-               }
+                     $.extend(criteriaKaryawan, {$and:[{'username':{'$ne':null}},{'username':new RegExp(conditions[i].val, "i")}]});
+                 else if(conditions[i].col=='nama')
+                     $.extend(criteria,{'nama':new RegExp(conditions[i].val, "i")});
+                  else if(conditions[i].col=='namaCabang')
+                     $.extend(criteria,{'namaCabang':new RegExp(conditions[i].val, "i")});
+             }
+         }
         console.log(criteria);
         var displayStart = req.query.iDisplayStart*1;
         var page = displayStart/perPage;

@@ -35,7 +35,12 @@ var CabangSchema = new Schema({
   alamat: {type : String, default : '', trim : true},
   kodePos: {type : String, default : '', trim : true},
   kota: {type : String, default : '', trim : true},
-  telepon: {type : String, default : '', trim : true}
+  telepon: {type : String, default : '', trim : true},
+  proposal : {  
+    percentDP : {type:Number, default : 0},
+    provisi : {type:Number, default : 0},
+    admInsurance : {type:Number, default : 0}
+  }
 })
 
 /**

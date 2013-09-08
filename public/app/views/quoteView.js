@@ -23,20 +23,21 @@ define([
          },
         updateSukuBunga:function(){
             var lamaPinjaman = this.$el.find('#lamaPinjaman').val()*1;
-            var sukuBunga = 0;
-            if(lamaPinjaman) {
+            
+            if(lamaPinjaman && this.sukuBunga) {
+                var tmp = 0;
                 if(lamaPinjaman==1)
-                    sukuBunga = this.sukuBunga.thn1;
+                    tmp = this.sukuBunga.thn1;
                 else if(lamaPinjaman==2)
-                    sukuBunga = this.sukuBunga.thn2;
+                    tmp = this.sukuBunga.thn2;
                 else if(lamaPinjaman==3)
-                    sukuBunga = this.sukuBunga.thn3;
+                    tmp = this.sukuBunga.thn3;
                 else if(lamaPinjaman==4)
-                    sukuBunga = this.sukuBunga.thn4;
-            console.log('update suku bunga '+ sukuBunga);
+                    tmp = this.sukuBunga.thn4;
+            console.log('update suku bunga '+ tmp);
             if(this.$el.find('#kreditProtectionSection:visible'))
               this.$el.find('#kreditProtection').val((0.3*lamaPinjaman).toFixed(1));
-            this.$el.find('#sukuBunga').val(sukuBunga);
+            this.$el.find('#sukuBunga').val(tmp);
             }
         },
         initialize:function(options){
@@ -215,9 +216,15 @@ define([
             formatSelection:function(object,container) {
                 //console.log(object.obj);
                 if(typeof object.obj!=='undefined') {
-
-                    $('#thumbnail-profile').attr('src',object.obj.imgProfile);
-                    $('#imgProfile').val(object.obj.imgProfile);
+                    if(object.obj.imgProfile)
+                    {
+                        $('#thumbnail-profile').attr('src','/thumbnail/'+object.obj.imgProfile);
+                        $('#imgProfile').val(object.obj.imgProfile);
+                    }
+                    else {
+                        $('#thumbnail-profile').attr('src','/img/80x80.gif');
+                        $('#imgProfile').val('');
+                    }
                     $('#namaCustomer').val(object.obj.namaCustomer);
                     $('#quoteAlamat').html(_.template( $("#alamatSection").html(),object.obj.alamat));
                     $('#quoteTelepon').html(_.template( $("#teleponSection").html(),object.obj.telepon));
@@ -268,6 +275,9 @@ define([
 
             formatSelection:function(object,container) {
                 //console.log(object.obj);
+                if(object && object.obj) {
+                    object = object.obj;
+                }
                 if(typeof object!=='undefined') {
 /*
                     $('#thumbnail-profile').attr('src',object.obj.imgProfile);
@@ -287,7 +297,7 @@ define([
                         that.$el.find('#kreditProtection').val(0);
                         that.$el.find('#kreditProtectionSection').hide();
                     }
-
+                    return object.inisial;
                 }
 
                 return object.text;

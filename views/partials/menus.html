@@ -11,7 +11,12 @@
                     </li>
                     <li class="divider-vertical hidden-phone hidden-tablet"></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> {{currentNama}} <b class="caret"></b></a>
+
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+
+
+                          <img src="/thumbnail/{{currentUser.karyawan.imgProfile}}" class="thumbnail" style="display:inline;height:20px;padding:0px;margin-right:5px;margin-top:-3px"> 
+                          {{currentNama}} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="user_profile.html">My Profile</a></li>
                             <li><a href="javascrip:void(0)">Ganti Password</a></li>

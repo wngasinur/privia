@@ -3,6 +3,8 @@
  * GET home page.
  */
  var mongoose = require('mongoose'),
+ im = require('imagemagick'),
+ path = require('path'),
  fs = require('fs')
  , User = mongoose.model('User')
 
@@ -34,13 +36,27 @@ exports.upload = function(req, res){
   fs.readFile(req.files.qqfile.path, function (err, data) {
 
     var fileName = new Date().getTime()+req.files.qqfile.name;
-    var newPath = __dirname + "/../uploads/"+fileName;
-    console.log('writing to '+newPath);
-    fs.writeFile(newPath, data, function (err) {
-      res.set({
+    var extName =  path.extname(fileName);
+    var baseName = path.basename(fileName,extName);
+    
+    var newPath = path.normalize(__dirname + "/../uploads/");
+    
+    console.log('writing to '+newPath+ ' '+baseName+' '+extName);
+    fs.writeFile(newPath+fileName, data, function (err) {
+      console.log(newPath+fileName+' '+newPath+baseName+'_small'+extName);
+      im.resize({
+        srcPath: newPath+fileName,
+        dstPath: newPath+baseName+'_small'+extName,
+        width:   120
+      }, function(err, stdout, stderr){
+        if (err) throw err;
+        console.log('resized');
+          res.set({
         'Content-Type': 'text/plain'
       });
-      res.json({ success: 'true' ,path : '/thumbnail/'+fileName});
+      res.json({ success: 'true' ,path : baseName+extName});
+      });
+    
     });
   });
 
@@ -50,10 +66,25 @@ exports.upload = function(req, res){
 
 exports.thumbnail = function(req, res){
   //app.set('layout', 'layoutx') ;
-  console.log('%j',req.params.name);
-  var options =  {root:__dirname + "/../uploads/"};
-
-  res.sendfile(req.params.name,options);
+ 
+  var filePath = path.normalize(__dirname + "/../uploads/");
+  var fileName = req.params.name;
+  var extName =  path.extname(fileName);
+  var baseName = path.basename(fileName,extName);
+  var thumbnailName = baseName+'_small'+extName;
+  var options =  {root:filePath};
+  
+  
+  fs.exists(filePath+thumbnailName, function (exists) {
+    if(!exists) {
+        filePath = path.normalize(__dirname + "/../public/img/");
+        options =  {root:filePath};
+        thumbnailName = '80x80.gif';
+    }
+    console.log('%j',filePath+' '+thumbnailName);
+    res.sendfile(thumbnailName,options);
+});
+  
 };
 
 exports.rememberMe = function(req, res){ 

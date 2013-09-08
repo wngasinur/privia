@@ -13,7 +13,7 @@
         <table class="table table-bordered table-striped  dTableR" id="privia_grid" aria-describedby="dt_gal_info">
             <thead>
                 <tr>
-                    <th>Profile</th>
+                    <th width=80>Profile</th>
                     <th>Username</th>
                     <th>Nama Karyawan</th>
                     <th>Cabang</th>
@@ -43,7 +43,7 @@
                 // Using `row[0]` is equivalent.
                 "mRender": function ( data, type, row ) {
                     if(data!='') 
-                        return '<img src="'+data+'" width=40 height=40 />';
+                        return '<img src="/thumbnail/'+data+'" />';
                     return '<img src="http://www.placehold.it/40x40/EFEFEF/AAAAAA" alt="" id="thumbnail-profile"></div>';
                 },
                 "aTargets": [ 0 ]
@@ -61,13 +61,20 @@
                     return data?data.username:'';
                 },
                 "aTargets": [1]
+            },
+              {
+                "mRender": function ( data, type, row ) {
+
+                    return data?data.namaCabang:'';
+                },
+                "aTargets": [3]
             }
             ],
         "aoColumns": [
         { "mData": "imgProfile" },
         { "mData": "username" },
         { "mData": "nama" },
-        { "mData": "namaCabang" },
+        { "mData": "cabang" },
         { "mData": "status" },
         { "mData": "_id" }
         ],

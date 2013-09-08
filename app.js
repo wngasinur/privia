@@ -13,7 +13,7 @@
  var mongoose = require('mongoose');
 
  mongoose.connect(config.db)
-
+ mongoose.set('debug', true)
 var models_path = __dirname + '/models'
 fs.readdirSync(models_path).forEach(function (file) {
   require(models_path+'/'+file)
@@ -105,6 +105,11 @@ http.createServer(app).listen(app.get('port'), function(){
 	console.log('Express server listening on port ' + app.get('port'));
 });
 
+hbs.registerHelper('unless_blank', function(item, block) {
+  console.log('xxx'+ (item && item.replace(/\s/g,"").length) ? block.fn(this) : block.inverse(this));
+  return (item && item.replace(/\s/g,"").length) ? block.fn(this) : block.inverse(this);
+});
+
 Array.prototype.contains = function(k, callback) {
     var self = this;
     return (function check(i) {
@@ -120,14 +125,17 @@ Array.prototype.contains = function(k, callback) {
     }(0));
 }
 
+Array.prototype.contains = function(k) {
+    var self = this;
+    return (function check(i) {
+        if (i >= self.length) {
+            return callback(false);
+        }
 
-function queryConditions(req) {
-    var conditions = [];
-    for(i=0;i<5;i++) {
-        var val = req.query['sSearch_'+i];
-        var col = req.query['mDataProp_'+i];
-        if(val)
-            conditions.push({'col':col,'val':val});
-    }
-    return conditions;
+        if (self[i] === k) {
+            return true;
+        }
+
+        return process.nextTick(check.bind(null, i+1));
+    }(0));
 }
