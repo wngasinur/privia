@@ -46,6 +46,16 @@
   }
 })
 
+CustomerSchema.virtual('text').get(function () {
+  return this.namaCustomer;
+});
+
+CustomerSchema.virtual('id').get(function () {
+  return this._id;
+});
+
+CustomerSchema.set('toJSON', { getters: true, virtuals: true });
+
 /**
  * Validations
  */

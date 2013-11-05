@@ -43,6 +43,8 @@
 
             <link rel="stylesheet" href="/css/select2.css" />
             
+            <link rel="stylesheet" href="/css/select2-bootstrap.css" />
+            
             <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans" />
     
         <!-- Favicon -->
@@ -115,6 +117,13 @@
     <script type="text/html" id='alamatSection'>
         <div class="alamatSection">
             <%=jalan%> RT <%=rt%> RW <%=rw%>
+        </div>
+    </script>
+     <script type="text/html" id='sukuBungaSection'>
+        <div class="sukuBungaSection">
+            <% _.each(bungas, function(bunga){ %>
+                <%='<b>'+bunga.jenis+'</b> : '+bunga.thn1+'%/'+bunga.thn2+'%/'+bunga.thn3+'%/'+bunga.thn4+'%<br>' %>
+            <% }); %>
         </div>
     </script>
      <script type="text/html" id='teleponSection'>

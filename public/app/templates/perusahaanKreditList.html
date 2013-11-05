@@ -12,7 +12,7 @@
                 <tr>
                     <th>Inisial</th>
                     <th>Nama Lengkap Perusahaan</th>
-                    <th>% Suku Bunga (1/2/3/4 tahun)</th>
+                    <th>% Suku Bunga Pinjaman (1/2/3/4 tahun)</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -37,7 +37,9 @@
                 // defaults to the column being worked with, in this case is the first
                 // Using `row[0]` is equivalent.
                 "mRender": function ( data, type, row ) {
-                   return data.thn1+'/'+data.thn2+'/'+data.thn3+'/'+data.thn4;
+                    var bunga = _.template( $("#sukuBungaSection").html(),{'bungas':data});
+
+                    return bunga; 
                 },
                 "aTargets": [2]
             },
@@ -51,7 +53,7 @@
         "aoColumns": [
         { "mData": "inisial" },
         { "mData": "namaPerusahaanKredit" },
-        { "mData": "sukuBunga" },
+        { "mData": "bungaPinjaman" },
         { "mData": "_id" }  
       
         ],

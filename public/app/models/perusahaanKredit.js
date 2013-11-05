@@ -15,6 +15,12 @@ define(["jquery", "backbone"],
                 inisial:'',
                 namaPerusahaanKredit:'',
                 kreditProtection:'',
+                bungaPinjaman:[{
+                    jenis:'',tahunMulai:'',tahunAkhir:'', dp:'',thn1:'',thn2:'',thn3:'',thn4:''
+                }],
+                bungaAsuransi:[{
+                    jenis:'',thn1:'',thn2:'',thn3:'',thn4:''
+                }],
                 sukuBunga:{},
             },
 

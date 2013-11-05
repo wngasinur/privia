@@ -13,12 +13,13 @@ define([
         el: $('#container'),
         events: {
             "click .save"   : "save",
+            "click .saveKontrak"   : "save",
             "click .print"   : "print",
             "click .cancel"   : "cancel",
             "click #tambahCustomer"   : "tambahCustomer",
             "change #lamaPinjaman": "updateSukuBunga"
         },
-         print:function(){
+        print:function(){
             window.print();
          },
         updateSukuBunga:function(){
@@ -81,8 +82,12 @@ define([
             console.log(this.quoteForm.serializeObject());
 
             if(this.quoteForm.valid()) {
+                var status = e.target.textContent;
+
                 this.model.set(this.quoteForm.serializeObject());
                 this.model.set('perusahaanKredit',this.perusahaanKredit);
+                this.model.set('customer',this.customer);
+                this.model.set('status',status);
                 this.quoteForm.find('.save').button('loading');
                 this.model.save();
             }
@@ -166,6 +171,12 @@ define([
                         that.$el.html( compiledTemplate );
                         that.quoteForm = that.$el.find('#quoteForm');
                         that.initializeForm();
+                        var status = that.model.get('status');
+                        if(status && status=='Kontrak') {
+                            that.$el.find('.save').addClass('hide');
+                        }
+                        else        
+                            that.$el.find('.saveKontrak').removeClass('hide');
 
                         if(cb) cb();
                     }
@@ -191,6 +202,11 @@ define([
     },
     initializeForm:function(){
         that=this;
+
+        that.$el.find('#bungaPinjaman').select2({data:{results:[]}});
+
+        that.$el.find('#bungaAsuransi').select2({data:{results:[]}});
+
         this.$el.find('#kodeCustomer').select2({  
             ajax: {
                 url: "/api/customers/search",
@@ -203,50 +219,30 @@ define([
                 results : function(data) {
                     return {
                         results : $.map(data, function(item) {
-                            return {
-                                id : item._id,
-                                text : item.namaCustomer,
-                                obj : item
-                            };
+                            return item;
                         })
                     };
                 }
             },
 
             formatSelection:function(object,container) {
-                //console.log(object.obj);
-                if(typeof object.obj!=='undefined') {
-                    if(object.obj.imgProfile)
+                if(typeof object!=='undefined' && object.length!=0) {
+                    if(object.imgProfile)
                     {
-                        $('#thumbnail-profile').attr('src','/thumbnail/'+object.obj.imgProfile);
-                        $('#imgProfile').val(object.obj.imgProfile);
+                        $('#thumbnail-profile').attr('src','/thumbnail/'+object.imgProfile);
                     }
                     else {
                         $('#thumbnail-profile').attr('src','/img/80x80.gif');
-                        $('#imgProfile').val('');
                     }
-                    $('#namaCustomer').val(object.obj.namaCustomer);
-                    $('#quoteAlamat').html(_.template( $("#alamatSection").html(),object.obj.alamat));
-                    $('#quoteTelepon').html(_.template( $("#teleponSection").html(),object.obj.telepon));
-                    $('#alamat').val($('#quoteAlamat').html());
-                    
+                    $('#quoteAlamat').html(_.template( $("#alamatSection").html(),object.alamat));
+                    $('#quoteTelepon').html(_.template( $("#teleponSection").html(),object.telepon));
+                    that.customer =  object;
                 }
                 return object.text;
             },
             initSelection: function(element, callback) {
-                var id=$(element).val();
-                if (id!=="") {
-                    $.ajax("/api/customers/search?q="+id).done(function(data) { 
-                        if(data.length!=0) {
-                        data[0].id=data[0]._id;
-                        data[0].text=data[0].namaCustomer;
-                        data[0].obj=data[0];
-                        var obj =data[0];
-                        callback(obj); 
-                        }
-                    });
-
-                }
+                var obj = that.model.get('customer');
+                callback(obj); 
             }
             });
 
@@ -263,11 +259,7 @@ define([
                 results : function(data) {
                     return {
                         results : $.map(data, function(item) {
-                            return {
-                                id : item._id,
-                                text : item.inisial,
-                                obj : item
-                            };
+                            return item;
                         })
                     };
                 }
@@ -275,21 +267,83 @@ define([
 
             formatSelection:function(object,container) {
                 //console.log(object.obj);
-                if(object && object.obj) {
-                    object = object.obj;
-                }
-                if(typeof object!=='undefined') {
-/*
-                    $('#thumbnail-profile').attr('src',object.obj.imgProfile);
-                    $('#imgProfile').val(object.obj.imgProfile);
-                    $('#namaCustomer').val(object.obj.namaCustomer);
-                    $('#quoteAlamat').html(_.template( $("#alamatSection").html(),object.obj.alamat));
-                    $('#quoteTelepon').html(_.template( $("#teleponSection").html(),object.obj.telepon));
-                    $('#alamat').val($('#quoteAlamat').html());*/
-                   
+                if(typeof object!=='undefined' && Object.prototype.toString.call( object ) !== '[object Array]') {
+
                     that.sukuBunga = object.sukuBunga;
                     that.perusahaanKredit = object;
-                    that.$el.find('#lamaPinjaman').trigger('change');
+
+                    var lamaPinjaman =  that.$el.find('#lamaPinjaman');
+
+                    lamaPinjaman.trigger('change');
+                    
+                    var format=function format(item) { return item.jenis; };
+
+                    var tahunBuat = that.$el.find('#tahunBuat').val()*1;
+
+                    var filterBungaPinjaman = $.grep(object.bungaPinjaman, function(v) {
+                        if(!v.tahunMulai && v.tahunAkhir)
+                        {
+                            return (tahunBuat<=(v.tahunAkhir*1));
+                        }
+                        else if(v.tahunMulai && !v.tahunAkhir)
+                        {
+                            return (tahunBuat>=(v.tahunMulai*1));   
+                        }
+                        else if(v.tahunMulai && v.tahunAkhir) {
+                            return (tahunBuat>=(v.tahunMulai*1) && tahunBuat<=(v.tahunAkhir*1));
+                        }
+                        
+                        return false;
+                    });
+                    console.log(filterBungaPinjaman);
+
+                    that.$el.find('#bungaPinjaman').select2({
+                        data:{
+                            results:filterBungaPinjaman,
+                            text:'jenis',id:'_id'
+                        },
+                        formatResult:format,
+                        formatSelection:function(object) {
+                            if(lamaPinjaman.val()==1) {
+                                that.$el.find('#sukuBunga').val(object.thn1);
+                            }
+                            else if(lamaPinjaman.val()==2) {
+                                that.$el.find('#sukuBunga').val(object.thn2);
+                            }
+                            else if(lamaPinjaman.val()==3) {
+                                that.$el.find('#sukuBunga').val(object.thn3);
+                            }
+                            else if(lamaPinjaman.val()==4) {
+                                that.$el.find('#sukuBunga').val(object.thn4);
+                            }
+                            that.$el.find('#percentDP').val(object.dp);
+                            return object.jenis;
+                        }
+                    });
+
+                    that.$el.find('#bungaAsuransi').select2({
+                        data:{
+                            results:object.bungaAsuransi,
+                            text:'jenis',id:'_id'
+                        },
+                        formatResult:format,
+                        formatSelection:function(object) {
+                            if(lamaPinjaman.val()==1) {
+                                that.$el.find('#asstTlo').val(object.thn1);
+                            }
+                            else if(lamaPinjaman.val()==2) {
+                                that.$el.find('#asstTlo').val(object.thn2);
+                            }
+                            else if(lamaPinjaman.val()==3) {
+                                that.$el.find('#asstTlo').val(object.thn3);
+                            }
+                            else if(lamaPinjaman.val()==4) {
+                                that.$el.find('#asstTlo').val(object.thn4);
+                            }
+                            return object.jenis;
+                        }
+                    });
+
                     if(object.kreditProtection) {
                         that.$el.find('#kreditProtectionSection').show();
                     }
@@ -297,7 +351,7 @@ define([
                         that.$el.find('#kreditProtection').val(0);
                         that.$el.find('#kreditProtectionSection').hide();
                     }
-                    return object.inisial;
+                    return object.text;
                 }
 
                 return object.text;
@@ -305,15 +359,8 @@ define([
             initSelection: function(element, callback) {
                 var id=$(element).val();
                 if (id!=="") {
-                    $.ajax("/api/perusahaanKredit/search?q="+id).done(function(data) { 
-                        if(data.length!=0) {
-                        data[0].id=data[0]._id;
-                        data[0].text=data[0].inisial;
-                        //data[0].obj=data[0];
-                        //var obj =data[0];
-                        callback(data[0]); 
-                        }
-                    });
+                   var obj = that.model.get('perusahaanKredit');
+                   callback(obj); 
 
                 }
             }
@@ -351,7 +398,7 @@ define([
                     tglTambah = new Date();
 
                   //console.log('perusahaan kredit %j',that.perusahaanKredit);
-                  formData = $.extend(formData,{tglTambah:tglTambah,inisial:that.perusahaanKredit.inisial});
+                  formData = $.extend(formData,{tglTambah:tglTambah,inisial:that.perusahaanKredit.inisial,customer:that.customer});
                 
                   var quotePrint = _.template( print1SectionTemplate ,formData);
                   that.$el.find('#quotePrint').html(quotePrint);
@@ -369,7 +416,19 @@ define([
         this.quoteForm.find('.numeric').inputmask("integer");
 
         this.quoteForm.find('.percentage').inputmask("decimal");
-        this.quoteForm.find('.price').inputmask('Rp. 999.999.999.999', { numericInput: true });
+        this.quoteForm.find('.price').on('focus',function(e){
+
+        });
+        this.quoteForm.find('.price').inputmask('Rp. 999.999.999.999', { numericInput: true,
+            onKeyUp:function(e) {
+
+                /*var code = e.keyCode || e.which;
+                if (code == '8') {
+                    $(this).val('');
+                    return false;
+                }*/
+            }
+        });
     }
                       
     });

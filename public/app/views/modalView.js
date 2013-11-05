@@ -89,7 +89,6 @@ define([
                     },
                     rules: {
                         namaModal: "required",
-                        noIdentitas : "required",
                         gender : "required",
                         "telepon[hp1]":"required"
                     },

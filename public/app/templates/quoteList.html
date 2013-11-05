@@ -19,8 +19,8 @@
                 <th>Marketing</th>
                 <th>Customer</th>
                 <th>Kendaraan</th>
-                <th>Alamat</th>
                 <th>Lama Pnjmn</th>
+                <th>Status</th>
                 <th>Waktu</th>
                 <th>Action</th>
                 </tr>
@@ -49,7 +49,7 @@
                 },
                 "aTargets": [ 3 ]
             },
-              {
+           {
                 "mRender": function ( data, type, row ) {
                     
                     return moment(data).fromNow();
@@ -67,10 +67,10 @@
         "aoColumns": [
         { "mData": "cabang.namaCabang","bVisible":    true },
         { "mData": "ditambahOleh.nama" },
-        { "mData": "namaCustomer" },
+        { "mData": "customer.namaCustomer" },
         { "mData": "jenisKendaraan" },
-        { "mData": "alamat" },
         { "mData": "lamaPinjaman" },
+        { "mData": "status" },
         { "mData": "tglTambah" },
         { "mData": "_id" }
         ],

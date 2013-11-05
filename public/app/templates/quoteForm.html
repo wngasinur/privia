@@ -9,10 +9,6 @@
             </div>
 
     <input type="hidden" name="admInsurance" id="admInsurance">
-    <input type="hidden" name="alamat" id="alamat">
-    <input type="hidden" name="telepon" id="telepon">
-    <input type="hidden" name="namaCustomer" id="namaCustomer">
-    <input type="hidden" name="imgProfile" id="imgProfile" >
     <input type="hidden" name="cashBack" id="cashBack">
     <input type="hidden" name="carDepreciation" id="carDepreciation">
     <input type="hidden" name="pengurangTerakhir" id="pengurangTerakhir">
@@ -38,7 +34,7 @@
                                     <div class="span6">
                                         <label for="kodeCustomer">Nama<span class="f_req">*</span>
                                         <span class="right"><a class="btn" id="tambahCustomer">Tambah Customer</a></span></label>
-                                        <input type="text" name="kodeCustomer" id="kodeCustomer"  class="span12" value="<%=kodeCustomer%>">
+                                        <input type="text" name="kodeCustomer" id="kodeCustomer"  class="span12" value="<%=customer%>">
                                     </div> 
                                 </div>
                             </div>
@@ -75,13 +71,12 @@
                                         <label for="kendaraanRoda">Kendaraan Roda:</label>
                                          <select name="kendaraanRoda"  class="span12">
                                             <option value="Mobil" <%=kendaraanRoda=='Mobil'?'checked':''%> >Mobil</option>
-                                            <option value="Motor" <%=kendaraanRoda=='Motor'?'checked':''%> >Motor</option>
                                             <option value="Truck" <%=kendaraanRoda=='Truck'?'checked':''%> >Truck</option>
                                             <option value="Pick-Up" <%=kendaraanRoda=='Pick-Up'?'checked':''%> >Pick-Up</option>
                                         </select> 
                                     </div>
                                     <div class="span4">
-                                       <label for="jenisKendaraan">Jenis Kendaraan:</label>
+                                       <label for="jenisKendaraan">Merk Kendaraan:</label>
                                         <input type="text" name="jenisKendaraan" id="jenisKendaraan" value="<%=jenisKendaraan%>" />
                                     </div>
                                 </div>
@@ -89,7 +84,7 @@
                             <div class="control-group">
                                 <div class="row-fluid">
                                     <div class="span4">
-                                       <label for="namaKendaraan">Tipe Kendaraan:</label>
+                                       <label for="namaKendaraan">Type Kendaraan:</label>
                                         <input type="text" class="span12"  name="namaKendaraan" id="namaKendaraan" value="<%=namaKendaraan%>" />
                                     </div>
                                     <div class="span3">
@@ -97,7 +92,7 @@
                                          <input type="text" class="span8"  name="tahunBuat" id="tahunBuat" value="<%=tahunBuat%>" />
                                     </div>
                                     <div class="span5">
-                                        <label for="hargaOTR">Harga OTR:</label>
+                                        <label for="hargaOTR">Harga OTRx:</label>
                                         <input type="text"  class="span14 price" name="hargaOTRMask" id="hargaOTRMask" value="<%=hargaOTR%>"  />
                                     </div>
                                 </div>
@@ -117,7 +112,7 @@
                     <div class="span6">
                     <label for="perusahaanKredit">Perusahaan Kredit:</label>
 
-                    <input type="text" name="perusahaanKredit[_id]" id="perusahaanKredit" value="<%=perusahaanKredit._id%>">
+                    <input type="text" name="perusahaanKredit[_id]" id="perusahaanKredit" value="<%=perusahaanKredit._id%>" class="span12">
                     </div>
                     </div>
                 </div>
@@ -134,19 +129,24 @@
                     </div>
                 </div>
 
+
                 <div class="control-group">
                     <div class="row-fluid">
-                        <div class="span4">
-                            <label> % Suku Bunga<span class="f_req">*</span></label>
-                            <input type="text" name="sukuBunga" id="sukuBunga" class="span8 percentage"  value="<%=sukuBunga%>">
+                        <div class="span10">
+                            <label> % Suku Bunga Pinjaman<span class="f_req">*</span></label>
+                            <input name="bungaPinjaman" id="bungaPinjaman" class="span8" value="<%=bungaPinjaman%>">
+                            <input type="text" name="sukuBunga" id="sukuBunga" class="span3 percentage"  value="<%=sukuBunga%>">
                         </div>
-                        <div class="span5 input-prepend">
-                            <label> % Asst<span class="f_req">*</span></label>
-                            <select name="coverage" class="span8">
-                            <option>All Risk</option>
-                            <option>Tlo</option>
-                            </select>
-                            <input type="text" name="asstTlo" class="span6 percentage" value="<%=asstTlo%>">
+                    </div>
+                </div>
+
+                 <div class="control-group">
+                    <div class="row-fluid">
+                       
+                        <div class="span10">
+                            <label> % Asuransi <span class="f_req">*</span></label>
+                            <input name="bungaAsuransi" id="bungaAsuransi" class="span8" value="<%=bungaAsuransi%>">
+                            <input type="text" name="asstTlo" id="asstTlo" class="span3 percentage" value="<%=asstTlo%>">
                         </div>
                     </div>
                 </div>
@@ -201,7 +201,8 @@
    
 </fieldset>
 
-<button type="button" class="finish btn btn-primary save" data-loading-text="Loading ..."><i class="icon-ok icon-white"></i> Save</button>
+<button type="button" class="finish btn btn-success saveKontrak hide" data-loading-text="Loading ..."><i class="icon-ok icon-white"></i>Kontrak</button>
+<button type="button" class="finish btn btn-primary save" data-loading-text="Loading ..."><i class="icon-ok icon-white"></i>Pending</button>
     <button type="button" class="finish btn btn-inverse print" data-loading-text="Loading ..."><i class="splashy-printer"></i> Print</button>&nbsp;           
 </form>
 </div>

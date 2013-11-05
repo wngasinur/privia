@@ -12,9 +12,8 @@ define(["jquery", "backbone"],
             // Default values for all of the Model attributes
             defaults: {
                 _id:'',
+                customer:{alamat:{jalan:'',rt:'',rw:''},telepon:{hp1:'',hp2:'',rmh:'',kantor:''}},
                 imgProfile :'',
-                kodeCustomer : '',
-                namaCustomer:'',
                 kendaraanRoda:'',
                 jenisKendaraan:'',
                 namaKendaraan:'',
@@ -24,7 +23,7 @@ define(["jquery", "backbone"],
                 lamaPinjaman:1,
                 sukuBunga:'',
                 asstTlo:'',
-                percentDP:30,
+                percentDP:'',
                 cashBack:'',
                 carDepreciation:'',
                 pengurangTerakhir:'',
@@ -32,7 +31,10 @@ define(["jquery", "backbone"],
                 bungaDibayar:'',
                 admInsurance :5000000,
                 coverage:'',
-                kreditProtection :0
+                kreditProtection :0,
+                bungaAsuransi:'',
+                bungaPinjaman:'',
+                status:''
             },
 
             // Gets called automatically by Backbone when the set and/or save methods are called (Add your own logic)

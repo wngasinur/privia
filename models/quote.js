@@ -14,21 +14,15 @@ var mongoose = require('mongoose')
  */
 
 var QuoteSchema = new Schema({
-    imgProfile: {type : String, default : '', trim : true},
-    kodeCustomer: {type : String, default : '', trim : true},
-    namaCustomer: {type : String, default : '', trim : true},
-    alamat: {type : String, default : '', trim : true},
-    telepon: {type : String, default : '', trim : true},
+    customer: {type : Schema.Types.Mixed},
     kendaraanRoda: {type : String, default : '', trim : true},
     jenisKendaraan: {type : String, default : '', trim : true},
     namaKendaraan: {type : String, default : '', trim : true},
     tahunBuat: {type : String, default : '', trim : true},
     hargaOTR: {type : Number, default : 0},
-    perusahaanKredit: {
-        _id: {type:Schema.Types.ObjectId},
-        inisial: {type : String, default : '', trim : true},
-        namaPerusahaanKredit: {type : String, default : '', trim : true}
-    },
+    perusahaanKredit: {type : Schema.Types.Mixed},
+    bungaAsuransi : {type : String, default : '', trim : true},
+    bungaPinjaman : {type : String, default : '', trim : true},
     lamaPinjaman: {type : String, default : '', trim : true},
     sukuBunga: {type : Number, default : 0},
     asstTlo: {type : Number, default : 0},
@@ -54,12 +48,31 @@ var QuoteSchema = new Schema({
       imgProfile : {type : String, default : '', trim : true},
       _id: {type:Schema.Types.ObjectId}
     },
+    status :{type : String, default : '', trim : true},
     cabang : {
         _id: {type:Schema.Types.ObjectId},
         kodeCabang: {type : String, default : '', trim : true},
         namaCabang: {type : String, default : '', trim : true}
     }
 })
+
+QuoteSchema.virtual('text').get(function () {
+  return this.namaCustomer;
+});
+
+QuoteSchema.virtual('id').get(function () {
+  return this._id;
+});
+
+QuoteSchema.virtual('imgProfile').get(function () {
+  if(typeof this.customer!='undefined')
+  return this.customer.imgProfile;
+
+  return {};
+});
+
+
+QuoteSchema.set('toJSON', { getters: true, virtuals: true });
 
 /**
  * Validations

@@ -27,13 +27,41 @@
     kodePos: {type : String, default : '', trim : true},
     kota: {type : String, default : '', trim : true}
   },
-  sukuBunga: {
+  bungaAsuransi : [{
+    jenis :  {type : String, default : '', trim : true},
     thn1 : {type : Number, default : 0},
     thn2 : {type : Number, default : 0},
     thn3 : {type : Number, default : 0},
     thn4 : {type : Number, default : 0}
-  }
+  }],
+  adminAsuransi : [{
+    jenis :  {type : String, default : '', trim : true},
+    thn1 : {type : Number, default : 0},
+    thn2 : {type : Number, default : 0},
+    thn3 : {type : Number, default : 0},
+    thn4 : {type : Number, default : 0}
+  }],
+  bungaPinjaman: [{
+    jenis :  {type : String, default : '', trim : true},
+    tahunMulai :  {type : Number},
+    tahunAkhir :  {type : Number},
+    dp :  {type : Number},
+    thn1 : {type : Number, default : 0},
+    thn2 : {type : Number, default : 0},
+    thn3 : {type : Number, default : 0},
+    thn4 : {type : Number, default : 0}
+  }]
 })
+
+PerusahaanKreditSchema.virtual('text').get(function () {
+  return this.namaPerusahaanKredit;
+});
+
+PerusahaanKreditSchema.virtual('id').get(function () {
+  return this._id;
+});
+
+PerusahaanKreditSchema.set('toJSON', { getters: true, virtuals: true });
 
 /**
  * Validations

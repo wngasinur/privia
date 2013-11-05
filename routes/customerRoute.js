@@ -26,9 +26,9 @@ exports.search = function(req, res){
         var objId = searchCustomername;
 
     console.log(searchCustomername.length);
-    var criteria = {$or:[{namaCustomer:new RegExp(searchCustomername, "i")},{_id:objId}]};
-    var select = {namaCustomer:true,alamat:true,telepon:true,imgProfile:true};
-    Customer.list({perPage:10,page:0,criteria:criteria,select:select},function(err,result){
+    var criteria = {$or:[{namaCustomer:new RegExp(searchCustomername, "i")},{_id:objId}]};/*
+    var select = {namaCustomer:true,alamat:true,telepon:true,imgProfile:true};*/
+    Customer.list({perPage:10,page:0,criteria:criteria},function(err,result){
         if(err)
             console.log(err);
         else

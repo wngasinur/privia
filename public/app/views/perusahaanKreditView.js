@@ -4,15 +4,20 @@ define([
     'backbone',
     'text!../templates/perusahaanKreditList.html',
     'text!../templates/perusahaanKreditForm.html',
-    'text!../templates/perusahaanKreditForm.html',
+    'text!../templates/perusahaanKreditBungaPinjamanSection.html',
+    'text!../templates/perusahaanKreditBungaAsuransiSection.html',    
     '../models/perusahaanKredit'
-], function($, _, Backbone, listTemplate,formTemplate,formEditTemplate,Model){
+], function($, _, Backbone, listTemplate,formTemplate,bungaPinjamanSectionTemplate,bungaAsuransiSectionTemplate,Model){
 
     var PerusahaanKreditView = Backbone.View.extend({
         el: $('#container'),
         events: {
             "click .save"   : "save",
-            "click .cancel"   : "cancel"
+            "click .cancel"   : "cancel",
+            "click #addBungaPinjaman"   : "addBungaPinjaman",
+            "click .removeBungaPinjaman"   : "removeBungaPinjaman",
+            "click #addBungaAsuransi"   : "addBungaAsuransi",
+            "click .removeBungaAsuransi"   : "removeBungaAsuransi"
         },
         initialize:function(options){
             console.log('initialize perusahaanKredit view ');
@@ -51,6 +56,36 @@ define([
         initializeForm:function(){
 
         },
+        addBungaPinjaman:function(e,obj){
+            if(obj) {
+                var bungaPinjaman = obj;
+            }
+            else {
+                var bungaPinjaman = new Model().get('bungaPinjaman')[0];
+            }
+
+            var compiledSection = _.template(bungaPinjamanSectionTemplate,bungaPinjaman);
+            this.$el.find('#sukuBungaForm').append(compiledSection);
+        },
+        removeBungaPinjaman:function(e){
+            var target = $(e.target);
+            target.closest('.row-fluid').remove();
+        },
+        addBungaAsuransi:function(e,obj){
+            if(obj) {
+                var bungaAsuransi = obj;
+            }
+            else {
+                var bungaAsuransi = new Model().get('bungaAsuransi')[0];
+            }
+
+            var compiledSection = _.template(bungaAsuransiSectionTemplate,bungaAsuransi);
+            this.$el.find('#sukuBungaAsuransiForm').append(compiledSection);
+        },
+        removeBungaPinjaman:function(e){
+            var target = $(e.target);
+            target.closest('.row-fluid').remove();
+        },
         save:function() {
             this.perusahaanKreditForm = this.$el.find('#perusahaanKreditForm');
             //console.log(this.userForm.serializeObject());
@@ -77,7 +112,7 @@ define([
                 template=listTemplate;
 
             if(id) {
-                template=formEditTemplate;
+                template=formTemplate;
 
                 console.log('load '+id);
                 var perusahaanKredit = new Model({id:id});
@@ -86,7 +121,20 @@ define([
                         var data = perusahaanKredit.toJSON();
                         that.model.set (data);
                         var compiledTemplate = _.template( template, data );
+
                         that.$el.html( compiledTemplate );
+                        var bungaPinjaman = data.bungaPinjaman;
+                        if(bungaPinjaman) {
+                            for(i=0;i<bungaPinjaman.length;i++ ){
+                                that.addBungaPinjaman(null,bungaPinjaman[i]);
+                            }
+                        }
+                        var bungaAsuransi = data.bungaAsuransi;
+                        if(bungaAsuransi) {
+                            for(i=0;i<bungaAsuransi.length;i++ ){
+                                that.addBungaAsuransi(null,bungaAsuransi[i]);
+                            }
+                        }
                         that.perusahaanKreditForm = that.$el.find('#perusahaanKreditForm');
 
                         if(cb) cb();
