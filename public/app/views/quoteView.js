@@ -17,28 +17,30 @@ define([
             "click .print"   : "print",
             "click .cancel"   : "cancel",
             "click #tambahCustomer"   : "tambahCustomer",
-            "change #lamaPinjaman": "updateSukuBunga"
+            "change #lamaPinjaman": "updateSukuBunga",
+            "change #tahunBuat": "updatePerusahaanKredit",
         },
         print:function(){
             window.print();
          },
+          updatePerusahaanKredit:function(){
+           
+                if(this.perusahaanKredit) {
+                  
+                    $('#perusahaanKredit').trigger('change');
+                
+                }
+        },
         updateSukuBunga:function(){
             var lamaPinjaman = this.$el.find('#lamaPinjaman').val()*1;
             
-            if(lamaPinjaman && this.sukuBunga) {
-                var tmp = 0;
-                if(lamaPinjaman==1)
-                    tmp = this.sukuBunga.thn1;
-                else if(lamaPinjaman==2)
-                    tmp = this.sukuBunga.thn2;
-                else if(lamaPinjaman==3)
-                    tmp = this.sukuBunga.thn3;
-                else if(lamaPinjaman==4)
-                    tmp = this.sukuBunga.thn4;
-            console.log('update suku bunga '+ tmp);
-            if(this.$el.find('#kreditProtectionSection:visible'))
-              this.$el.find('#kreditProtection').val((0.3*lamaPinjaman).toFixed(1));
-            this.$el.find('#sukuBunga').val(tmp);
+            if(lamaPinjaman && this.perusahaanKredit) {
+              
+                $('#bungaPinjaman').trigger('change');
+
+                if(this.$el.find('#kreditProtectionSection:visible'))
+                  this.$el.find('#kreditProtection').val((0.3*lamaPinjaman).toFixed(1));
+                //this.$el.find('#sukuBunga').val(tmp);
             }
         },
         initialize:function(options){
@@ -274,7 +276,7 @@ define([
 
                     var lamaPinjaman =  that.$el.find('#lamaPinjaman');
 
-                    lamaPinjaman.trigger('change');
+                    that.$el.find('#lamaPinjaman').trigger('change');
                     
                     var format=function format(item) { return item.jenis; };
 
@@ -293,9 +295,8 @@ define([
                             return (tahunBuat>=(v.tahunMulai*1) && tahunBuat<=(v.tahunAkhir*1));
                         }
                         
-                        return false;
+                        return true;
                     });
-                    console.log(filterBungaPinjaman);
 
                     that.$el.find('#bungaPinjaman').select2({
                         data:{

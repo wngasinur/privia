@@ -122,7 +122,7 @@
      <script type="text/html" id='sukuBungaSection'>
         <div class="sukuBungaSection">
             <% _.each(bungas, function(bunga){ %>
-                <%='<b>'+bunga.jenis+'</b> : '+bunga.thn1+'%/'+bunga.thn2+'%/'+bunga.thn3+'%/'+bunga.thn4+'%<br>' %>
+                <%='<b>'+bunga.jenis+'</b> ('+(bunga.tahunMulai?bunga.tahunMulai:'Sebelum')+' - '+(bunga.tahunAkhir?bunga.tahunAkhir:'Sesudah')+') : '+bunga.thn1+'%/'+bunga.thn2+'%/'+bunga.thn3+'%/'+bunga.thn4+'%<br>' %>
             <% }); %>
         </div>
     </script>
