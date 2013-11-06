@@ -123,6 +123,9 @@ define([
             var loanPrincipal = 0;
             loanPrincipal = hargaOTR-(f.percentDP*1/100*hargaOTR)-pengurangDP-loanPrincipal;
             var kreditProtection = 0;
+            if(!that.perusahaanKredit.kreditProtection)
+                f.kreditProtection=0;
+            
             if(f.kreditProtection!=0) 
               kreditProtection = loanPrincipal * (f.kreditProtection*1/100);
             var bungaDibayar = (f.sukuBunga*1/100)*loanPrincipal*f.lamaPinjaman;
