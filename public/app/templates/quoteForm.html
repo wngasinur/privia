@@ -12,6 +12,7 @@
     <input type="hidden" name="cashBack" id="cashBack">
     <input type="hidden" name="carDepreciation" id="carDepreciation">
     <input type="hidden" name="pengurangTerakhir" id="pengurangTerakhir">
+    <input type="hidden" name="pengurangDP" id="pengurangDP">
     <input type="hidden" name="provisi" id="provisi" >
     <input type="hidden" name="hargaOTR" id="hargaOTR" >
     <input type="hidden" name="payPerMonth" id="payPerMonth" >
@@ -173,6 +174,15 @@
                     </div>
                     <div class="span4">
                         <label>Pengurang DP<span class="f_req">*</span></label>
+                        <input type="text" name="pengurangDPMask" id="pengurangDPMask" class="span12 price" value="<%=pengurangDP%>" >
+                    </div>
+                   
+                </div>
+            </div>
+              <div class="control-group">
+                <div class="row-fluid">
+                    <div class="span4">
+                        <label>Pengurang Terakhir<span class="f_req">*</span></label>
                         <input type="text" name="pengurangTerakhirMask" id="pengurangTerakhirMask" class="span12 price" value="<%=pengurangTerakhir%>" >
                     </div>
                    

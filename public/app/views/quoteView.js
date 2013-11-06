@@ -40,6 +40,9 @@ define([
 
                 if(this.$el.find('#kreditProtectionSection:visible'))
                   this.$el.find('#kreditProtection').val((0.3*lamaPinjaman).toFixed(1));
+                else
+                  this.$el.find('#kreditProtection').val("0");
+                
                 //this.$el.find('#sukuBunga').val(tmp);
             }
         },
@@ -105,6 +108,8 @@ define([
             var cashBack = $('#cashBackMask').inputmask('unmaskedvalue')*1;
             var carDepreciation = $('#carDepreciationMask').inputmask('unmaskedvalue')*1;
             var pengurangTerakhir = $('#pengurangTerakhirMask').inputmask('unmaskedvalue')*1;
+            var pengurangDP = $('#pengurangDPMask').inputmask('unmaskedvalue')*1;
+            
             var provisi = $('#provisiMask').inputmask('unmaskedvalue')*1;
             var admInsurance = $('#admInsuranceMask').inputmask('unmaskedvalue')*1;
             var hargaOTR = $('#hargaOTRMask').inputmask('unmaskedvalue')*1;
@@ -116,10 +121,10 @@ define([
             $('#provisi').val(provisi);
 
             var loanPrincipal = 0;
-            loanPrincipal = hargaOTR-(f.percentDP*1/100*hargaOTR)-loanPrincipal;
+            loanPrincipal = hargaOTR-(f.percentDP*1/100*hargaOTR)-pengurangDP-loanPrincipal;
             var kreditProtection = 0;
             if(f.kreditProtection!=0) 
-            kreditProtection = loanPrincipal * (f.kreditProtection*1/100);
+              kreditProtection = loanPrincipal * (f.kreditProtection*1/100);
             var bungaDibayar = (f.sukuBunga*1/100)*loanPrincipal*f.lamaPinjaman;
             var bungaAssDibayar = (f.asstTlo*1/100)*hargaOTR;
             var maxRevenue = loanPrincipal - pengurangTerakhir - carDepreciation;
@@ -377,6 +382,7 @@ define([
 
                 var cashBack = $('#cashBackMask').inputmask('unmaskedvalue');
                 var carDepreciation = $('#carDepreciationMask').inputmask('unmaskedvalue');
+                var pengurangDP = $('#pengurangDPMask').inputmask('unmaskedvalue');
                 var pengurangTerakhir = $('#pengurangTerakhirMask').inputmask('unmaskedvalue');
                 var provisi = $('#provisiMask').inputmask('unmaskedvalue');
                 var admInsurance = $('#admInsuranceMask').inputmask('unmaskedvalue');
@@ -385,6 +391,8 @@ define([
                 $('#cashBack').val(cashBack);
                 $('#carDepreciation').val(carDepreciation);
                 $('#pengurangTerakhir').val(pengurangTerakhir);
+
+                $('#pengurangDP').val(pengurangDP);
                 $('#provisi').val(provisi);
                 $('#admInsurance').val(admInsurance);
                 $('#hargaOTR').val(hargaOTR);

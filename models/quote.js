@@ -29,6 +29,7 @@ var QuoteSchema = new Schema({
     cashBack: {type : Number, default : 0},
     carDepreciation: {type : Number, default : 0},
     pengurangTerakhir: {type : Number, default : 0},
+    pengurangDP: {type : Number, default : 0},
     provisi: {type : Number, default : 0}, 
     percentDP :{type : Number, default : 0},
     coverage :{type : String, default : '', trim : true},
