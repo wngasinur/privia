@@ -88,7 +88,7 @@ define([
                         $(element).closest('div').append(error);
                     },
                     rules: {
-                        namaModal: "required",
+                        namaCustomer: "required",
                         gender : "required",
                         "telepon[hp1]":"required"
                     },

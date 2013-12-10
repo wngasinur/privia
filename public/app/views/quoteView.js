@@ -133,7 +133,7 @@ define([
             var maxRevenue = loanPrincipal - pengurangTerakhir - carDepreciation;
             var totalMaxRevenue = maxRevenue + cashBack;
             var payPerMonth = (bungaDibayar + loanPrincipal) / (f.lamaPinjaman*12);
-            var cashNCarry = totalMaxRevenue - admInsurance - bungaAssDibayar - provisi - payPerMonth - kreditProtection;
+            var cashNCarry = totalMaxRevenue - admInsurance - bungaAssDibayar - provisi - payPerMonth;
             $('#payPerMonth').val(payPerMonth);
             $('#cashNCarry').val(cashNCarry);
 
@@ -369,7 +369,13 @@ define([
                 var id=$(element).val();
                 if (id!=="") {
                    var obj = that.model.get('perusahaanKredit');
-                   callback(obj); 
+                   var sukuBunga = that.$el.find('#sukuBunga').val();
+                   var percentDP = that.$el.find('#percentDP').val();
+                   var asstTlo = that.$el.find('#asstTlo').val();
+                   callback(obj);
+                   that.$el.find('#sukuBunga').val(sukuBunga);
+                   that.$el.find('#percentDP').val(percentDP);
+                   that.$el.find('#asstTlo').val(asstTlo);
 
                 }
             }

@@ -3,8 +3,8 @@ define([ 'jquery',
   'backbone',
   'text!./templates/sidebarsMenuSection.html','antiscroll','jquery.actual'], function($, _, Backbone,sidebarsTemplate) {
 
-    console.log('Initialize App'); 
-    
+    console.log('Initialize App');
+
   // Provide a global location to place configuration settings and module
   // creation.
   var app = {
@@ -44,7 +44,7 @@ $('#sidebarsMenu').html(compiledTemplate);
       // sidebar onload state
       if($(window).width() > 979){
                 if(!$('body').hasClass('sidebar_hidden')) {
-                   
+
                 } else {
                     $('.sidebar_switch').toggleClass('on_switch off_switch').attr('title','Show Sidebar');
                 }
@@ -58,7 +58,7 @@ $('#sidebarsMenu').html(compiledTemplate);
             $('.sidebar_switch').click(function(){
                 $('.sidebar_switch').removeClass('on_switch off_switch');
                 if( $('body').hasClass('sidebar_hidden') ) {
-                 
+
                     $('body').removeClass('sidebar_hidden');
                     $('.sidebar_switch').addClass('on_switch').show();
                     $('.sidebar_switch').attr( 'title', "Hide Sidebar" );
@@ -128,10 +128,10 @@ $('#sidebarsMenu').html(compiledTemplate);
     //* top submenu
     gebo_submenu.init();
     */
-    
+
     gebo_sidebar.make_scroll();
     gebo_sidebar.update_scroll();
-    
+
     //* style switcher
     /*gebo_style_sw.init();
     */
@@ -191,7 +191,7 @@ Number.prototype.formatPrice = function() {
      // return this+"".replace(/(\d)(?=(\d{3})+)/g, "$1,");
    };
 
-   
+
 
 var delay = (function(){
   var timer = 0;

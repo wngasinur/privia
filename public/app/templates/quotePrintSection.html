@@ -3,7 +3,7 @@
         <h2 class="invoice_heading">MEGA OTO FINANCE since 2000</h2>
     </div>
     <div class="span4">
-        <p class="sepH_a"><span class="muted sepV_b">Type Kendaraan</span><strong><%=namaKendaraan%></strong></p>
+        <p class="sepH_a"><span class="muted sepV_b">Kendaraan</span><strong><%=jenisKendaraan+' '+namaKendaraan%></strong></p>
         <p><span class="muted sepV_b">Tahun Buat</span><strong><%=tahunBuat%></strong></p>
     </div>
 </div>
@@ -15,7 +15,7 @@
         </address>  
     </div>
 </div>
-<div class"row-fluid">
+<div class="row-fluid">
 <aside>
 <table class="table span6">
  <tr>
@@ -80,15 +80,6 @@
                 <td class="number_tar"><%=bungaAssDibayar%></td>
                 <td></td>
             </tr>
-             <%
-             if(kreditProtection!='Rp. 0') {
-             %>
-            <tr>
-                <td>Kredit Protection </td>
-                <td class="number_tar"><%=kreditProtection%></td>
-                <td></td>
-            </tr>
-            <% } %>
              <tr>
                 <td>Provisi & Fiducia Legal</td>
                 <td class="number_tar"><%=provisi%></td>
@@ -104,7 +95,15 @@
                 <td></td>
                 <td class="number_tar"><%=cashNCarry%></td>
             </tr>
-           
+            <%
+            if(kreditProtection!='Rp. 0') {
+            %>
+            <tr>
+                <td>Kredit Protection </td>
+                <td class="number_tar"><%=kreditProtection%></td>
+                <td></td>
+            </tr>
+            <% } %>
         </tbody></table>
     </div>
 </div>

@@ -1,8 +1,8 @@
 require.config({
   baseUrl: '/app',
+  waitSeconds:0,
   paths: {
     "dataTables" : "../lib/datatables/jquery.dataTables.min",
-    "dataTables.sorting" :"../lib/datatables/jquery.dataTables.sorting",
     "dataTables.bootstrap" : "../lib/datatables/jquery.dataTables.bootstrap.min",
     "underscore" : "../lib/underscore",
     "backbone" :"../lib/backbone-min",
@@ -68,13 +68,10 @@ require.config({
       deps : ['jquery']
     },
     'dataTables': {
-      exports: 'dataTable'
-    },
-    'dataTables.sorting' : {
-      deps : ['dataTables']
+       deps : ['jquery']
     },
     'dataTables.bootstrap' : {
-      deps : ['dataTables']
+      deps : ['jquery','dataTables']
     },
     'bootstrap' : {
       deps : ['jquery']
@@ -111,8 +108,8 @@ require.config({
 
 require([
 
-'app','router','backbone','jquery.ui','jquery.validate','jquery.form','jquery.actual','bootstrap','jquery.serializeObject',
-'dataTables','dataTables.sorting','dataTables.bootstrap','antiscroll','jquery.fineuploader',
+'app','router','backbone','jquery.validate','jquery.form','jquery.actual','bootstrap','jquery.serializeObject',
+'dataTables','dataTables.bootstrap','antiscroll','jquery.fineuploader',
 'select2','stepy','flot','flot.categories','flot.time','flot.pie','qtip2',
 'backbone.syphon','jquery.inputmask','moment','gebo_common'], function(app,Router) {
 
