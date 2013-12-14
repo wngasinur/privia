@@ -121,7 +121,7 @@ define([
             $('#provisi').val(provisi);
 
             var loanPrincipal = 0;
-            loanPrincipal = hargaOTR-(f.percentDP*1/100*hargaOTR)-pengurangDP-loanPrincipal;
+            loanPrincipal = hargaOTR-((f.percentDP*1/100*hargaOTR)-pengurangDP);
             var kreditProtection = 0;
             if(!that.perusahaanKredit.kreditProtection)
                 f.kreditProtection=0;
